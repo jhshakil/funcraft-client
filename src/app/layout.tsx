@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import "./globals.css";
 import TopBar from "@/components/topBar";
 import Providers from "@/providers";
+import Footer from "@/components/shared/Footer";
 
 export const metadata: Metadata = {
   title: "FunCraft",
@@ -26,7 +27,8 @@ export default function RootLayout({
           disableTransitionOnChange
         >
           <TopBar />
-          <div className="container mx-auto px-2">{children}</div>
+          <div className="container min-h-[80vh] mx-auto px-2">{children}</div>
+          <Footer />
         </Providers>
       </body>
     </html>

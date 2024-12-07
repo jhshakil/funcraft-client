@@ -1,5 +1,11 @@
+import HeroSection from "@/components/home/HeroSection";
+
 const Page = async () => {
-  return <>home</>;
+  return (
+    <>
+      <HeroSection />
+    </>
+  );
 };
 
 export default Page;
