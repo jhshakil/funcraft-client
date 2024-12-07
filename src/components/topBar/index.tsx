@@ -3,25 +3,16 @@ import Logo from "../shared/Logo";
 import MainSearch from "./MainSearch";
 import TopBarAction from "./TopBarAction";
 import { getCurrentUser } from "@/services/AuthService";
-import { getAdmin, getUser } from "@/services/UserService";
-import { TAdminData, TUserData } from "@/types/user.types";
+import { getUser } from "@/services/UserService";
 import Navbar from "./Navbar";
 
 const TopBar = async () => {
   const user = await getCurrentUser();
 
-  let userData: TUserData | TAdminData | null = null;
+  let userData = null;
 
-  try {
-    if (user?.role === "admin") {
-      const { data } = await getAdmin(user?.email as string);
-      userData = data;
-    } else {
-      const { data } = await getUser(user?.email as string);
-      userData = data;
-    }
-  } catch (error: any) {
-    console.log(error.message);
+  if (user?.id) {
+    userData = await getUser(user?.id as string);
   }
 
   return (
@@ -36,11 +27,7 @@ const TopBar = async () => {
 
         <div className="flex justify-end gap-2 items-center">
           <MainSearch userEmail={user?.email} />
-          <TopBarAction
-            username={user?.username}
-            role={user?.role}
-            userData={userData}
-          />
+          <TopBarAction role={user?.role} userData={userData?.data} />
         </div>
       </div>
     </header>

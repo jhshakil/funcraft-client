@@ -6,9 +6,26 @@ import { revalidateTag } from "next/cache";
 import { cookies } from "next/headers";
 import { FieldValues } from "react-hook-form";
 
-export const registerUser = async (userData: FieldValues) => {
+export const registerCustomer = async (userData: FieldValues) => {
   try {
-    const { data } = await axiosInstance.post("/auth/create-user", userData);
+    const { data } = await axiosInstance.post(
+      "/user/create-customer",
+      userData
+    );
+
+    if (data.success) {
+      cookies().set("accessToken", data?.data?.accessToken);
+      cookies().set("refreshToken", data?.data?.refreshToken);
+    }
+
+    return data;
+  } catch (error: any) {
+    throw new Error(error);
+  }
+};
+export const registerVendor = async (userData: FieldValues) => {
+  try {
+    const { data } = await axiosInstance.post("/user/create-vendor", userData);
 
     if (data.success) {
       cookies().set("accessToken", data?.data?.accessToken);
@@ -23,7 +40,7 @@ export const registerUser = async (userData: FieldValues) => {
 
 export const registerAdmin = async (userData: FieldValues) => {
   try {
-    const { data } = await axiosInstance.post("/auth/create-admin", userData);
+    const { data } = await axiosInstance.post("/user/create-admin", userData);
     revalidateTag("admins");
     return data;
   } catch (error: any) {
@@ -58,11 +75,11 @@ export const getCurrentUser = async () => {
 
   if (accessToken) {
     decodedToken = await jwtDecode(accessToken);
-    const { email, username, role } = decodedToken;
+    const { email, id, role } = decodedToken;
 
     return {
       email,
-      username,
+      id,
       role,
     };
   }

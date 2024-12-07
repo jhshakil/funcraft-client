@@ -5,15 +5,23 @@ import axiosInstance from "@/lib/axiosInstance";
 import { revalidateTag } from "next/cache";
 import { getCurrentUser } from "../AuthService";
 import { TAdminData, TFollow, TUser, TUserData } from "@/types/user.types";
+import { cookies } from "next/headers";
 
-export const getUser = async (email: string): Promise<{ data: TUserData }> => {
+export const getUser = async (
+  id: string
+): Promise<{ data: TUserData | TAdminData }> => {
+  const cookieStore = cookies();
+  const accessToken = cookieStore.get("accessToken")?.value;
   const fetchOption = {
     next: {
       tags: ["user"],
     },
+    headers: {
+      Authorization: accessToken as string,
+    },
   };
 
-  const res = await fetch(`${envConfig.baseUrl}/user/${email}`, fetchOption);
+  const res = await fetch(`${envConfig.baseUrl}/user/${id}`, fetchOption);
 
   if (!res.ok) {
     throw new Error("Failed to get data");

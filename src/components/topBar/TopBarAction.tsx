@@ -8,18 +8,17 @@ import { cn } from "@/lib/utils";
 import { TAdminData, TUserData } from "@/types/user.types";
 
 type Props = {
-  username: string;
   role: string;
-  userData: TUserData | TAdminData | null;
+  userData?: TUserData | TAdminData | null;
 };
 
-const TopBarAction = ({ username, role, userData }: Props) => {
+const TopBarAction = ({ role, userData }: Props) => {
   return (
     <>
-      {username ? (
+      {userData?.id ? (
         <>
           <ThemeMode />
-          <ProfileAction username={username} role={role} userData={userData} />
+          <ProfileAction role={role} userData={userData} />
         </>
       ) : (
         <>

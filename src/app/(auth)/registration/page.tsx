@@ -23,13 +23,17 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import Link from "next/link";
 import { cn } from "@/lib/utils";
 import { toast } from "sonner";
 import { useRouter } from "next/navigation";
 
-import { useUserRegistration } from "@/hooks/auth.hook";
-import { useEffect } from "react";
+import {
+  useCustomerRegistration,
+  useVendorRegistration,
+} from "@/hooks/auth.hook";
+import { useEffect, useState } from "react";
 import { useUser } from "@/context/user.provider";
 
 const FormSchema = z
@@ -37,9 +41,6 @@ const FormSchema = z
     email: z.string().email(),
     name: z.string().min(2, {
       message: "Name must be at least 2 characters.",
-    }),
-    username: z.string().min(2, {
-      message: "Username must be at least 2 characters.",
     }),
     password: z.string().min(8, {
       message: "Password must be at least 8 characters.",
@@ -56,28 +57,40 @@ const FormSchema = z
 const Page = () => {
   const router = useRouter();
   const { setIsLoading: userLoading } = useUser();
+  const [selectedTab, setSelectedTab] = useState("customer");
 
   const {
-    mutate: handleUserRegistration,
-    isPending,
-    isSuccess,
-  } = useUserRegistration();
+    mutate: handleCustomerRegistration,
+    isPending: customerPending,
+    isSuccess: customerSuccess,
+  } = useCustomerRegistration();
+  const {
+    mutate: handleVendorRegistration,
+    isPending: vendorPending,
+    isSuccess: vendorSuccess,
+  } = useVendorRegistration();
 
   const form = useForm<z.infer<typeof FormSchema>>({
     resolver: zodResolver(FormSchema),
     defaultValues: {
       email: "",
       name: "",
-      username: "",
       password: "",
       confirm_password: "",
     },
   });
 
-  async function onSubmit(data: z.infer<typeof FormSchema>) {
+  async function onSubmit(formData: z.infer<typeof FormSchema>) {
+    const outerFormData = new FormData();
+    outerFormData.append("data", JSON.stringify(formData));
     try {
-      handleUserRegistration(data);
-      userLoading(true);
+      if (selectedTab === "vendor") {
+        handleVendorRegistration(outerFormData);
+        userLoading(true);
+      } else {
+        handleCustomerRegistration(outerFormData);
+        userLoading(true);
+      }
     } catch (err: any) {
       if (err?.data?.message === "already exist") {
         toast.error("User already exist");
@@ -88,10 +101,16 @@ const Page = () => {
   }
 
   useEffect(() => {
-    if (!isPending && isSuccess) {
+    if (!customerPending && customerSuccess) {
       router.push("/");
     }
-  }, [isPending, isSuccess]);
+  }, [customerPending, customerSuccess]);
+
+  useEffect(() => {
+    if (!vendorPending && vendorSuccess) {
+      router.push("/");
+    }
+  }, [vendorPending, vendorSuccess]);
 
   return (
     <Card className="w-full md:w-[500px] mx-auto my-8">
@@ -102,84 +121,153 @@ const Page = () => {
         </CardDescription>
       </CardHeader>
       <CardContent className="grid gap-4">
-        <Form {...form}>
-          <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
-            <FormField
-              control={form.control}
-              name="email"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Email</FormLabel>
-                  <FormControl>
-                    <Input placeholder="Enter your email" {...field} />
-                  </FormControl>
-                  <FormDescription>Email must be unique</FormDescription>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-            <FormField
-              control={form.control}
-              name="name"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Name</FormLabel>
-                  <FormControl>
-                    <Input placeholder="Enter your name" {...field} />
-                  </FormControl>
+        <Tabs value={selectedTab} onValueChange={setSelectedTab}>
+          <TabsList className="grid w-full grid-cols-2">
+            <TabsTrigger value="customer">Customer</TabsTrigger>
+            <TabsTrigger value="vendor">Vendor</TabsTrigger>
+          </TabsList>
+          <TabsContent value="customer">
+            <Form {...form}>
+              <form
+                onSubmit={form.handleSubmit(onSubmit)}
+                className="space-y-4"
+              >
+                <FormField
+                  control={form.control}
+                  name="email"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>Email</FormLabel>
+                      <FormControl>
+                        <Input placeholder="Enter your email" {...field} />
+                      </FormControl>
+                      <FormDescription>Email must be unique</FormDescription>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+                <FormField
+                  control={form.control}
+                  name="name"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>Name</FormLabel>
+                      <FormControl>
+                        <Input placeholder="Enter your name" {...field} />
+                      </FormControl>
 
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-            <FormField
-              control={form.control}
-              name="username"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Username</FormLabel>
-                  <FormControl>
-                    <Input placeholder="Enter your username" {...field} />
-                  </FormControl>
-                  <FormDescription>Username must be unique</FormDescription>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-            <FormField
-              control={form.control}
-              name="password"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Password</FormLabel>
-                  <FormControl>
-                    <Input placeholder="Enter your password" {...field} />
-                  </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
 
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-            <FormField
-              control={form.control}
-              name="confirm_password"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Confirm Password</FormLabel>
-                  <FormControl>
-                    <Input placeholder="Enter your password" {...field} />
-                  </FormControl>
+                <FormField
+                  control={form.control}
+                  name="password"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>Password</FormLabel>
+                      <FormControl>
+                        <Input placeholder="Enter your password" {...field} />
+                      </FormControl>
 
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+                <FormField
+                  control={form.control}
+                  name="confirm_password"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>Confirm Password</FormLabel>
+                      <FormControl>
+                        <Input placeholder="Enter your password" {...field} />
+                      </FormControl>
 
-            <Button type="submit" className="w-full">
-              Register
-            </Button>
-          </form>
-        </Form>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+
+                <Button type="submit" className="w-full">
+                  Register
+                </Button>
+              </form>
+            </Form>
+          </TabsContent>
+          <TabsContent value="vendor">
+            <Form {...form}>
+              <form
+                onSubmit={form.handleSubmit(onSubmit)}
+                className="space-y-4"
+              >
+                <FormField
+                  control={form.control}
+                  name="email"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>Email</FormLabel>
+                      <FormControl>
+                        <Input placeholder="Enter your email" {...field} />
+                      </FormControl>
+                      <FormDescription>Email must be unique</FormDescription>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+                <FormField
+                  control={form.control}
+                  name="name"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>Name</FormLabel>
+                      <FormControl>
+                        <Input placeholder="Enter your name" {...field} />
+                      </FormControl>
+
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+
+                <FormField
+                  control={form.control}
+                  name="password"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>Password</FormLabel>
+                      <FormControl>
+                        <Input placeholder="Enter your password" {...field} />
+                      </FormControl>
+
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+                <FormField
+                  control={form.control}
+                  name="confirm_password"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>Confirm Password</FormLabel>
+                      <FormControl>
+                        <Input placeholder="Enter your password" {...field} />
+                      </FormControl>
+
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+
+                <Button type="submit" className="w-full">
+                  Register
+                </Button>
+              </form>
+            </Form>
+          </TabsContent>
+        </Tabs>
+
         <div className="relative">
           <div className="absolute inset-0 flex items-center">
             <span className="w-full border-t" />

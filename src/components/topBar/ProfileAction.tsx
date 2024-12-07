@@ -1,6 +1,6 @@
 "use client";
 
-import { CreditCard, LogOut, Settings, User } from "lucide-react";
+import { CreditCard, LogOut, User } from "lucide-react";
 
 import {
   DropdownMenu,
@@ -20,7 +20,6 @@ import { TAdminData, TUserData } from "@/types/user.types";
 import AvatarComponent from "../shared/AvatarComponent";
 
 type Props = {
-  username: string;
   role: string;
   userData: TUserData | TAdminData | null;
 };
@@ -46,7 +45,7 @@ const adminRoutes = [
   },
 ];
 
-const ProfileAction = ({ username, role, userData }: Props) => {
+const ProfileAction = ({ role, userData }: Props) => {
   const router = useRouter();
   const pathname = usePathname();
 
@@ -76,7 +75,7 @@ const ProfileAction = ({ username, role, userData }: Props) => {
         </div>
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end">
-        <DropdownMenuLabel>@{username}</DropdownMenuLabel>
+        <DropdownMenuLabel>{userData?.name}</DropdownMenuLabel>
         <DropdownMenuSeparator />
         <DropdownMenuGroup>
           {(role === "admin" || role === "superAdmin"

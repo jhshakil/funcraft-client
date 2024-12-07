@@ -1,7 +1,6 @@
 export type TUser = {
   _id?: string;
   email: string;
-  username: string;
   role: string;
   status?: TUserStatus;
 };
@@ -9,7 +8,7 @@ export type TUser = {
 export type TUserStatus = "active" | "inActive" | "blocked";
 
 export type TUserData = {
-  _id: string;
+  id: string;
   authId?: TUser;
   email: string;
   name: string;
@@ -31,7 +30,7 @@ export type TFollow = {
 };
 
 export type TAdminData = {
-  _id: string;
+  id: string;
   authId?: TUser;
   email: string;
   name: string;

@@ -3,18 +3,31 @@ import {
   forgetPassword,
   loginUser,
   registerAdmin,
-  registerUser,
+  registerCustomer,
+  registerVendor,
   resetPassword,
 } from "../services/AuthService";
 import { FieldValues } from "react-hook-form";
 import { toast } from "sonner";
 
-export const useUserRegistration = () => {
+export const useCustomerRegistration = () => {
   return useMutation<any, Error, FieldValues>({
-    mutationKey: ["USER_REGISTRATION"],
-    mutationFn: async (userData) => await registerUser(userData),
+    mutationKey: ["CUSTOMER_REGISTRATION"],
+    mutationFn: async (userData) => await registerCustomer(userData),
     onSuccess: () => {
-      toast.success("User registration successful");
+      toast.success("Customer registration successful");
+    },
+    onError: (error) => {
+      toast.error("Something went wrong, Please add valid information");
+    },
+  });
+};
+export const useVendorRegistration = () => {
+  return useMutation<any, Error, FieldValues>({
+    mutationKey: ["VENDOR_REGISTRATION"],
+    mutationFn: async (userData) => await registerVendor(userData),
+    onSuccess: () => {
+      toast.success("Vendor registration successful");
     },
     onError: (error) => {
       toast.error("Something went wrong, Please add valid information");
