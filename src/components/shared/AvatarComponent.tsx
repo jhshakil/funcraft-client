@@ -1,7 +1,6 @@
 import { AvatarFallback } from "@radix-ui/react-avatar";
 import { Avatar, AvatarImage } from "../ui/avatar";
 import { cn } from "@/lib/utils";
-import { Crown } from "lucide-react";
 
 type Props = {
   src: string;
@@ -17,8 +16,6 @@ const AvatarComponent = ({
   className = "w-8 h-8",
   alt = "profile",
   fallback = "S",
-  isPro = false,
-  badgeClassName = "w-2 h-2",
 }: Props) => {
   return (
     <div className="relative">
@@ -28,13 +25,6 @@ const AvatarComponent = ({
           {fallback}
         </AvatarFallback>
       </Avatar>
-      {isPro ? (
-        <div className="absolute top-0 right-0 p-0.5 bg-background rounded-full">
-          <Crown className={cn("text-primary", badgeClassName)} />
-        </div>
-      ) : (
-        ""
-      )}
     </div>
   );
 };

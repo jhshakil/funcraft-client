@@ -26,7 +26,14 @@ export const useUpdateUser = () => {
 };
 
 export const useUpdateStatus = () => {
-  return useMutation<any, Error, Partial<TUser>>({
+  return useMutation<
+    any,
+    Error,
+    {
+      id: string;
+      status: "ACTIVE" | "BLOCKED" | "DELETED";
+    }
+  >({
     mutationKey: ["UPDATE_USER_STATUS"],
     mutationFn: async (postData) => await updateUserStatus(postData),
     onSuccess: () => {

@@ -1,6 +1,6 @@
 "use client";
 
-import { CreditCard, LogOut, User } from "lucide-react";
+import { CreditCard, LogOut, UserPen, Users } from "lucide-react";
 
 import {
   DropdownMenu,
@@ -16,19 +16,24 @@ import { usePathname, useRouter } from "next/navigation";
 import { logout } from "@/services/AuthService";
 import { useUser } from "@/context/user.provider";
 import { protectedRoutes } from "@/constant";
-import { TAdminData, TUserData } from "@/types/user.types";
+import {
+  TAdminData,
+  TCustomerData,
+  TUserData,
+  TVendorData,
+} from "@/types/user.types";
 import AvatarComponent from "../shared/AvatarComponent";
 
 type Props = {
   role: string;
-  userData: TUserData | TAdminData | null;
+  userData: TAdminData | TVendorData | TCustomerData;
 };
 
 const userRoutes = [
   {
     name: "Profile",
     path: "/user/profile",
-    icon: <User className="mr-2 h-4 w-4" />,
+    icon: <UserPen className="mr-2 h-4 w-4" />,
   },
   // {
   //   name: "Settings",
@@ -39,9 +44,19 @@ const userRoutes = [
 
 const adminRoutes = [
   {
+    name: "Profile",
+    path: "/admin/profile",
+    icon: <UserPen className="mr-2 h-4 w-4" />,
+  },
+  {
     name: "Dashboard",
     path: "/admin/dashboard",
     icon: <CreditCard className="mr-2 h-4 w-4" />,
+  },
+  {
+    name: "Users",
+    path: "/admin/users",
+    icon: <Users className="mr-2 h-4 w-4" />,
   },
 ];
 
@@ -63,22 +78,20 @@ const ProfileAction = ({ role, userData }: Props) => {
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
-        <div>
+        <div className="cursor-pointer">
           <AvatarComponent
             src={userData?.profileImage || ""}
-            className=""
-            // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-            // @ts-expect-error
-            isPro={role === "user" ? userData?.isPro : false}
             fallback={userData?.name?.[0] || "S"}
           />
         </div>
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end">
-        <DropdownMenuLabel>{userData?.name}</DropdownMenuLabel>
+        <DropdownMenuLabel className="line-clamp-1">
+          {userData?.email}
+        </DropdownMenuLabel>
         <DropdownMenuSeparator />
         <DropdownMenuGroup>
-          {(role === "admin" || role === "superAdmin"
+          {(role === "ADMIN" || role === "SUPER_ADMIN"
             ? adminRoutes
             : userRoutes
           )?.map((item) => (

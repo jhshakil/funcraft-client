@@ -1,5 +1,4 @@
 import { getCurrentUser } from "@/services/AuthService";
-import { Menu } from "lucide-react";
 import Link from "next/link";
 
 const ANav = [
@@ -48,7 +47,7 @@ const DashboardNav = async () => {
       </div>
       <div>
         <ul>
-          {(user?.role === "admin" ? ANav : SNav)?.map((el) => (
+          {(user?.role === "ADMIN" ? ANav : SNav)?.map((el) => (
             <li key={el.path} className="py-2 border-b border-border">
               <Link href={el.path}>{el.name}</Link>
             </li>

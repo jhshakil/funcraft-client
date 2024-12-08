@@ -5,11 +5,16 @@ import { buttonVariants } from "../ui/button";
 import ProfileAction from "./ProfileAction";
 import Link from "next/link";
 import { cn } from "@/lib/utils";
-import { TAdminData, TUserData } from "@/types/user.types";
+import {
+  TAdminData,
+  TCustomerData,
+  TUserData,
+  TVendorData,
+} from "@/types/user.types";
 
 type Props = {
   role: string;
-  userData?: TUserData | TAdminData | null;
+  userData?: TAdminData | TVendorData | TCustomerData;
 };
 
 const TopBarAction = ({ role, userData }: Props) => {

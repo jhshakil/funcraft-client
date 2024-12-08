@@ -5,14 +5,25 @@ import TopBarAction from "./TopBarAction";
 import { getCurrentUser } from "@/services/AuthService";
 import { getUser } from "@/services/UserService";
 import Navbar from "./Navbar";
+import {
+  TAdminData,
+  TCustomerData,
+  TUserData,
+  TVendorData,
+} from "@/types/user.types";
 
 const TopBar = async () => {
   const user = await getCurrentUser();
 
-  let userData = null;
+  let userData: { data: TAdminData | TVendorData | TCustomerData } | null =
+    null;
 
-  if (user?.id) {
-    userData = await getUser(user?.id as string);
+  try {
+    if (user?.id) {
+      userData = await getUser(user?.id as string);
+    }
+  } catch (error) {
+    console.log(error);
   }
 
   return (

@@ -1,5 +1,5 @@
 export type TUser = {
-  _id?: string;
+  id: string;
   email: string;
   role: string;
   status?: TUserStatus;
@@ -9,20 +9,14 @@ export type TUserStatus = "active" | "inActive" | "blocked";
 
 export type TUserData = {
   id: string;
-  authId?: TUser;
   email: string;
-  name: string;
-  bio: string;
-  profileImage: string;
-  phoneNumber: string;
-  gender: "male" | "female";
-  dateOfBirth: string;
-  totalFollower: string;
-  totalFollowing: string;
-  follower: TFollow[];
-  following: TFollow[];
-  isPro: boolean;
-  proValidity: string;
+  role: "CUSTOMER" | "VENDOR" | "ADMIN" | "SUPER_ADMIN";
+  status: "ACTIVE" | "BLOCKED" | "DELETED";
+  createdAt: string;
+  updateAt: string;
+  admin: TAdminData;
+  vendor: TVendorData;
+  customer: TCustomerData;
 };
 
 export type TFollow = {
@@ -31,9 +25,23 @@ export type TFollow = {
 
 export type TAdminData = {
   id: string;
-  authId?: TUser;
   email: string;
   name: string;
   profileImage: string;
-  phoneNumber: string;
+};
+export type TCustomerData = {
+  id: string;
+  email: string;
+  name: string;
+  profileImage: string;
+  contactNumber: string;
+  address: string;
+};
+export type TVendorData = {
+  id: string;
+  email: string;
+  name: string;
+  profileImage: string;
+  contactNumber: string;
+  address: string;
 };

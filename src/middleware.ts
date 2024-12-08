@@ -7,12 +7,13 @@ const AuthRoutes = ["/login", "/registration"];
 type Role = keyof typeof roleBaseRoutes;
 
 const roleBaseRoutes = {
-  vendor: [/^\/vendor/],
-  admin: [/^\/admin\/dashboard/, /^\/admin\/profile/, /^\/admin\/user-list/],
-  superAdmin: [
+  VENDOR: [/^\/vendor/],
+  ADMIN: [/^\/admin\/dashboard/, /^\/admin\/profile/, /^\/admin\/users/],
+  SUPER_ADMIN: [
     /^\/admin\/dashboard/,
+    /^\/admin\/profile/,
     /^\/admin\/create-admin/,
-    /^\/admin\/user-list/,
+    /^\/admin\/users/,
     /^\/admin\/admin-list/,
   ],
 };

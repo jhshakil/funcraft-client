@@ -4,12 +4,20 @@ import { envConfig } from "@/config/envConfig";
 import axiosInstance from "@/lib/axiosInstance";
 import { revalidateTag } from "next/cache";
 import { getCurrentUser } from "../AuthService";
-import { TAdminData, TFollow, TUser, TUserData } from "@/types/user.types";
+import {
+  TAdminData,
+  TCustomerData,
+  TFollow,
+  TUserData,
+  TVendorData,
+} from "@/types/user.types";
 import { cookies } from "next/headers";
+import { toast } from "sonner";
+import { TMeta } from "@/types/meta.type";
 
 export const getUser = async (
   id: string
-): Promise<{ data: TUserData | TAdminData }> => {
+): Promise<{ data: TAdminData | TVendorData | TCustomerData }> => {
   const cookieStore = cookies();
   const accessToken = cookieStore.get("accessToken")?.value;
   const fetchOption = {
@@ -30,17 +38,25 @@ export const getUser = async (
   return res.json();
 };
 
-export const getAllUser = async (): Promise<{ data: TUserData[] }> => {
+export const getAllUser = async (): Promise<{
+  data: TUserData[];
+  meta: TMeta;
+}> => {
+  const cookieStore = cookies();
+  const accessToken = cookieStore.get("accessToken")?.value;
   const fetchOption = {
     next: {
       tags: ["users"],
+    },
+    headers: {
+      Authorization: accessToken as string,
     },
   };
 
   const res = await fetch(`${envConfig.baseUrl}/user`, fetchOption);
 
   if (!res.ok) {
-    throw new Error("Failed to get data");
+    toast("Failed to get data");
   }
 
   return res.json();
@@ -116,13 +132,21 @@ export const updateAdmin = async (formData: FormData): Promise<any> => {
   }
 };
 
-export const updateUserStatus = async (
-  payload: Partial<TUser>
-): Promise<any> => {
+export const updateUserStatus = async (payload: {
+  id: string;
+  status: "ACTIVE" | "BLOCKED" | "DELETED";
+}): Promise<any> => {
   try {
     const { data } = await axiosInstance.patch(
-      `/user/status/${payload.email}`,
-      payload
+      `/user/status/${payload.id}`,
+      {
+        status: payload.status,
+      },
+      {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }
     );
 
     revalidateTag("users");
