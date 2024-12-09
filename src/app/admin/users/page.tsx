@@ -1,18 +1,22 @@
 import UserList from "@/components/user/UserList";
 import { getAllUser } from "@/services/UserService";
 
-const page = async () => {
-  const users = await getAllUser();
+const Page = async ({ searchParams }: { searchParams: { page?: string } }) => {
+  const users = await getAllUser({ page: searchParams.page || "1" });
   return (
     <div className="mt-5">
       <div>
         <h1 className="text-3xl">Users</h1>
       </div>
       <div className="mt-11">
-        <UserList users={users.data} meta={users.meta} />
+        <UserList
+          users={users.data}
+          meta={users.meta}
+          currentPage={searchParams.page || "1"}
+        />
       </div>
     </div>
   );
 };
 
-export default page;
+export default Page;

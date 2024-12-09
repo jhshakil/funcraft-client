@@ -38,7 +38,11 @@ export const getUser = async (
   return res.json();
 };
 
-export const getAllUser = async (): Promise<{
+export const getAllUser = async ({
+  page,
+}: {
+  page?: string;
+}): Promise<{
   data: TUserData[];
   meta: TMeta;
 }> => {
@@ -53,7 +57,13 @@ export const getAllUser = async (): Promise<{
     },
   };
 
-  const res = await fetch(`${envConfig.baseUrl}/user`, fetchOption);
+  const url = new URL(`${envConfig.baseUrl}/user`);
+
+  if (page) {
+    url.searchParams.append("page", page);
+  }
+
+  const res = await fetch(url.toString(), fetchOption);
 
   if (!res.ok) {
     toast("Failed to get data");

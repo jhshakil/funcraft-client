@@ -29,10 +29,21 @@ import { useUpdateStatus } from "@/hooks/user.hook";
 type Props = {
   users: TUserData[];
   meta: TMeta;
+  currentPage: string;
 };
 
-const UserList = ({ users, meta }: Props) => {
+const UserList = ({ users, meta, currentPage }: Props) => {
   const { mutate: handleUpdateStatus } = useUpdateStatus();
+
+  const totalPage = calculatePages(meta.total, meta.limit);
+  const start = Math.max(0, Number(currentPage) - 2);
+  const end = Math.min(totalPage, start + 3);
+  const adjustedStart = Math.max(0, end - 3);
+  const visibleItems = Array.from(
+    { length: totalPage },
+    (_, index) => index + 1
+  ).slice(adjustedStart, end);
+
   return (
     <Table>
       <TableHeader>
@@ -122,23 +133,32 @@ const UserList = ({ users, meta }: Props) => {
             <Pagination className="justify-end">
               <PaginationContent>
                 <PaginationItem>
-                  <PaginationPrevious href="#" />
+                  <PaginationPrevious
+                    href={`/admin/users?page=${
+                      Number(currentPage) < 2 ? 1 : Number(currentPage) - 1
+                    }`}
+                  />
                 </PaginationItem>
-                {Array.from({
-                  length: calculatePages(meta.total, meta.limit),
-                }).map((_, index) => (
-                  <PaginationItem key={`user-pagination_${index}`}>
-                    <PaginationLink href="#" isActive={index + 1 === meta.page}>
-                      {index + 1}
+                {visibleItems.map((el) => (
+                  <PaginationItem key={`user-pagination_${el}`}>
+                    <PaginationLink
+                      href={`/admin/users?page=${el}`}
+                      isActive={el === meta.page}
+                    >
+                      {el}
                     </PaginationLink>
                   </PaginationItem>
                 ))}
-
                 <PaginationItem>
-                  <PaginationEllipsis />
-                </PaginationItem>
-                <PaginationItem>
-                  <PaginationNext href="#" />
+                  <PaginationNext
+                    href={`/admin/users?page=${
+                      Number(currentPage) === totalPage
+                        ? totalPage
+                        : Number(currentPage) < totalPage
+                        ? Number(currentPage) + 1
+                        : totalPage
+                    }`}
+                  />
                 </PaginationItem>
               </PaginationContent>
             </Pagination>
