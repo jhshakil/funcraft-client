@@ -1,6 +1,6 @@
 "use client";
 
-import { CreditCard, LogOut, UserPen, Users } from "lucide-react";
+import { CreditCard, FileUser, LogOut, UserPen, Users } from "lucide-react";
 
 import {
   DropdownMenu,
@@ -57,6 +57,11 @@ const adminRoutes = [
     name: "Users",
     path: "/admin/users",
     icon: <Users className="mr-2 h-4 w-4" />,
+  },
+  {
+    name: "Create Admin",
+    path: "/admin/create-admin",
+    icon: <FileUser className="mr-2 h-4 w-4" />,
   },
 ];
 

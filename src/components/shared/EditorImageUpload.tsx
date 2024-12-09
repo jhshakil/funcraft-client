@@ -8,26 +8,18 @@ import {
   DialogTitle,
 } from "../ui/dialog";
 import { type Editor } from "@tiptap/react";
-import { useDropzone } from "react-dropzone";
-import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
-import { imageUploadDB } from "@/lib/firebaseConfig";
-import { v4 } from "uuid";
+import { FileWithPath, useDropzone } from "react-dropzone";
 import { UploadCloud } from "lucide-react";
 import { Input } from "../ui/input";
+import { Dispatch, SetStateAction } from "react";
 
 type Props = {
   open: boolean;
-  closeFn: () => void;
-  editor: Editor;
+  setOpen: Dispatch<SetStateAction<boolean>>;
+  onSubmit: (data: FileWithPath) => void;
 };
 
-const EditorImageUpload = ({ open, closeFn, editor }: Props) => {
-  const closeDialog = (value: boolean) => {
-    if (value === false) {
-      closeFn();
-    }
-  };
-
+const EditorImageUpload = ({ open, setOpen, onSubmit }: Props) => {
   const { acceptedFiles, getRootProps, getInputProps } = useDropzone({
     accept: {
       "image/jpeg": [".jpeg", ".png"],
@@ -36,25 +28,12 @@ const EditorImageUpload = ({ open, closeFn, editor }: Props) => {
 
   const submit = async () => {
     if (acceptedFiles[0]) {
-      const imgRef = ref(imageUploadDB, `/postBody/${v4()}`);
-      await uploadBytes(imgRef, acceptedFiles[0]).then(async (imgData) => {
-        await getDownloadURL(imgData.ref).then((val) => {
-          editor
-            .chain()
-            .focus()
-            .setImage({
-              src: val,
-              alt: "Post Image",
-            })
-            .run();
-          closeDialog(false);
-        });
-      });
+      onSubmit(acceptedFiles[0]);
     }
   };
 
   return (
-    <Dialog open={open} onOpenChange={(value) => closeDialog(value)}>
+    <Dialog open={open} onOpenChange={setOpen}>
       <DialogContent className="sm:max-w-[425px]">
         <DialogHeader>
           <DialogTitle></DialogTitle>

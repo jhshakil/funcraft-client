@@ -30,9 +30,10 @@ type Props = {
   users: TUserData[];
   meta: TMeta;
   currentPage: string;
+  path: string;
 };
 
-const UserList = ({ users, meta, currentPage }: Props) => {
+const UserList = ({ users, meta, currentPage, path }: Props) => {
   const { mutate: handleUpdateStatus } = useUpdateStatus();
 
   const totalPage = calculatePages(meta.total, meta.limit);
@@ -93,7 +94,13 @@ const UserList = ({ users, meta, currentPage }: Props) => {
             <TableCell>{user.role}</TableCell>
             <TableCell>{user.status}</TableCell>
             <TableCell className="text-right">
-              <div className="flex justify-end items-center gap-2">
+              <div
+                className={cn(
+                  user.role === "SUPER_ADMIN"
+                    ? "hidden"
+                    : "flex justify-end items-center gap-2"
+                )}
+              >
                 <Button
                   className={cn(user.status === "ACTIVE" ? "hidden" : "")}
                   onClick={() =>
@@ -134,7 +141,7 @@ const UserList = ({ users, meta, currentPage }: Props) => {
               <PaginationContent>
                 <PaginationItem>
                   <PaginationPrevious
-                    href={`/admin/users?page=${
+                    href={`${path}?page=${
                       Number(currentPage) < 2 ? 1 : Number(currentPage) - 1
                     }`}
                   />
@@ -142,7 +149,7 @@ const UserList = ({ users, meta, currentPage }: Props) => {
                 {visibleItems.map((el) => (
                   <PaginationItem key={`user-pagination_${el}`}>
                     <PaginationLink
-                      href={`/admin/users?page=${el}`}
+                      href={`${path}?page=${el}`}
                       isActive={el === meta.page}
                     >
                       {el}
@@ -151,7 +158,7 @@ const UserList = ({ users, meta, currentPage }: Props) => {
                 ))}
                 <PaginationItem>
                   <PaginationNext
-                    href={`/admin/users?page=${
+                    href={`${path}?page=${
                       Number(currentPage) === totalPage
                         ? totalPage
                         : Number(currentPage) < totalPage
