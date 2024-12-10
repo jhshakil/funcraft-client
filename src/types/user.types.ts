@@ -27,13 +27,13 @@ export type TAdminData = {
   id: string;
   email: string;
   name: string;
-  profileImage: string;
+  profilePhoto: string;
 };
 export type TCustomerData = {
   id: string;
   email: string;
   name: string;
-  profileImage: string;
+  profilePhoto: string;
   contactNumber: string;
   address: string;
 };
@@ -41,7 +41,7 @@ export type TVendorData = {
   id: string;
   email: string;
   name: string;
-  profileImage: string;
+  profilePhoto: string;
   contactNumber: string;
   address: string;
 };

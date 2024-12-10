@@ -68,10 +68,8 @@ const Page = () => {
   });
 
   async function onSubmit(formData: z.infer<typeof FormSchema>) {
-    const outerFormData = new FormData();
-    outerFormData.append("data", JSON.stringify(formData));
     try {
-      handleRegistration(outerFormData);
+      handleRegistration(formData);
       userLoading(true);
     } catch (err: any) {
       if (err?.data?.message === "already exist") {

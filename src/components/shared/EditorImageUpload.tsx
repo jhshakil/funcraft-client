@@ -7,28 +7,36 @@ import {
   DialogHeader,
   DialogTitle,
 } from "../ui/dialog";
-import { type Editor } from "@tiptap/react";
 import { FileWithPath, useDropzone } from "react-dropzone";
 import { UploadCloud } from "lucide-react";
 import { Input } from "../ui/input";
 import { Dispatch, SetStateAction } from "react";
+import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
+import { imageUploadDB } from "@/lib/firebaseConfig";
+import { v4 } from "uuid";
 
 type Props = {
   open: boolean;
   setOpen: Dispatch<SetStateAction<boolean>>;
-  onSubmit: (data: FileWithPath) => void;
+  onSubmit: (data: string) => void;
 };
 
 const EditorImageUpload = ({ open, setOpen, onSubmit }: Props) => {
   const { acceptedFiles, getRootProps, getInputProps } = useDropzone({
     accept: {
-      "image/jpeg": [".jpeg", ".png"],
+      "image/jpeg": [".jpeg", ".jpg"],
+      "image/png": [".png"],
     },
   });
 
   const submit = async () => {
     if (acceptedFiles[0]) {
-      onSubmit(acceptedFiles[0]);
+      const imgRef = ref(imageUploadDB, `/profilePhoto/${v4()}`);
+      await uploadBytes(imgRef, acceptedFiles[0]).then(async (imgData) => {
+        await getDownloadURL(imgData.ref).then((val) => {
+          onSubmit(val);
+        });
+      });
     }
   };
 

@@ -69,9 +69,9 @@ const UserList = ({ users, meta, currentPage, path }: Props) => {
               <Avatar>
                 <AvatarImage
                   src={
-                    user?.customer?.profileImage ||
-                    user?.vendor?.profileImage ||
-                    user?.admin?.profileImage
+                    user?.customer?.profilePhoto ||
+                    user?.vendor?.profilePhoto ||
+                    user?.admin?.profilePhoto
                   }
                   alt={
                     user?.customer?.name ||

@@ -85,7 +85,7 @@ const ProfileAction = ({ role, userData }: Props) => {
       <DropdownMenuTrigger asChild>
         <div className="cursor-pointer">
           <AvatarComponent
-            src={userData?.profileImage || ""}
+            src={userData?.profilePhoto || ""}
             fallback={userData?.name?.[0] || "S"}
           />
         </div>

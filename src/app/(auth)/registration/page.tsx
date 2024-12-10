@@ -81,14 +81,12 @@ const Page = () => {
   });
 
   async function onSubmit(formData: z.infer<typeof FormSchema>) {
-    const outerFormData = new FormData();
-    outerFormData.append("data", JSON.stringify(formData));
     try {
       if (selectedTab === "vendor") {
-        handleVendorRegistration(outerFormData);
+        handleVendorRegistration(formData);
         userLoading(true);
       } else {
-        handleCustomerRegistration(outerFormData);
+        handleCustomerRegistration(formData);
         userLoading(true);
       }
     } catch (err: any) {

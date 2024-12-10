@@ -14,6 +14,7 @@ import {
 import { cookies } from "next/headers";
 import { toast } from "sonner";
 import { TMeta } from "@/types/meta.type";
+import { FieldValues } from "react-hook-form";
 
 export const getUser = async (
   id: string
@@ -72,69 +73,12 @@ export const getAllUser = async ({
   return res.json();
 };
 
-export const getAdmin = async (
-  email: string
-): Promise<{ data: TAdminData }> => {
-  const fetchOption = {
-    next: {
-      tags: ["admin"],
-    },
-  };
-
-  const res = await fetch(`${envConfig.baseUrl}/admin/${email}`, fetchOption);
-
-  if (!res.ok) {
-    throw new Error("Failed to get data");
-  }
-
-  return res.json();
-};
-
-export const getAllAdmin = async (): Promise<{ data: TAdminData[] }> => {
-  const fetchOption = {
-    next: {
-      tags: ["admins"],
-    },
-  };
-
-  const res = await fetch(`${envConfig.baseUrl}/admin`, fetchOption);
-
-  if (!res.ok) {
-    throw new Error("Failed to get data");
-  }
-
-  return res.json();
-};
-
-export const updateUser = async (formData: FormData): Promise<any> => {
-  const user = await getCurrentUser();
-
+export const updateUser = async (formData: FieldValues): Promise<any> => {
   try {
-    const { data } = await axiosInstance.patch(
-      `/user/${user?.email}`,
-      formData
-    );
+    const { data } = await axiosInstance.patch(`/user/profile`, formData);
 
     revalidateTag("user");
     revalidateTag("users");
-
-    return data;
-  } catch (error: any) {
-    throw new Error(error);
-  }
-};
-
-export const updateAdmin = async (formData: FormData): Promise<any> => {
-  const user = await getCurrentUser();
-
-  try {
-    const { data } = await axiosInstance.patch(
-      `/admin/${user?.email}`,
-      formData
-    );
-
-    revalidateTag("admin");
-    revalidateTag("admins");
 
     return data;
   } catch (error: any) {
@@ -165,50 +109,6 @@ export const updateUserStatus = async (payload: {
   } catch (error) {
     console.log(error);
     throw new Error("Failed to update status");
-  }
-};
-
-export const deleteUser = async (email: string): Promise<any> => {
-  try {
-    const { data } = await axiosInstance.delete(`/user/${email}`);
-
-    revalidateTag("users");
-
-    return data;
-  } catch (error) {
-    console.log(error);
-    throw new Error("Failed to delete user");
-  }
-};
-
-export const updateAdminStatus = async (
-  payload: Partial<TAdminData>
-): Promise<any> => {
-  try {
-    const { data } = await axiosInstance.patch(
-      `/admin/status/${payload.email}`,
-      payload
-    );
-
-    revalidateTag("admins");
-
-    return data;
-  } catch (error) {
-    console.log(error);
-    throw new Error("Failed to update status");
-  }
-};
-
-export const deleteAdmin = async (email: string): Promise<any> => {
-  try {
-    const { data } = await axiosInstance.delete(`/admin/${email}`);
-
-    revalidateTag("admins");
-
-    return data;
-  } catch (error) {
-    console.log(error);
-    throw new Error("Failed to delete admin");
   }
 };
 

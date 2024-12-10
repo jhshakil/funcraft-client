@@ -1,19 +1,16 @@
 import {
-  deleteAdmin,
-  deleteUser,
   followUser,
   unFollowUser,
-  updateAdmin,
-  updateAdminStatus,
   updateUser,
   updateUserStatus,
 } from "@/services/UserService";
-import { TFollow, TUser } from "@/types/user.types";
+import { TFollow } from "@/types/user.types";
 import { useMutation } from "@tanstack/react-query";
+import { FieldValues } from "react-hook-form";
 import { toast } from "sonner";
 
 export const useUpdateUser = () => {
-  return useMutation<any, Error, FormData>({
+  return useMutation<any, Error, FieldValues>({
     mutationKey: ["UPDATE_USER"],
     mutationFn: async (postData) => await updateUser(postData),
     onSuccess: () => {
@@ -38,58 +35,6 @@ export const useUpdateStatus = () => {
     mutationFn: async (postData) => await updateUserStatus(postData),
     onSuccess: () => {
       toast.success("Update successfully");
-    },
-    onError: (error) => {
-      toast.error(error.message);
-    },
-  });
-};
-
-export const useDeleteUser = () => {
-  return useMutation<any, Error, string>({
-    mutationKey: ["DELETE_USER"],
-    mutationFn: async (postData) => await deleteUser(postData),
-    onSuccess: () => {
-      toast.success("User delete successfully");
-    },
-    onError: (error) => {
-      toast.error(error.message);
-    },
-  });
-};
-
-export const useUpdateAdmin = () => {
-  return useMutation<any, Error, FormData>({
-    mutationKey: ["UPDATE_ADMIN"],
-    mutationFn: async (postData) => await updateAdmin(postData),
-    onSuccess: () => {
-      toast.success("Update successfully");
-    },
-    onError: (error) => {
-      toast.error(error.message);
-    },
-  });
-};
-
-export const useUpdateAdminStatus = () => {
-  return useMutation<any, Error, Partial<TUser>>({
-    mutationKey: ["UPDATE_ADMIN_STATUS"],
-    mutationFn: async (postData) => await updateAdminStatus(postData),
-    onSuccess: () => {
-      toast.success("Update successfully");
-    },
-    onError: (error) => {
-      toast.error(error.message);
-    },
-  });
-};
-
-export const useDeleteAdmin = () => {
-  return useMutation<any, Error, string>({
-    mutationKey: ["DELETE_ADMIN"],
-    mutationFn: async (postData) => await deleteAdmin(postData),
-    onSuccess: () => {
-      toast.success("Admin delete successfully");
     },
     onError: (error) => {
       toast.error(error.message);
