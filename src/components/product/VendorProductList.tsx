@@ -19,22 +19,19 @@ import {
 } from "@/components/ui/pagination";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { TMeta } from "@/types/meta.type";
-import { TUserData } from "@/types/user.types";
 import { calculatePages, cn } from "@/lib/utils";
 import { Button } from "../ui/button";
-import { CircleUser } from "lucide-react";
-import { useUpdateStatus } from "@/hooks/user.hook";
+import { TProductData } from "@/types/product.types";
+import { Images, Pencil } from "lucide-react";
 
 type Props = {
-  users: TUserData[];
+  products: TProductData[];
   meta: TMeta;
   currentPage: string;
   path: string;
 };
 
-const UserList = ({ users, meta, currentPage, path }: Props) => {
-  const { mutate: handleUpdateStatus } = useUpdateStatus();
-
+const VendorProductList = ({ products, meta, currentPage, path }: Props) => {
   const totalPage = calculatePages(meta.total, meta.limit);
   const start = Math.max(0, Number(currentPage) - 2);
   const end = Math.min(totalPage, start + 3);
@@ -49,80 +46,60 @@ const UserList = ({ users, meta, currentPage, path }: Props) => {
       <TableHeader>
         <TableRow>
           <TableHead>Name</TableHead>
-          <TableHead>Profile Photo</TableHead>
-          <TableHead>Email</TableHead>
-          <TableHead>Address</TableHead>
-          <TableHead>Contact Number</TableHead>
-          <TableHead>Role</TableHead>
+          <TableHead>Thumbnail</TableHead>
+          <TableHead>Category Name</TableHead>
+          <TableHead>Price</TableHead>
+          <TableHead>Quantity</TableHead>
+          <TableHead>Discount</TableHead>
+          <TableHead>Ratting</TableHead>
+          <TableHead>Total Review</TableHead>
           <TableHead>Status</TableHead>
           <TableHead className="text-right">Action</TableHead>
         </TableRow>
       </TableHeader>
       <TableBody>
-        {users.map((user) => (
-          <TableRow key={user.id}>
-            <TableCell className="font-medium">
-              {user?.customer?.name || user?.vendor?.name || user?.admin?.name}
-            </TableCell>
+        {products.map((product) => (
+          <TableRow key={product.id}>
+            <TableCell className="font-medium">{product?.name}</TableCell>
             <TableCell>
               <Avatar>
                 <AvatarImage
-                  src={
-                    user?.customer?.profilePhoto ||
-                    user?.vendor?.profilePhoto ||
-                    user?.admin?.profilePhoto
-                  }
-                  alt={
-                    user?.customer?.name ||
-                    user?.vendor?.name ||
-                    user?.admin?.name
-                  }
+                  src={product?.thumbnailImage as string}
+                  alt={product?.name}
                 />
                 <AvatarFallback>
-                  <CircleUser />
+                  <Images />
                 </AvatarFallback>
               </Avatar>
             </TableCell>
-            <TableCell>{user.email}</TableCell>
-            <TableCell>{user?.vendor?.address}</TableCell>
-            <TableCell>
-              {user?.customer?.contactNumber || user?.vendor?.contactNumber}
-            </TableCell>
-            <TableCell>{user.role}</TableCell>
-            <TableCell>{user.status}</TableCell>
+            <TableCell>category</TableCell>
+            <TableCell>{product?.price}</TableCell>
+            <TableCell>{product?.inventoryCount}</TableCell>
+            <TableCell>{product.discount}</TableCell>
+            <TableCell>{product.ratting}</TableCell>
+            <TableCell>{product.reviewCount}</TableCell>
+            <TableCell>{product.status}</TableCell>
             <TableCell className="text-right">
-              <div
-                className={cn(
-                  user.role === "SUPER_ADMIN"
-                    ? "hidden"
-                    : "flex justify-end items-center gap-2"
-                )}
-              >
+              <div className={cn("flex justify-end items-center gap-2")}>
                 <Button
-                  className={cn(user.status === "ACTIVE" ? "hidden" : "")}
-                  onClick={() =>
-                    handleUpdateStatus({ id: user.id, status: "ACTIVE" })
-                  }
+                  className={cn(product.status === "PUBLISHED" ? "hidden" : "")}
                 >
                   Active
                 </Button>
                 <Button
-                  className={cn(user.status === "BLOCKED" ? "hidden" : "")}
+                  className={cn(product.status === "BLOCKED" ? "hidden" : "")}
                   variant={"outline"}
-                  onClick={() =>
-                    handleUpdateStatus({ id: user.id, status: "BLOCKED" })
-                  }
                 >
                   BLOCK
                 </Button>
                 <Button
-                  className={cn(user.status === "DELETED" ? "hidden" : "")}
+                  className={cn(product.status === "DRAFT" ? "hidden" : "")}
                   variant={"secondary"}
-                  onClick={() =>
-                    handleUpdateStatus({ id: user.id, status: "DELETED" })
-                  }
                 >
                   DELETE
+                </Button>
+                <Button size={"icon"}>
+                  <Pencil size={16} />
                 </Button>
               </div>
             </TableCell>
@@ -133,7 +110,7 @@ const UserList = ({ users, meta, currentPage, path }: Props) => {
         <TableRow>
           <TableCell>Total:</TableCell>
           <TableCell>{meta.total}</TableCell>
-          <TableCell colSpan={6} className="text-right">
+          <TableCell colSpan={8} className="text-right">
             <Pagination className="justify-end">
               <PaginationContent>
                 <PaginationItem>
@@ -144,7 +121,7 @@ const UserList = ({ users, meta, currentPage, path }: Props) => {
                   />
                 </PaginationItem>
                 {visibleItems.map((el) => (
-                  <PaginationItem key={`user-pagination_${el}`}>
+                  <PaginationItem key={`product-pagination_${el}`}>
                     <PaginationLink
                       href={`${path}?page=${el}`}
                       isActive={el === meta.page}
@@ -173,4 +150,4 @@ const UserList = ({ users, meta, currentPage, path }: Props) => {
   );
 };
 
-export default UserList;
+export default VendorProductList;

@@ -64,6 +64,33 @@ const adminRoutes = [
     icon: <FileUser className="mr-2 h-4 w-4" />,
   },
 ];
+const vendorRoutes = [
+  {
+    name: "Profile",
+    path: "/vendor/profile",
+    icon: <UserPen className="mr-2 h-4 w-4" />,
+  },
+  {
+    name: "Dashboard",
+    path: "/vendor/dashboard",
+    icon: <CreditCard className="mr-2 h-4 w-4" />,
+  },
+  {
+    name: "Orders",
+    path: "/vendor/orders",
+    icon: <Users className="mr-2 h-4 w-4" />,
+  },
+  {
+    name: "Products",
+    path: "/vendor/products",
+    icon: <Users className="mr-2 h-4 w-4" />,
+  },
+  {
+    name: "Create Shop",
+    path: "/vendor/create-shop",
+    icon: <FileUser className="mr-2 h-4 w-4" />,
+  },
+];
 
 const ProfileAction = ({ role, userData }: Props) => {
   const router = useRouter();
@@ -98,6 +125,8 @@ const ProfileAction = ({ role, userData }: Props) => {
         <DropdownMenuGroup>
           {(role === "ADMIN" || role === "SUPER_ADMIN"
             ? adminRoutes
+            : role === "VENDOR"
+            ? vendorRoutes
             : userRoutes
           )?.map((item) => (
             <DropdownMenuItem

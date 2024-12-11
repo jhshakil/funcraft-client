@@ -35,7 +35,6 @@ export type TCustomerData = {
   name: string;
   profilePhoto: string;
   contactNumber: string;
-  address: string;
 };
 export type TVendorData = {
   id: string;

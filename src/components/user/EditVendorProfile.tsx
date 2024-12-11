@@ -22,16 +22,24 @@ import { useUpdateUser } from "@/hooks/user.hook";
 import { toast } from "sonner";
 import { useRouter } from "next/navigation";
 import { useUser } from "@/context/user.provider";
-import { TAdminData } from "@/types/user.types";
+import { TVendorData } from "@/types/user.types";
 
 const FormSchema = z.object({
   name: z.string().min(2, {
     message: "Name must be at least 2 characters.",
   }),
+  contactNumber: z
+    .string()
+
+    .optional(),
+  address: z
+    .string()
+
+    .optional(),
   profilePhoto: z.string().optional(),
 });
 
-const EditorAdminProfile = ({ userData }: { userData?: TAdminData }) => {
+const EditorVendorProfile = ({ userData }: { userData?: TVendorData }) => {
   const [open, setOpen] = useState(false);
   const [uploadFile, setUploadFile] = useState<string>();
   const router = useRouter();
@@ -44,6 +52,8 @@ const EditorAdminProfile = ({ userData }: { userData?: TAdminData }) => {
     resolver: zodResolver(FormSchema),
     defaultValues: {
       name: userData?.name || "",
+      contactNumber: userData?.contactNumber || "",
+      address: userData?.address || "",
     },
   });
 
@@ -70,7 +80,7 @@ const EditorAdminProfile = ({ userData }: { userData?: TAdminData }) => {
 
   useEffect(() => {
     if (!isPending && isSuccess) {
-      router.push("/admin/dashboard");
+      router.push("/vendor/dashboard");
     }
   }, [isPending, isSuccess]);
 
@@ -103,6 +113,37 @@ const EditorAdminProfile = ({ userData }: { userData?: TAdminData }) => {
                   </FormItem>
                 )}
               />
+              <FormField
+                control={form.control}
+                name="contactNumber"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Contact Number</FormLabel>
+                    <FormControl>
+                      <Input
+                        placeholder="Enter your contact number"
+                        {...field}
+                      />
+                    </FormControl>
+
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+              <FormField
+                control={form.control}
+                name="address"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Address</FormLabel>
+                    <FormControl>
+                      <Input placeholder="Enter your address" {...field} />
+                    </FormControl>
+
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
 
               <Button type="submit" className="w-full">
                 Update
@@ -120,4 +161,4 @@ const EditorAdminProfile = ({ userData }: { userData?: TAdminData }) => {
   );
 };
 
-export default EditorAdminProfile;
+export default EditorVendorProfile;

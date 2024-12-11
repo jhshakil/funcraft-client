@@ -4,21 +4,13 @@ import { envConfig } from "@/config/envConfig";
 import axiosInstance from "@/lib/axiosInstance";
 import { revalidateTag } from "next/cache";
 import { getCurrentUser } from "../AuthService";
-import {
-  TAdminData,
-  TCustomerData,
-  TFollow,
-  TUserData,
-  TVendorData,
-} from "@/types/user.types";
+import { TFollow, TUserData } from "@/types/user.types";
 import { cookies } from "next/headers";
 import { toast } from "sonner";
 import { TMeta } from "@/types/meta.type";
 import { FieldValues } from "react-hook-form";
 
-export const getUser = async (
-  id: string
-): Promise<{ data: TAdminData | TVendorData | TCustomerData }> => {
+export const getUser = async (id: string) => {
   const cookieStore = cookies();
   const accessToken = cookieStore.get("accessToken")?.value;
   const fetchOption = {
