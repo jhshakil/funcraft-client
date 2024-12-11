@@ -8,13 +8,19 @@ type Role = keyof typeof roleBaseRoutes;
 
 const roleBaseRoutes = {
   VENDOR: [/^\/vendor/],
-  ADMIN: [/^\/admin\/dashboard/, /^\/admin\/profile/, /^\/admin\/users/],
+  ADMIN: [
+    /^\/admin\/dashboard/,
+    /^\/admin\/profile/,
+    /^\/admin\/users/,
+    /^\/admin\/categories/,
+    /^\/admin\/create-admin/,
+  ],
   SUPER_ADMIN: [
     /^\/admin\/dashboard/,
     /^\/admin\/profile/,
     /^\/admin\/create-admin/,
     /^\/admin\/users/,
-    /^\/admin\/admin-list/,
+    /^\/admin\/categories/,
   ],
 };
 

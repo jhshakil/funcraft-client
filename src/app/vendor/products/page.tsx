@@ -18,7 +18,7 @@ const Page = async ({ searchParams }: { searchParams: { page?: string } }) => {
           products={products.data}
           meta={products.meta}
           currentPage={searchParams.page || "1"}
-          path="/admin/users"
+          path="/vendor/products"
         />
       </div>
     </div>

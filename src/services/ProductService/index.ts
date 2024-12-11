@@ -1,22 +1,6 @@
 "use server";
 
 import { envConfig } from "@/config/envConfig";
-import axiosInstance from "@/lib/axiosInstance";
-import { TPost } from "@/types/post.types";
-import { revalidateTag } from "next/cache";
-
-export const createFullPost = async (payload: TPost): Promise<any> => {
-  try {
-    const { data } = await axiosInstance.post("/post", payload);
-
-    revalidateTag("posts");
-
-    return data;
-  } catch (error) {
-    console.log(error);
-    throw new Error("Failed to create post");
-  }
-};
 
 export const getAllProduct = async ({
   page,
