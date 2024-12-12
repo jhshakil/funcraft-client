@@ -8,11 +8,9 @@ import { revalidateTag } from "next/cache";
 import { cookies } from "next/headers";
 import { toast } from "sonner";
 
-export const getAllCategory = async ({
-  page,
-}: {
-  page?: string;
-}): Promise<{
+export const getAllCategory = async (
+  page?: string
+): Promise<{
   data: TCategory[];
   meta: TMeta;
 }> => {
@@ -50,7 +48,7 @@ export const createCategory = async (payload: TCategory): Promise<any> => {
 
     return data;
   } catch (error: any) {
-    throw new Error("Failed to update category");
+    throw new Error("Failed to create category");
   }
 };
 export const updateCategory = async (
