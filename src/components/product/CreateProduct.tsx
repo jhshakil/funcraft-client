@@ -102,7 +102,6 @@ export function CreateProduct({ categories, shopId }: Props) {
   async function onSubmit(
     formData: z.infer<typeof FormSchema> & { shopId: string }
   ) {
-    console.log("hi");
     try {
       formData.shopId = shopId;
       if (acceptedFiles[0]) {

@@ -14,7 +14,7 @@ const Page = async ({ searchParams }: { searchParams: { page?: string } }) => {
     shopId: shop?.id,
   });
 
-  const categories = await getAllCategory();
+  const categories = await getAllCategory({});
 
   return (
     <div className="mt-5">

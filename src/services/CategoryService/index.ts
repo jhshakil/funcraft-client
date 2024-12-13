@@ -8,9 +8,13 @@ import { revalidateTag } from "next/cache";
 import { cookies } from "next/headers";
 import { toast } from "sonner";
 
-export const getAllCategory = async (
-  page?: string
-): Promise<{
+export const getAllCategory = async ({
+  page,
+  limit,
+}: {
+  page?: string;
+  limit?: string;
+}): Promise<{
   data: TCategory[];
   meta: TMeta;
 }> => {
@@ -29,6 +33,9 @@ export const getAllCategory = async (
 
   if (page) {
     url.searchParams.append("page", page);
+  }
+  if (limit) {
+    url.searchParams.append("limit", limit);
   }
 
   const res = await fetch(url.toString(), fetchOption);

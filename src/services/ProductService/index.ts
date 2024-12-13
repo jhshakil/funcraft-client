@@ -5,7 +5,15 @@ import axiosInstance from "@/lib/axiosInstance";
 import { TProductData } from "@/types/product.types";
 import { revalidateTag } from "next/cache";
 
-export const getAllProduct = async ({ page }: { page?: string }) => {
+export const getAllProduct = async ({
+  page,
+  sortBy,
+  sortOrder,
+}: {
+  sortBy?: string;
+  sortOrder?: string;
+  page?: string;
+}) => {
   const fetchOption = {
     next: {
       tags: ["products"],
@@ -16,6 +24,12 @@ export const getAllProduct = async ({ page }: { page?: string }) => {
 
   if (page) {
     url.searchParams.append("page", page);
+  }
+  if (sortBy) {
+    url.searchParams.append("sortBy", sortBy);
+  }
+  if (sortOrder) {
+    url.searchParams.append("sortOrder", sortOrder);
   }
 
   const res = await fetch(url.toString(), fetchOption);

@@ -3,7 +3,7 @@ import { CreateCategory } from "@/components/category/CreateCategory";
 import { getAllCategory } from "@/services/CategoryService";
 
 const Page = async ({ searchParams }: { searchParams: { page?: string } }) => {
-  const categories = await getAllCategory(searchParams.page || "1");
+  const categories = await getAllCategory({ page: searchParams.page || "1" });
   return (
     <div className="mt-5">
       <div className="flex justify-between items-center">
