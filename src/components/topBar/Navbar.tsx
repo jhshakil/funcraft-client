@@ -6,8 +6,8 @@ const NavbarConfig = [
     path: "/",
   },
   {
-    name: "Shop",
-    path: "/shop",
+    name: "Product",
+    path: "/product",
   },
   {
     name: "About",

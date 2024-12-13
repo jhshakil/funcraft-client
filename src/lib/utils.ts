@@ -8,3 +8,7 @@ export function cn(...inputs: ClassValue[]) {
 export const calculatePages = (totalItems: number, limit: number) => {
   return Math.ceil(totalItems / limit);
 };
+
+export const formatToKebabCase = (input: string): string => {
+  return input.trim().toLowerCase().replace(/\s+/g, "-");
+};

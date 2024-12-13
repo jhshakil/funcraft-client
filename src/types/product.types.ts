@@ -19,6 +19,6 @@ export type TProductData = {
   status: "PUBLISHED" | "DRAFT" | "BLOCKED";
   createdAt?: string;
   updateAt?: string;
-  category?: TCategory[];
+  category?: TCategory;
   shop?: TShop[];
 };

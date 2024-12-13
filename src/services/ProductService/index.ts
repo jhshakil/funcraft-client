@@ -9,10 +9,12 @@ export const getAllProduct = async ({
   page,
   sortBy,
   sortOrder,
+  category,
 }: {
   sortBy?: string;
   sortOrder?: string;
   page?: string;
+  category?: string;
 }) => {
   const fetchOption = {
     next: {
@@ -31,8 +33,28 @@ export const getAllProduct = async ({
   if (sortOrder) {
     url.searchParams.append("sortOrder", sortOrder);
   }
+  if (category) {
+    url.searchParams.append("category", category);
+  }
 
   const res = await fetch(url.toString(), fetchOption);
+
+  return res.json();
+};
+
+export const getProductById = async (
+  payload: Partial<TProductData>
+): Promise<any> => {
+  const fetchOption = {
+    next: {
+      tags: ["products"],
+    },
+  };
+
+  const res = await fetch(
+    `${envConfig.baseUrl}/product/${payload.id}`,
+    fetchOption
+  );
 
   return res.json();
 };

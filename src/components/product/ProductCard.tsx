@@ -12,6 +12,8 @@ import {
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { TProductData } from "@/types/product.types";
+import Link from "next/link";
+import { formatToKebabCase } from "@/lib/utils";
 
 type Props = {
   product: TProductData;
@@ -32,7 +34,7 @@ export function ProductCard({ product }: Props) {
       </CardHeader>
       <CardContent className="p-4">
         <CardTitle className="text-lg font-semibold mb-2">
-          {product?.name}
+          <Link href={`/product/${product?.id}`}>{product?.name}</Link>
         </CardTitle>
         <p className="text-sm text-gray-600 mb-2">{product?.description}</p>
         <div className="flex justify-between items-center mb-2">

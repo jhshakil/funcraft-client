@@ -47,7 +47,7 @@ const HomeProductSection = ({ products }: Props) => {
   return (
     <div className="my-10">
       <div className="flex justify-between items-center">
-        <h2 className="text-3xl font-bold mb-6">All Products Products</h2>
+        <h2 className="text-3xl font-bold mb-6">All Products</h2>
         <Select
           value={selectedField}
           onValueChange={(value) => {
@@ -56,7 +56,7 @@ const HomeProductSection = ({ products }: Props) => {
           }}
         >
           <SelectTrigger className="w-[180px]">
-            <SelectValue placeholder="Filter Product" />
+            <SelectValue placeholder="Sort Product" />
           </SelectTrigger>
           <SelectContent>
             <SelectGroup>
