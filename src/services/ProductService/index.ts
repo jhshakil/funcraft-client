@@ -5,6 +5,24 @@ import axiosInstance from "@/lib/axiosInstance";
 import { TProductData } from "@/types/product.types";
 import { revalidateTag } from "next/cache";
 
+export const getAllProduct = async ({ page }: { page?: string }) => {
+  const fetchOption = {
+    next: {
+      tags: ["products"],
+    },
+  };
+
+  const url = new URL(`${envConfig.baseUrl}/product`);
+
+  if (page) {
+    url.searchParams.append("page", page);
+  }
+
+  const res = await fetch(url.toString(), fetchOption);
+
+  return res.json();
+};
+
 export const getAllProductByShopId = async ({
   page,
   shopId,
@@ -55,6 +73,22 @@ export const updateProduct = async (
     return data;
   } catch (error: any) {
     throw new Error("Failed to update product");
+  }
+};
+export const updateProductStatus = async (
+  payload: Partial<TProductData>
+): Promise<any> => {
+  try {
+    const { data } = await axiosInstance.patch(
+      `/product/status/${payload.id}`,
+      payload
+    );
+
+    revalidateTag("products");
+
+    return data;
+  } catch (error: any) {
+    throw new Error("Failed to update status");
   }
 };
 export const deleteProduct = async (

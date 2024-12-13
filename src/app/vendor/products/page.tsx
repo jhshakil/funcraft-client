@@ -1,13 +1,17 @@
 import { CreateProduct } from "@/components/product/CreateProduct";
 import VendorProductList from "@/components/product/VendorProductList";
+import { getCurrentUser } from "@/services/AuthService";
 import { getAllCategory } from "@/services/CategoryService";
 import { getAllProductByShopId } from "@/services/ProductService";
+import { getShopByVendorId } from "@/services/ShopService";
 import { TCategory } from "@/types/category.type";
 
 const Page = async ({ searchParams }: { searchParams: { page?: string } }) => {
+  const user = await getCurrentUser();
+  const shop = await getShopByVendorId(user?.id as string);
   const products = await getAllProductByShopId({
     page: searchParams.page || "1",
-    shopId: "6ca986d2-5db7-4f81-bc0e-5ecb1ca04b4a",
+    shopId: shop?.id,
   });
 
   const categories = await getAllCategory();

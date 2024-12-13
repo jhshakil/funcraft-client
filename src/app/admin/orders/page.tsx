@@ -1,16 +1,10 @@
 import AdminOrderList from "@/components/order/AdminOrderList";
-import { getCurrentUser } from "@/services/AuthService";
-import { getOrderByShopId } from "@/services/orderService";
-import { getShopByVendorId } from "@/services/ShopService";
+import { getAllOrder } from "@/services/orderService";
 
 const Page = async ({ searchParams }: { searchParams: { page?: string } }) => {
-  const user = await getCurrentUser();
-  const shop = await getShopByVendorId(user?.id as string);
-  const orders = await getOrderByShopId({
+  const orders = await getAllOrder({
     page: searchParams.page || "1",
-    shopId: shop?.id,
   });
-
   return (
     <div className="mt-5">
       <div className="flex justify-between items-center">

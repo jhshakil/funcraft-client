@@ -75,6 +75,16 @@ const adminRoutes = [
     path: "/admin/categories",
     icon: <ClipboardList className="mr-2 h-4 w-4" />,
   },
+  {
+    name: "Products",
+    path: "/admin/products",
+    icon: <Users className="mr-2 h-4 w-4" />,
+  },
+  {
+    name: "Orders",
+    path: "/admin/orders",
+    icon: <Users className="mr-2 h-4 w-4" />,
+  },
 ];
 const vendorRoutes = [
   {

@@ -2,6 +2,7 @@ import {
   createProduct,
   deleteProduct,
   updateProduct,
+  updateProductStatus,
 } from "@/services/ProductService";
 import { TProductData } from "@/types/product.types";
 import { useMutation } from "@tanstack/react-query";
@@ -25,6 +26,19 @@ export const useUpdateProduct = () => {
     mutationFn: async (postData) => await updateProduct(postData),
     onSuccess: () => {
       toast.success("Product update successfully");
+    },
+    onError: (error) => {
+      toast.error(error.message);
+    },
+  });
+};
+
+export const useUpdateProductStatus = () => {
+  return useMutation<any, Error, Partial<TProductData>>({
+    mutationKey: ["UPDATE_PRODUCT_STATUS"],
+    mutationFn: async (postData) => await updateProductStatus(postData),
+    onSuccess: () => {
+      toast.success("Product status update successfully");
     },
     onError: (error) => {
       toast.error(error.message);
