@@ -24,9 +24,8 @@ import {
 import { toast } from "sonner";
 import { useRouter, useSearchParams } from "next/navigation";
 
-import { useResetPassword, useUserRegistration } from "@/hooks/auth.hook";
+import { useResetPassword } from "@/hooks/auth.hook";
 import { useEffect } from "react";
-import { useUser } from "@/context/user.provider";
 import { verifyToken } from "@/lib/verifyToken";
 
 const FormSchema = z

@@ -35,6 +35,12 @@ export async function middleware(request: NextRequest) {
     }
   }
 
+  if (user.role && user.role === "CUSTOMER") {
+    if (pathname === "/" || AuthRoutes.includes(pathname)) {
+      return NextResponse.next();
+    }
+  }
+
   return NextResponse.redirect(new URL("/", request.url));
 }
 
