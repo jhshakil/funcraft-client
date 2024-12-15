@@ -5,25 +5,25 @@ import { buttonVariants } from "../ui/button";
 import ProfileAction from "./ProfileAction";
 import Link from "next/link";
 import { cn } from "@/lib/utils";
-import {
-  TAdminData,
-  TCustomerData,
-  TUserData,
-  TVendorData,
-} from "@/types/user.types";
+import { TAdminData, TCustomerData, TVendorData } from "@/types/user.types";
 
 type Props = {
   role: string;
   userData?: TAdminData | TVendorData | TCustomerData;
+  shopId?: string;
 };
 
-const TopBarAction = ({ role, userData }: Props) => {
+const TopBarAction = ({ role, userData, shopId }: Props) => {
   return (
     <>
       {userData?.id ? (
         <>
           <ThemeMode />
-          <ProfileAction role={role} userData={userData} />
+          <ProfileAction
+            role={role}
+            userData={userData}
+            shopId={shopId as string}
+          />
         </>
       ) : (
         <>

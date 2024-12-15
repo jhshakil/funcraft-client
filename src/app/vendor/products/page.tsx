@@ -11,7 +11,7 @@ const Page = async ({ searchParams }: { searchParams: { page?: string } }) => {
   const shop = await getShopByVendorId(user?.id as string);
   const products = await getAllProductByShopId({
     page: searchParams.page || "1",
-    shopId: shop?.id,
+    shopId: shop?.data?.id,
   });
 
   const categories = await getAllCategory({});
@@ -23,7 +23,7 @@ const Page = async ({ searchParams }: { searchParams: { page?: string } }) => {
         <div>
           <CreateProduct
             categories={categories.data as TCategory[]}
-            shopId={products?.data[0]?.shop?.id}
+            shopId={shop?.data?.id}
           />
         </div>
       </div>

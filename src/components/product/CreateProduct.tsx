@@ -54,7 +54,7 @@ const FormSchema = z
     description: z.string(),
     thumbnailImage: z.string().optional(),
     categoryId: z.string(),
-    shopId: z.string(),
+    shopId: z.string().optional(),
     price: z.coerce.number(),
     discount: z.coerce.number().nullable(),
     inventoryCount: z.coerce.number().min(1, {
@@ -88,7 +88,6 @@ export function CreateProduct({ categories, shopId }: Props) {
   const form = useForm<z.infer<typeof FormSchema>>({
     resolver: zodResolver(FormSchema),
     defaultValues: {
-      shopId: shopId,
       status: "PUBLISHED",
     },
   });
@@ -99,9 +98,11 @@ export function CreateProduct({ categories, shopId }: Props) {
     }
   }, [isPending, isSuccess]);
 
-  async function onSubmit(
-    formData: z.infer<typeof FormSchema> & { shopId: string }
-  ) {
+  async function onSubmit(formData: z.infer<typeof FormSchema>) {
+    const loadingToastId = toast("Loading...", {
+      description: "Please wait while we process your request.",
+      icon: "⏳",
+    });
     try {
       formData.shopId = shopId;
       if (acceptedFiles[0]) {
@@ -110,14 +111,28 @@ export function CreateProduct({ categories, shopId }: Props) {
           await getDownloadURL(imgData.ref).then((val) => {
             formData.thumbnailImage = val;
             handleCreate(formData);
+            toast.success("Success!", {
+              description: "Your request has been completed successfully.",
+              icon: "✅",
+              duration: 4000,
+            });
           });
         });
       } else {
-        console.log("close");
         handleCreate(formData);
+        toast.success("Success!", {
+          description: "Your request has been completed successfully.",
+          icon: "✅",
+          duration: 4000,
+        });
       }
     } catch (err: any) {
-      toast.error("Something went wrong");
+      toast.error("Something went wrong!", {
+        description: "Please try again later.",
+        icon: "❌",
+      });
+    } finally {
+      toast.dismiss(loadingToastId);
     }
   }
 

@@ -123,6 +123,10 @@ export function EditProduct({ open, setOpen, productData, categories }: Props) {
   }, [isPending, isSuccess]);
 
   async function onSubmit(formData: z.infer<typeof FormSchema>) {
+    const loadingToastId = toast("Loading...", {
+      description: "Please wait while we process your request.",
+      icon: "⏳",
+    });
     try {
       if (acceptedFiles[0]) {
         const imgRef = ref(imageUploadDB, `/profilePhoto/${v4()}`);
@@ -130,13 +134,28 @@ export function EditProduct({ open, setOpen, productData, categories }: Props) {
           await getDownloadURL(imgData.ref).then((val) => {
             formData.thumbnailImage = val;
             handleUpdate(formData);
+            toast.success("Success!", {
+              description: "Your request has been completed successfully.",
+              icon: "✅",
+              duration: 4000,
+            });
           });
         });
       } else {
         handleUpdate(formData);
+        toast.success("Success!", {
+          description: "Your request has been completed successfully.",
+          icon: "✅",
+          duration: 4000,
+        });
       }
     } catch (err: any) {
-      toast.error("Something went wrong");
+      toast.error("Something went wrong!", {
+        description: "Please try again later.",
+        icon: "❌",
+      });
+    } finally {
+      toast.dismiss(loadingToastId);
     }
   }
 

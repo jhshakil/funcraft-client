@@ -23,17 +23,14 @@ import { usePathname, useRouter } from "next/navigation";
 import { logout } from "@/services/AuthService";
 import { useUser } from "@/context/user.provider";
 import { protectedRoutes } from "@/constant";
-import {
-  TAdminData,
-  TCustomerData,
-  TUserData,
-  TVendorData,
-} from "@/types/user.types";
+import { TAdminData, TCustomerData, TVendorData } from "@/types/user.types";
 import AvatarComponent from "../shared/AvatarComponent";
+import { cn } from "@/lib/utils";
 
 type Props = {
   role: string;
   userData: TAdminData | TVendorData | TCustomerData;
+  shopId: string;
 };
 
 const userRoutes = [
@@ -114,7 +111,7 @@ const vendorRoutes = [
   },
 ];
 
-const ProfileAction = ({ role, userData }: Props) => {
+const ProfileAction = ({ role, userData, shopId }: Props) => {
   const router = useRouter();
   const pathname = usePathname();
 
@@ -154,7 +151,10 @@ const ProfileAction = ({ role, userData }: Props) => {
             <DropdownMenuItem
               key={item.path}
               onClick={() => router.push(item.path)}
-              className="cursor-pointer"
+              className={cn(
+                "cursor-pointer",
+                item.path === "/vendor/create-shop" && shopId ? "hidden" : ""
+              )}
             >
               {item.icon}
               <span>{item.name}</span>

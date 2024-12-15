@@ -11,6 +11,7 @@ import {
   TUserData,
   TVendorData,
 } from "@/types/user.types";
+import { getShopByVendorId } from "@/services/ShopService";
 
 const TopBar = async () => {
   const user = await getCurrentUser();
@@ -25,6 +26,7 @@ const TopBar = async () => {
   } catch (error) {
     console.log(error);
   }
+  const shop = await getShopByVendorId(user?.id as string);
 
   return (
     <header className="w-full py-6 bg-background">
@@ -38,7 +40,11 @@ const TopBar = async () => {
 
         <div className="flex justify-end gap-2 items-center">
           <MainSearch userEmail={user?.email} />
-          <TopBarAction role={user?.role} userData={userData?.data} />
+          <TopBarAction
+            role={user?.role}
+            userData={userData?.data}
+            shopId={shop?.data?.id}
+          />
         </div>
       </div>
     </header>
