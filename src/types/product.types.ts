@@ -20,5 +20,15 @@ export type TProductData = {
   createdAt?: string;
   updateAt?: string;
   category?: TCategory;
-  shop?: TShop[];
+  shop?: TShop;
+};
+
+export type TCartData = {
+  id?: string;
+  shopId?: string;
+  name: string;
+  thumbnailImage?: string;
+  mainPrice: number;
+  totalPrice: number;
+  quantity: number;
 };

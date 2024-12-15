@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import { Star, ShoppingCart } from "lucide-react";
+import { Star } from "lucide-react";
 import {
   Card,
   CardContent,
@@ -9,11 +9,10 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { TProductData } from "@/types/product.types";
 import Link from "next/link";
-import { formatToKebabCase } from "@/lib/utils";
+import AddToCart from "../shared/AddToCart";
 
 type Props = {
   product: TProductData;
@@ -60,9 +59,7 @@ export function ProductCard({ product }: Props) {
         </div>
       </CardContent>
       <CardFooter className="p-4 pt-0">
-        <Button className="w-full">
-          <ShoppingCart className="mr-2 h-4 w-4" /> Add to Cart
-        </Button>
+        <AddToCart className="w-full" product={product} />
       </CardFooter>
     </Card>
   );

@@ -25,6 +25,9 @@ const ProductDetails = ({ product }: Props) => {
         <div>
           Category: <Badge className="mb-4">{product?.category?.name}</Badge>
         </div>
+        <div>
+          Shop: <Badge className="mb-4">{product?.shop?.name}</Badge>
+        </div>
         <p className="text-2xl font-semibold mb-4">
           Price: ${product?.price.toFixed(2)}
         </p>

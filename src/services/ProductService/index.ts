@@ -10,11 +10,13 @@ export const getAllProduct = async ({
   sortBy,
   sortOrder,
   category,
+  limit,
 }: {
   sortBy?: string;
   sortOrder?: string;
   page?: string;
   category?: string;
+  limit?: string;
 }) => {
   const fetchOption = {
     next: {
@@ -35,6 +37,9 @@ export const getAllProduct = async ({
   }
   if (category) {
     url.searchParams.append("category", category);
+  }
+  if (limit) {
+    url.searchParams.append("limit", limit);
   }
 
   const res = await fetch(url.toString(), fetchOption);

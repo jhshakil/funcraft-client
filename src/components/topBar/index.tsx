@@ -5,13 +5,10 @@ import TopBarAction from "./TopBarAction";
 import { getCurrentUser } from "@/services/AuthService";
 import { getUser } from "@/services/UserService";
 import Navbar from "./Navbar";
-import {
-  TAdminData,
-  TCustomerData,
-  TUserData,
-  TVendorData,
-} from "@/types/user.types";
+import { TAdminData, TCustomerData, TVendorData } from "@/types/user.types";
 import { getShopByVendorId } from "@/services/ShopService";
+
+import CartButton from "./CartButton";
 
 const TopBar = async () => {
   const user = await getCurrentUser();
@@ -40,6 +37,7 @@ const TopBar = async () => {
 
         <div className="flex justify-end gap-2 items-center">
           <MainSearch userEmail={user?.email} />
+          <CartButton />
           <TopBarAction
             role={user?.role}
             userData={userData?.data}
