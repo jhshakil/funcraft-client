@@ -1,14 +1,24 @@
 import AdminOrderList from "@/components/order/AdminOrderList";
 import { getCurrentUser } from "@/services/AuthService";
-import { getOrderByShopId } from "@/services/orderService";
-import { getShopByVendorId } from "@/services/ShopService";
+import { getOrderByCustomer } from "@/services/orderService";
+import { getUser } from "@/services/UserService";
+import { TCustomerData } from "@/types/user.types";
 
 const Page = async ({ searchParams }: { searchParams: { page?: string } }) => {
   const user = await getCurrentUser();
-  const shop = await getShopByVendorId(user?.id as string);
-  const orders = await getOrderByShopId({
+  let userData: { data: TCustomerData } | null = null;
+
+  try {
+    if (user?.id) {
+      userData = await getUser(user?.id as string);
+    }
+  } catch (error) {
+    console.log(error);
+  }
+
+  const orders = await getOrderByCustomer({
     page: searchParams.page || "1",
-    shopId: shop?.id,
+    customerId: userData?.data?.id as string,
   });
 
   return (
@@ -21,7 +31,7 @@ const Page = async ({ searchParams }: { searchParams: { page?: string } }) => {
           orders={orders.data}
           meta={orders.meta}
           currentPage={searchParams.page || "1"}
-          path="/vendor/orders"
+          path="/user/orders"
         />
       </div>
     </div>

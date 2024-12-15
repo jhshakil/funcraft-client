@@ -61,6 +61,36 @@ export const getOrderByShopId = async ({
   return res.json();
 };
 
+export const getOrderByCustomer = async ({
+  page,
+  customerId,
+}: {
+  page?: string;
+  customerId: string;
+}) => {
+  const cookieStore = cookies();
+  const accessToken = cookieStore.get("accessToken")?.value;
+
+  const fetchOption = {
+    next: {
+      tags: ["orders"],
+    },
+    headers: {
+      Authorization: accessToken as string,
+    },
+  };
+
+  const url = new URL(`${envConfig.baseUrl}/shop/customer/${customerId}`);
+
+  if (page) {
+    url.searchParams.append("page", page);
+  }
+
+  const res = await fetch(url.toString(), fetchOption);
+
+  return res.json();
+};
+
 export const updateOrderStatus = async (
   payload: Partial<TOrder>
 ): Promise<any> => {

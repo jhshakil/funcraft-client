@@ -1,8 +1,7 @@
 import Image from "next/image";
 import { Badge } from "../ui/badge";
-import { Button } from "../ui/button";
-import { ShoppingCart } from "lucide-react";
 import { TProductData } from "@/types/product.types";
+import AddToCart from "../shared/AddToCart";
 
 type Props = {
   product: TProductData;
@@ -31,9 +30,10 @@ const ProductDetails = ({ product }: Props) => {
         <p className="text-2xl font-semibold mb-4">
           Price: ${product?.price.toFixed(2)}
         </p>
-        <Button size="lg" className="mb-4">
-          <ShoppingCart className="mr-2 h-5 w-5" /> Add to Cart
-        </Button>
+        <div className="mb-4">
+          <AddToCart product={product} />
+        </div>
+
         <div>
           <h2 className="text-xl font-semibold mb-2">Product Description</h2>
           <p>{product?.description}</p>

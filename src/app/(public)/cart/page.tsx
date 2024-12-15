@@ -1,9 +1,11 @@
 "use client";
 
-import { Button } from "@/components/ui/button";
+import { Button, buttonVariants } from "@/components/ui/button";
 import { useUser } from "@/context/user.provider";
+import { cn } from "@/lib/utils";
 import { TCartData } from "@/types/product.types";
 import Image from "next/image";
+import Link from "next/link";
 
 const Page = () => {
   const { cartData, updateCartData } = useUser();
@@ -39,7 +41,14 @@ const Page = () => {
 
   return (
     <div className="mt-11">
-      <h1 className="text-3xl font-bold mb-6">All Carts</h1>
+      <div className="flex justify-between items-center gap-11">
+        <h1 className="text-3xl font-bold mb-6">All Carts</h1>
+        <div>
+          <Link href={"/user/checkout"} className={cn(buttonVariants())}>
+            Go to checkout
+          </Link>
+        </div>
+      </div>
       <div className="mt-11 flex flex-col gap-5">
         {cartData?.map((cart) => (
           <div

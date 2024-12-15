@@ -44,3 +44,9 @@ export type TVendorData = {
   contactNumber: string;
   address: string;
 };
+
+export type TDeliveryAddress = {
+  id?: string;
+  customer?: TCustomerData;
+  address: string;
+};

@@ -5,6 +5,7 @@ import {
   CreditCard,
   FileUser,
   LogOut,
+  MapPinHouse,
   UserPen,
   Users,
 } from "lucide-react";
@@ -39,11 +40,21 @@ const userRoutes = [
     path: "/user/profile",
     icon: <UserPen className="mr-2 h-4 w-4" />,
   },
-  // {
-  //   name: "Settings",
-  //   path: "/user/settings",
-  //   icon: <Settings className="mr-2 h-4 w-4" />,
-  // },
+  {
+    name: "Dashboard",
+    path: "/user/dashboard",
+    icon: <CreditCard className="mr-2 h-4 w-4" />,
+  },
+  {
+    name: "Orders",
+    path: "/user/orders",
+    icon: <Users className="mr-2 h-4 w-4" />,
+  },
+  {
+    name: "Delivery Address",
+    path: "/user/delivery-address",
+    icon: <MapPinHouse className="mr-2 h-4 w-4" />,
+  },
 ];
 
 const adminRoutes = [

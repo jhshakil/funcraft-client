@@ -12,7 +12,7 @@ type Props = {
 };
 
 const AddToCart = ({ className, product }: Props) => {
-  const { cartData, updateCartData } = useUser();
+  const { cartData, updateCartData, user } = useUser();
 
   const updateCart = (product: TProductData) => {
     const findDifferentShop = cartData?.find((el) => el.shopId === product.id);
@@ -49,7 +49,15 @@ const AddToCart = ({ className, product }: Props) => {
   };
   return (
     <>
-      <Button className={cn(className)} onClick={() => updateCart(product)}>
+      <Button
+        className={cn(className)}
+        onClick={() => updateCart(product)}
+        disabled={
+          user?.role === "VENDOR" ||
+          user?.role === "ADMIN" ||
+          user?.role === "SUPER_ADMIN"
+        }
+      >
         <ShoppingCart className="mr-2 h-4 w-4" /> Add to Cart
       </Button>
     </>
