@@ -145,3 +145,17 @@ export const deleteProduct = async (
     throw new Error("Failed to delete product");
   }
 };
+
+export const getAllProductClient = async (payload: {
+  searchTerm: string;
+}): Promise<any> => {
+  try {
+    const { data } = await axiosInstance.get(
+      `/product?searchTerm=${payload.searchTerm}`
+    );
+
+    return data;
+  } catch (error: any) {
+    throw new Error("Failed to update post");
+  }
+};

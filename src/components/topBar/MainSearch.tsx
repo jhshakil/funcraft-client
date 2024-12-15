@@ -1,8 +1,6 @@
 "use client";
 
 import { Input } from "@/components/ui/input";
-import { useGetAllPost } from "@/hooks/post.hook";
-import { TPost } from "@/types/post.types";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
@@ -15,24 +13,14 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog";
 import { Search } from "lucide-react";
+import { useGetAllProduct } from "@/hooks/product.hook";
+import { TProductData } from "@/types/product.types";
 
-type Props = {
-  userEmail: string;
-};
-
-const MainSearch = ({ userEmail }: Props) => {
-  const { mutate: getSearchPost, data: allPostData } = useGetAllPost();
+const MainSearch = () => {
+  const { mutate: getSearchProduct, data: allProductData } = useGetAllProduct();
   const [timeOutValue, setTimeOutValue] = useState<NodeJS.Timeout>();
   const [allSearchData, setALlSearchData] = useState([]);
-
-  const stringToSlug = (title: string) => {
-    return title
-      .toLowerCase()
-      .replace(/[^a-z0-9 -]/g, "")
-      .replace(/\s+/g, "-")
-      .replace(/-+/g, "-")
-      .replace(/^-+|-+$/g, "");
-  };
+  const [proOpen, setProOpen] = useState(false);
 
   const sampleData = async (inputData: string) => {
     if (timeOutValue) {
@@ -40,7 +28,7 @@ const MainSearch = ({ userEmail }: Props) => {
     }
     const timeValue = setTimeout(async () => {
       if (inputData) {
-        getSearchPost({ email: userEmail, searchTerm: inputData });
+        getSearchProduct({ searchTerm: inputData });
       } else {
         setALlSearchData([]);
       }
@@ -49,15 +37,15 @@ const MainSearch = ({ userEmail }: Props) => {
   };
 
   useEffect(() => {
-    if (allPostData?.data?.length) {
-      setALlSearchData(allPostData.data);
+    if (allProductData?.data?.length) {
+      setALlSearchData(allProductData.data);
     }
-  }, [allPostData?.data]);
+  }, [allProductData?.data]);
 
   return (
-    <Dialog>
+    <Dialog open={proOpen} onOpenChange={setProOpen}>
       <DialogTrigger asChild>
-        <Button variant="outline" size="icon">
+        <Button variant="outline" size="icon" onClick={() => setProOpen(true)}>
           <Search size={16} />
         </Button>
       </DialogTrigger>
@@ -76,15 +64,16 @@ const MainSearch = ({ userEmail }: Props) => {
           {allSearchData && allSearchData?.length ? (
             <div className="absolute top-[50px] bg-background w-full p-4 z-20">
               <ul>
-                {allSearchData?.map((item: TPost, i: number) => (
+                {allSearchData?.map((item: TProductData, i: number) => (
                   <li
                     key={`search_item-${i}`}
-                    onClick={() => setALlSearchData([])}
+                    onClick={() => {
+                      setALlSearchData([]);
+                      setProOpen(false);
+                    }}
                   >
-                    <Link
-                      href={`/post/${stringToSlug(item.title)}?key=${item._id}`}
-                    >
-                      {item.title}
+                    <Link href={`/product/${item?.id}?key=${item?.id}`}>
+                      {item?.name}
                     </Link>
                   </li>
                 ))}

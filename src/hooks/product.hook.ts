@@ -1,6 +1,7 @@
 import {
   createProduct,
   deleteProduct,
+  getAllProductClient,
   updateProduct,
   updateProductStatus,
 } from "@/services/ProductService";
@@ -53,6 +54,17 @@ export const useDeleteProduct = () => {
     onSuccess: () => {
       toast.success("Product delete successfully");
     },
+    onError: (error) => {
+      toast.error(error.message);
+    },
+  });
+};
+
+export const useGetAllProduct = () => {
+  return useMutation<any, Error, { searchTerm: string }>({
+    mutationKey: ["GET_ALL_PRODUCT"],
+    mutationFn: async (postData) => await getAllProductClient(postData),
+    onSuccess: () => {},
     onError: (error) => {
       toast.error(error.message);
     },
