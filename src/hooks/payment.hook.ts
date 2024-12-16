@@ -1,12 +1,11 @@
-import { paymentForPro } from "@/services/PaymentService";
-import { TPayment } from "@/types/payment.type";
+import { makePayment } from "@/services/PaymentService";
 import { useMutation } from "@tanstack/react-query";
 import { toast } from "sonner";
 
-export const useProPayment = () => {
-  return useMutation<any, Error, TPayment>({
+export const useMakePayment = () => {
+  return useMutation<any, Error, { orderId: string }>({
     mutationKey: ["PAYMENT"],
-    mutationFn: async (postData) => await paymentForPro(postData),
+    mutationFn: async (productData) => await makePayment(productData),
     onSuccess: () => {
       toast.success("Proceed to payment");
     },

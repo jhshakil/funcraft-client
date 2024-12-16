@@ -21,8 +21,6 @@ const Page = async () => {
     id: userData?.data?.id as string,
   });
 
-  console.log(address);
-
   return (
     <div className="mt-5">
       <div className="flex justify-between items-center">

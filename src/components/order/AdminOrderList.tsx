@@ -22,7 +22,7 @@ import { calculatePages, cn } from "@/lib/utils";
 import { Button } from "../ui/button";
 
 import { TOrder } from "@/types/order.type";
-import { useUpdateOrderStatus } from "@/hooks/order.hook";
+import { useCancelOrder, useUpdateOrderStatus } from "@/hooks/order.hook";
 
 type Props = {
   orders: TOrder[];
@@ -33,6 +33,7 @@ type Props = {
 
 const AdminOrderList = ({ orders, meta, currentPage, path }: Props) => {
   const { mutate: handleUpdateStatus } = useUpdateOrderStatus();
+  const { mutate: handleCancel } = useCancelOrder();
 
   if (!orders?.length) return <p>No Order Found</p>;
 
@@ -64,7 +65,13 @@ const AdminOrderList = ({ orders, meta, currentPage, path }: Props) => {
           <TableRow key={order.id}>
             <TableCell className="font-medium">{order?.id}</TableCell>
             <TableCell>{order?.customer?.name}</TableCell>
-            <TableCell>products</TableCell>
+            <TableCell>
+              {order?.orderProduct?.map((item) => (
+                <p key={item.id} className="mt-1">
+                  {item?.product?.name}
+                </p>
+              ))}
+            </TableCell>
             <TableCell>{order?.deliveryAddress?.address}</TableCell>
             <TableCell>{order?.totalPrice}</TableCell>
             <TableCell>{order.orderStatus}</TableCell>
@@ -75,7 +82,8 @@ const AdminOrderList = ({ orders, meta, currentPage, path }: Props) => {
                 <div className={cn("flex justify-end items-center gap-2")}>
                   <Button
                     className={cn(
-                      order.orderStatus === "PENDING" ? "hidden" : ""
+                      order.orderStatus === "PENDING" ? "hidden" : "",
+                      path === "/user/orders" ? "hidden" : ""
                     )}
                     onClick={() =>
                       handleUpdateStatus({
@@ -92,9 +100,8 @@ const AdminOrderList = ({ orders, meta, currentPage, path }: Props) => {
                     )}
                     variant={"outline"}
                     onClick={() =>
-                      handleUpdateStatus({
+                      handleCancel({
                         id: order.id,
-                        orderStatus: "CANCEL",
                       })
                     }
                   >
@@ -102,7 +109,8 @@ const AdminOrderList = ({ orders, meta, currentPage, path }: Props) => {
                   </Button>
                   <Button
                     className={cn(
-                      order.orderStatus === "BLOCKED" ? "hidden" : ""
+                      order.orderStatus === "BLOCKED" ? "hidden" : "",
+                      path === "/user/orders" ? "hidden" : ""
                     )}
                     variant={"secondary"}
                     onClick={() =>

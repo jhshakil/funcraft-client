@@ -80,7 +80,7 @@ export const getOrderByCustomer = async ({
     },
   };
 
-  const url = new URL(`${envConfig.baseUrl}/shop/customer/${customerId}`);
+  const url = new URL(`${envConfig.baseUrl}/order/customer/${customerId}`);
 
   if (page) {
     url.searchParams.append("page", page);
@@ -89,6 +89,18 @@ export const getOrderByCustomer = async ({
   const res = await fetch(url.toString(), fetchOption);
 
   return res.json();
+};
+
+export const createOrder = async (payload: TOrder): Promise<any> => {
+  try {
+    const { data } = await axiosInstance.post(`/order`, payload);
+
+    revalidateTag("orders");
+
+    return data;
+  } catch (error: any) {
+    throw new Error("Failed to create order");
+  }
 };
 
 export const updateOrderStatus = async (
@@ -102,5 +114,17 @@ export const updateOrderStatus = async (
     return data;
   } catch (error: any) {
     throw new Error("Failed to update order status");
+  }
+};
+
+export const cancelOrder = async (payload: Partial<TOrder>): Promise<any> => {
+  try {
+    const { data } = await axiosInstance.patch(`/order/cancel/${payload.id}`);
+
+    revalidateTag("orders");
+
+    return data;
+  } catch (error: any) {
+    throw new Error("Failed to cancel order status");
   }
 };

@@ -1,9 +1,10 @@
 "use server";
 
 import axiosInstance from "@/lib/axiosInstance";
-import { TPayment } from "@/types/payment.type";
 
-export const paymentForPro = async (payload: TPayment): Promise<any> => {
+export const makePayment = async (payload: {
+  orderId: string;
+}): Promise<any> => {
   try {
     const { data } = await axiosInstance.post("/payment", payload);
 
