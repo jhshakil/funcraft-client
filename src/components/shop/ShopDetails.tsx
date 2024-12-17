@@ -7,8 +7,9 @@ import { TShop } from "@/types/shop.type";
 import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
 import { useState } from "react";
 import { EditShop } from "./EditShop";
+import { TVendorData } from "@/types/user.types";
 
-const ShopDetails = ({ shop, role }: { shop: TShop; role: string }) => {
+const ShopDetails = ({ shop, user }: { shop: TShop; user: TVendorData }) => {
   const [openEdit, setOpenEdit] = useState(false);
   return (
     <div className="min-h-screen">
@@ -25,16 +26,8 @@ const ShopDetails = ({ shop, role }: { shop: TShop; role: string }) => {
             </Avatar>
             <h1 className="text-2xl font-bold">{shop.name}</h1>
           </div>
-          <div className="flex items-center space-x-2">
-            <Button variant="outline" size="sm">
-              <Bell className="h-4 w-4 mr-2" />
-              Subscribe
-            </Button>
-            <Button variant="outline" size="sm">
-              <BellOff className="h-4 w-4 mr-2" />
-              Unsubscribe
-            </Button>
-            {role === "VENDOR" ? (
+          <div>
+            {user?.id === shop.vendorId ? (
               <Button
                 variant="outline"
                 size="sm"
@@ -44,7 +37,16 @@ const ShopDetails = ({ shop, role }: { shop: TShop; role: string }) => {
                 Edit
               </Button>
             ) : (
-              ""
+              <div className="flex items-center space-x-2">
+                <Button variant="outline" size="sm">
+                  <Bell className="h-4 w-4 mr-2" />
+                  Subscribe
+                </Button>
+                <Button variant="outline" size="sm">
+                  <BellOff className="h-4 w-4 mr-2" />
+                  Unsubscribe
+                </Button>
+              </div>
             )}
           </div>
         </div>

@@ -6,6 +6,7 @@ import {
   FileUser,
   LogOut,
   MapPinHouse,
+  ShoppingBag,
   UserPen,
   Users,
 } from "lucide-react";
@@ -92,6 +93,11 @@ const adminRoutes = [
     name: "Orders",
     path: "/admin/orders",
     icon: <Users className="mr-2 h-4 w-4" />,
+  },
+  {
+    name: "Shops",
+    path: "/admin/shops",
+    icon: <ShoppingBag className="mr-2 h-4 w-4" />,
   },
 ];
 const vendorRoutes = [
