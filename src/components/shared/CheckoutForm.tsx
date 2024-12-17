@@ -66,7 +66,6 @@ export function CheckoutForm({
 
   useEffect(() => {
     if (CodeData) {
-      console.log(CodeData);
       setDiscount(CodeData?.data?.discount);
     }
   }, [CodeData]);

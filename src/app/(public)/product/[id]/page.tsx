@@ -1,5 +1,6 @@
 import ProductDetails from "@/components/product/ProductDetails";
 import RelatedProduct from "@/components/product/RelatedProduct";
+import { CreateReview } from "@/components/review/CreateReview";
 import { getAllProduct, getProductById } from "@/services/ProductService";
 import { TProductData } from "@/types/product.types";
 
@@ -19,9 +20,11 @@ const Page = async ({ params }: Props) => {
   const filterProducts = products?.data?.filter(
     (product: TProductData) => product.id !== params.id
   );
+
   return (
     <div>
       <ProductDetails product={product.data} />
+      {/* <CreateReview /> */}
       <RelatedProduct products={filterProducts} />
     </div>
   );
