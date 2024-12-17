@@ -4,7 +4,6 @@ import { getAllCoupon } from "@/services/CouponService";
 
 const page = async () => {
   const coupons = await getAllCoupon();
-  console.log(coupons);
   return (
     <div className="mt-5">
       <div className="flex justify-between items-center">
