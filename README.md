@@ -14,8 +14,8 @@ FunCraft
 
 - Authentication system
 - User management system
-- Create and maintain Post
-- Follow and UnFollow
+- Create and maintain Product
+- Subscribe and UnSubscribe
 - Implement aamar pay payment service
 
 ## Technology Stack
@@ -44,4 +44,10 @@ FunCraft
    Example:
    ```bash
    BASE_URL=
+   FIREBASE_API_KEY=
+   FIREBASE_AUTH_DOMAIN=
+   FIREBASE_PROJECT_ID=
+   FIREBASE_STORAGE_BUCKET=
+   FIREBASE_MESSAGING_SEND_ID=
+   FIREBASE_APP_ID=
    ```
