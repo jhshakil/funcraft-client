@@ -36,7 +36,7 @@ const TopBar = async () => {
         </div>
 
         <div className="flex justify-end gap-2 items-center">
-          <MainSearch userEmail={user?.email} />
+          <MainSearch />
           <CartButton />
           <TopBarAction
             role={user?.role}
