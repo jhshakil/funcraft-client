@@ -110,7 +110,7 @@ export const forgetPassword = async (payload: {
   email: string;
 }): Promise<any> => {
   try {
-    const { data } = await axiosInstance.post("/auth/forget-password", payload);
+    const { data } = await axiosInstance.post("/auth/forgot-password", payload);
 
     return data;
   } catch (error: any) {
