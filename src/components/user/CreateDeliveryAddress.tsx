@@ -46,6 +46,7 @@ export function CreateDeliveryAddress({ customerId }: { customerId: string }) {
   useEffect(() => {
     if (!isPending && isSuccess) {
       setDialogOpen(false);
+      window.location.reload();
     }
   }, [isPending, isSuccess]);
 

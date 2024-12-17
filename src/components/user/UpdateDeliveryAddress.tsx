@@ -51,6 +51,7 @@ export function UpdateDeliveryAddress({
   useEffect(() => {
     if (!isPending && isSuccess) {
       setDialogOpen(false);
+      window.location.reload();
     }
   }, [isPending, isSuccess]);
 
