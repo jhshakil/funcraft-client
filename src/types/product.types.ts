@@ -32,3 +32,9 @@ export type TCartData = {
   totalPrice: number;
   quantity: number;
 };
+
+export type TCoupon = {
+  id?: string;
+  code?: string;
+  discount: string;
+};

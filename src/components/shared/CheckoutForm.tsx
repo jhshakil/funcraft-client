@@ -10,16 +10,17 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { toast } from "sonner";
 import { z } from "zod";
 import { Textarea } from "../ui/textarea";
-import { useUpdateAddress } from "@/hooks/deliveryAddress.hook";
 import { TDeliveryAddress } from "@/types/user.types";
 import { useUser } from "@/context/user.provider";
 import { useCreateOrder } from "@/hooks/order.hook";
 import { useRouter } from "next/navigation";
+import { Input } from "../ui/input";
+import { useGetCouponByCode } from "@/hooks/coupon.hook";
 
 const FormSchema = z.object({
   address: z.string().min(2, {
@@ -36,12 +37,18 @@ export function CheckoutForm({
   customerId: string;
 }) {
   const { cartData, updateCartData } = useUser();
+
+  const [code, setCode] = useState("");
+  const [discount, setDiscount] = useState("");
+
   const {
     mutate: handleCreate,
     isPending,
     isSuccess,
     data: orderData,
   } = useCreateOrder();
+
+  const { mutate: checkCode, data: CodeData } = useGetCouponByCode();
   const router = useRouter();
 
   const form = useForm<z.infer<typeof FormSchema>>({
@@ -57,6 +64,13 @@ export function CheckoutForm({
     }
   }, [isPending, isSuccess]);
 
+  useEffect(() => {
+    if (CodeData) {
+      console.log(CodeData);
+      setDiscount(CodeData?.data?.discount);
+    }
+  }, [CodeData]);
+
   if (!(cartData && cartData.length)) return;
 
   const totalCheckoutPrice = cartData?.reduce(
@@ -67,6 +81,7 @@ export function CheckoutForm({
   async function onSubmit(formData: z.infer<typeof FormSchema>) {
     try {
       formData.id = address?.id;
+
       createOrder(formData?.id as string);
     } catch (err: any) {
       toast.error("Something went wrong");
@@ -83,7 +98,9 @@ export function CheckoutForm({
         customerId,
         deliveryAddressId,
         shopId: cartData[0]?.shopId as string,
-        totalPrice: totalCheckoutPrice,
+        totalPrice: discount
+          ? totalCheckoutPrice - (totalCheckoutPrice * Number(discount)) / 100
+          : totalCheckoutPrice,
         products: cartData?.map((item) => {
           const data = {
             productId: item.id as string,
@@ -109,6 +126,10 @@ export function CheckoutForm({
     } finally {
       toast.dismiss(loadingToastId);
     }
+  };
+
+  const applyCoupon = () => {
+    checkCode({ code });
   };
 
   return (
@@ -166,11 +187,29 @@ export function CheckoutForm({
                   <td className="border border-border p-2">Total Price</td>
                   <td className="border border-border p-2"></td>
                   <td className="border border-border p-2">
-                    {totalCheckoutPrice}
+                    {discount
+                      ? totalCheckoutPrice -
+                        (totalCheckoutPrice * Number(discount)) / 100
+                      : totalCheckoutPrice}
                   </td>
                 </tr>
               </tfoot>
             </table>
+          </div>
+
+          <div className="flex w-full max-w-sm items-center space-x-2 mt-2">
+            <Input
+              placeholder="Coupon Code"
+              value={code}
+              onChange={(e) => setCode(e.target.value)}
+            />
+            <Button
+              type="button"
+              onClick={() => applyCoupon()}
+              disabled={!code}
+            >
+              Apply Coupon
+            </Button>
           </div>
 
           <Button type="submit" className="w-full">

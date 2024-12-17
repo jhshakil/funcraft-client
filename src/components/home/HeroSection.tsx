@@ -8,7 +8,7 @@ const HeroSection = () => {
       <div className="bg-background p-[40px] pt-[60px] mr-[60px] w-[643px] rounded-lg opacity-80">
         <span className="text-base font-medium">New Arrival</span>
         <h1 className="mt-1 text-[52px] text-primary font-bold leading-tight">
-          Discover Our New Collection
+          Discover Our Flash Sale Product
         </h1>
         <p className="mt-5 text-base">
           Explore our latest collection of premium furniture, crafted to inspire
@@ -17,7 +17,7 @@ const HeroSection = () => {
         </p>
 
         <Link
-          href={`/shop`}
+          href={`/product?discount=true`}
           className={cn(
             buttonVariants(),
             "w-[222px] h-[70px] text-xl mt-[46px] uppercase"

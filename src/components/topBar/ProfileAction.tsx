@@ -2,6 +2,7 @@
 
 import {
   ClipboardList,
+  Code,
   CreditCard,
   FileUser,
   LogOut,
@@ -125,6 +126,11 @@ const vendorRoutes = [
     name: "Create Shop",
     path: "/vendor/create-shop",
     icon: <FileUser className="mr-2 h-4 w-4" />,
+  },
+  {
+    name: "Coupons",
+    path: "/vendor/coupons",
+    icon: <Code className="mr-2 h-4 w-4" />,
   },
 ];
 
