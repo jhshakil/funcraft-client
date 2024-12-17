@@ -5,6 +5,8 @@ import { Button } from "../ui/button";
 import { cn } from "@/lib/utils";
 import { useUser } from "@/context/user.provider";
 import { TProductData } from "@/types/product.types";
+import { useState } from "react";
+import { CartAlert } from "./CartAlert";
 
 type Props = {
   className?: string;
@@ -13,11 +15,14 @@ type Props = {
 
 const AddToCart = ({ className, product }: Props) => {
   const { cartData, updateCartData, user } = useUser();
+  const [openAlert, setOpenAlert] = useState(false);
 
   const updateCart = (product: TProductData) => {
-    const findDifferentShop = cartData?.find((el) => el.shopId === product.id);
+    const findDifferentShop = cartData?.find(
+      (el) => el.shopId !== product.shopId
+    );
     if (findDifferentShop) {
-      alert("different");
+      setOpenAlert(true);
     } else {
       const findDuplicate = cartData?.find((el) => el.id === product.id);
       if (findDuplicate) {
@@ -47,6 +52,21 @@ const AddToCart = ({ className, product }: Props) => {
       }
     }
   };
+
+  const confirmReplace = () => {
+    const sampleData = {
+      id: product.id,
+      shopId: product.shopId,
+      name: product.name,
+      thumbnailImage: product.thumbnailImage,
+      mainPrice: Number(product.price),
+      totalPrice: Number(product.price),
+      quantity: 1,
+    };
+    updateCartData([sampleData]);
+
+    setOpenAlert(false);
+  };
   return (
     <>
       <Button
@@ -60,6 +80,11 @@ const AddToCart = ({ className, product }: Props) => {
       >
         <ShoppingCart className="mr-2 h-4 w-4" /> Add to Cart
       </Button>
+      <CartAlert
+        open={openAlert}
+        setOpen={setOpenAlert}
+        confirmFn={confirmReplace}
+      />
     </>
   );
 };

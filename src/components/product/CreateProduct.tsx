@@ -56,7 +56,7 @@ const FormSchema = z
     categoryId: z.string(),
     shopId: z.string().optional(),
     price: z.coerce.number(),
-    discount: z.coerce.number().nullable(),
+    discount: z.coerce.number().optional(),
     inventoryCount: z.coerce.number().min(1, {
       message: "Minimum 1 Inventory",
     }),
@@ -64,7 +64,7 @@ const FormSchema = z
   })
   .refine(
     (data) => {
-      if (data.discount !== null) {
+      if (data.discount !== undefined) {
         return data.discount <= data.price;
       }
       return true;
