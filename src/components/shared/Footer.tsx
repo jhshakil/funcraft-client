@@ -28,10 +28,10 @@ const Footer = () => {
           </p>
           <ul className="flex items-center divide-x-2 divide-border">
             <li className="px-3">
-              <Link href={`/terms-and-conditions`}>Terms & Conditions</Link>
+              <Link href={`/`}>Terms & Conditions</Link>
             </li>
             <li className="px-3">
-              <Link href={`/privacy-and-policy`}>Privacy & Policy</Link>
+              <Link href={`/`}>Privacy & Policy</Link>
             </li>
           </ul>
         </div>
