@@ -50,7 +50,7 @@ export const getOrderByShopId = async ({
     },
   };
 
-  const url = new URL(`${envConfig.baseUrl}/shop/vendor/${shopId}`);
+  const url = new URL(`${envConfig.baseUrl}/order/vendor/${shopId}`);
 
   if (page) {
     url.searchParams.append("page", page);

@@ -22,11 +22,11 @@ import { TMeta } from "@/types/meta.type";
 import { calculatePages, cn } from "@/lib/utils";
 import { Button } from "../ui/button";
 import { TProductData } from "@/types/product.types";
-import { Images, Pencil, Trash } from "lucide-react";
+import { CopyCheck, Images, Pencil, Trash } from "lucide-react";
 import { useState } from "react";
 import { EditProduct } from "./EditProduct";
 import { TCategory } from "@/types/category.type";
-import { useDeleteProduct } from "@/hooks/product.hook";
+import { useCreateProduct, useDeleteProduct } from "@/hooks/product.hook";
 
 type Props = {
   products: TProductData[];
@@ -47,6 +47,7 @@ const VendorProductList = ({
   const [selectedPro, setSelectedPro] = useState<TProductData>();
 
   const { mutate: handleDelete } = useDeleteProduct();
+  const { mutate: handleCreate } = useCreateProduct();
 
   const totalPage = calculatePages(meta.total, meta.limit);
   const start = Math.max(0, Number(currentPage) - 2);
@@ -56,6 +57,24 @@ const VendorProductList = ({
     { length: totalPage },
     (_, index) => index + 1
   ).slice(adjustedStart, end);
+
+  const duplicate = (product: TProductData) => {
+    const newData = {
+      categoryId: product.categoryId,
+      color: product.color,
+      description: product.description,
+      discount: product.discount,
+      inventoryCount: product.inventoryCount,
+      name: product.name + " duplicate",
+      price: product.price,
+      shopId: product.shopId,
+      size: product.size,
+      thumbnailImage: product.thumbnailImage,
+      status: product.status,
+    };
+
+    handleCreate(newData);
+  };
 
   return (
     <>
@@ -112,6 +131,9 @@ const VendorProductList = ({
                     onClick={() => handleDelete({ id: product.id })}
                   >
                     <Trash size={16} />
+                  </Button>
+                  <Button onClick={() => duplicate(product)}>
+                    <CopyCheck size={16} />
                   </Button>
                 </div>
               </TableCell>

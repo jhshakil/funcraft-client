@@ -10,6 +10,10 @@ const NavbarConfig = [
     path: "/product",
   },
   {
+    name: "Shop",
+    path: "/shop",
+  },
+  {
     name: "About",
     path: "/about",
   },

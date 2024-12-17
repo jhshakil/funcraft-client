@@ -1,3 +1,5 @@
+import { TProductData } from "./product.types";
+
 export type TShop = {
   id?: string;
   vendorId?: string;
@@ -6,6 +8,7 @@ export type TShop = {
   logo?: string;
   banner?: string;
   status?: "ACTIVE" | "BLOCKED" | "DISABLE";
+  product?: TProductData[];
   createdAt?: string;
   updateAt?: string;
 };

@@ -77,7 +77,21 @@ const AdminOrderList = ({ orders, meta, currentPage, path }: Props) => {
             <TableCell>{order.orderStatus}</TableCell>
             <TableCell>{order.paymentStatus}</TableCell>
 
-            <TableCell className="text-right">
+            <TableCell className="text-right flex justify-end items-center gap-2">
+              <Button
+                className={cn(
+                  order.orderStatus === "DELIVERED" ? "hidden" : "",
+                  path === "/user/orders" ? "hidden" : ""
+                )}
+                onClick={() =>
+                  handleUpdateStatus({
+                    id: order.id,
+                    orderStatus: "DELIVERED",
+                  })
+                }
+              >
+                DELIVERED
+              </Button>
               {order.orderStatus !== "DELIVERED" ? (
                 <div className={cn("flex justify-end items-center gap-2")}>
                   <Button
@@ -94,6 +108,7 @@ const AdminOrderList = ({ orders, meta, currentPage, path }: Props) => {
                   >
                     PENDING
                   </Button>
+
                   <Button
                     className={cn(
                       order.orderStatus === "CANCEL" ? "hidden" : ""

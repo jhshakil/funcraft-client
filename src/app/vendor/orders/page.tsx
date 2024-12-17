@@ -8,7 +8,7 @@ const Page = async ({ searchParams }: { searchParams: { page?: string } }) => {
   const shop = await getShopByVendorId(user?.id as string);
   const orders = await getOrderByShopId({
     page: searchParams.page || "1",
-    shopId: shop?.id,
+    shopId: shop?.data?.id,
   });
 
   return (

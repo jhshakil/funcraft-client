@@ -6,6 +6,51 @@ import { TShop } from "@/types/shop.type";
 import { revalidateTag } from "next/cache";
 import { cookies } from "next/headers";
 
+export const getAllShop = async ({
+  page,
+  limit,
+}: {
+  sortBy?: string;
+  sortOrder?: string;
+  page?: string;
+  category?: string;
+  limit?: string;
+}) => {
+  const fetchOption = {
+    next: {
+      tags: ["shops"],
+    },
+  };
+
+  const url = new URL(`${envConfig.baseUrl}/shop`);
+
+  if (page) {
+    url.searchParams.append("page", page);
+  }
+  if (limit) {
+    url.searchParams.append("limit", limit);
+  }
+
+  const res = await fetch(url.toString(), fetchOption);
+
+  return res.json();
+};
+
+export const getShopById = async (payload: Partial<TShop>): Promise<any> => {
+  const fetchOption = {
+    next: {
+      tags: ["shops"],
+    },
+  };
+
+  const res = await fetch(
+    `${envConfig.baseUrl}/shop/${payload.id}`,
+    fetchOption
+  );
+
+  return res.json();
+};
+
 export const createShop = async (payload: TShop): Promise<any> => {
   try {
     const { data } = await axiosInstance.post("/shop", payload);
@@ -38,4 +83,16 @@ export const getShopByVendorId = async (vendorId: string) => {
   );
 
   return res.json();
+};
+
+export const updateShop = async (payload: Partial<TShop>): Promise<any> => {
+  try {
+    const { data } = await axiosInstance.patch(`/shop/${payload.id}`, payload);
+
+    revalidateTag("shops");
+
+    return data;
+  } catch (error: any) {
+    throw new Error("Failed to update shop");
+  }
 };

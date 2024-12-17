@@ -20,7 +20,6 @@ const Page = () => {
           } else {
             el.quantity -= 1;
           }
-          console.log(el.mainPrice);
           el.totalPrice = Number(
             (Number(el.mainPrice) * el.quantity).toFixed(2)
           );
