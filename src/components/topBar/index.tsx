@@ -9,6 +9,7 @@ import { TAdminData, TCustomerData, TVendorData } from "@/types/user.types";
 import { getShopByVendorId } from "@/services/ShopService";
 
 import CartButton from "./CartButton";
+import MobileNavbar from "./MobileNavbar";
 
 const TopBar = async () => {
   const user = await getCurrentUser();
@@ -31,7 +32,7 @@ const TopBar = async () => {
         <div className="mr-5">
           <Logo />
         </div>
-        <div className="flex-1">
+        <div className="flex-1 hidden lg:block">
           <Navbar />
         </div>
 
@@ -43,6 +44,9 @@ const TopBar = async () => {
             userData={userData?.data}
             shopId={shop?.data?.id}
           />
+          <div className="lg:hidden">
+            <MobileNavbar />
+          </div>
         </div>
       </div>
     </header>

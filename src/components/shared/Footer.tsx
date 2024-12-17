@@ -5,7 +5,7 @@ const Footer = () => {
   return (
     <div className="border-t border-border">
       <div className="container mx-auto px-2 ">
-        <div className="flex justify-between py-11">
+        <div className="flex justify-between flex-wrap py-11 gap-11">
           <div>
             <Logo />
             <p className="max-w-[500px] mt-4">
@@ -21,7 +21,7 @@ const Footer = () => {
             </div>
           </div>
         </div>
-        <div className="py-4 flex justify-between gap-11">
+        <div className="py-4 flex justify-between flex-wrap gap-11">
           <p className="text-sm">
             2024 <span className="text-primary">funcraft</span>. All rights
             reverved
