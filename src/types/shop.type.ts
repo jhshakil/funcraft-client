@@ -4,7 +4,7 @@ import { TVendorData } from "./user.types";
 export type TShop = {
   id?: string;
   vendorId?: string;
-  vendor: TVendorData;
+  vendor?: TVendorData;
   name: string;
   description: string;
   logo?: string;
