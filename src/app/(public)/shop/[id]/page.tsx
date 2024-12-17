@@ -24,8 +24,6 @@ const Page = async ({ params }: Props) => {
     console.log(error);
   }
 
-  console.log(userData);
-
   return (
     <div>
       <ShopDetails shop={shop.data} user={userData?.data as TVendorData} />

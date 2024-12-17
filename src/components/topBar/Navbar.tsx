@@ -10,17 +10,21 @@ const NavbarConfig = [
     path: "/product",
   },
   {
+    name: "Recent Product",
+    path: "/recent-product",
+  },
+  {
     name: "Shop",
     path: "/shop",
   },
-  {
-    name: "About",
-    path: "/about",
-  },
-  {
-    name: "Contact",
-    path: "/contact",
-  },
+  // {
+  //   name: "About",
+  //   path: "/about",
+  // },
+  // {
+  //   name: "Contact",
+  //   path: "/contact",
+  // },
 ];
 
 const Navbar = () => {

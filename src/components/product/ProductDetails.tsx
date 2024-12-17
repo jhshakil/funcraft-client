@@ -1,13 +1,28 @@
+"use client";
+
 import Image from "next/image";
 import { Badge } from "../ui/badge";
 import { TProductData } from "@/types/product.types";
 import AddToCart from "../shared/AddToCart";
+import Link from "next/link";
+import { useUser } from "@/context/user.provider";
+import { useEffect } from "react";
 
 type Props = {
   product: TProductData;
 };
 
 const ProductDetails = ({ product }: Props) => {
+  const { recentProduct, updateRecentProduct } = useUser();
+
+  useEffect(() => {
+    const filterRecent = recentProduct
+      ?.slice(0, 10)
+      ?.filter((el) => el.id !== product.id);
+
+    updateRecentProduct([product, ...filterRecent]);
+  }, [product]);
+
   return (
     <div className="grid md:grid-cols-2 gap-8 my-11">
       <div className="relative aspect-square mb-4 overflow-hidden rounded-lg">
@@ -25,7 +40,12 @@ const ProductDetails = ({ product }: Props) => {
           Category: <Badge className="mb-4">{product?.category?.name}</Badge>
         </div>
         <div>
-          Shop: <Badge className="mb-4">{product?.shop?.name}</Badge>
+          Shop:{" "}
+          <Badge className="mb-4">
+            <Link href={`/shop/${product?.shop?.id}`}>
+              {product?.shop?.name}
+            </Link>
+          </Badge>
         </div>
         <p className="text-2xl font-semibold mb-4">
           Price: ${product?.price.toFixed(2)}
