@@ -2,13 +2,11 @@
 @tailwind components;
 @tailwind utilities;
 
-
 @layer utilities {
   .text-balance {
     text-wrap: balance;
   }
 }
-
 
 @layer base {
   :root {
@@ -66,8 +64,6 @@
     --chart-5: 340 75% 55%;
   }
 }
-
-
 
 @layer base {
   * {

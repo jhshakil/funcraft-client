@@ -1,45 +1,63 @@
+import { NavbarConfig } from "@/config/nav.config";
 import Link from "next/link";
-
-const NavbarConfig = [
-  {
-    name: "Home",
-    path: "/",
-  },
-  {
-    name: "Product",
-    path: "/product",
-  },
-  {
-    name: "Recent Product",
-    path: "/recent-product",
-  },
-  {
-    name: "Shop",
-    path: "/shop",
-  },
-  // {
-  //   name: "About",
-  //   path: "/about",
-  // },
-  // {
-  //   name: "Contact",
-  //   path: "/contact",
-  // },
-];
+import { cn } from "@/lib/utils";
+import {
+  NavigationMenu,
+  NavigationMenuContent,
+  NavigationMenuItem,
+  NavigationMenuLink,
+  NavigationMenuList,
+  NavigationMenuTrigger,
+  navigationMenuTriggerStyle,
+} from "@/components/ui/navigation-menu";
 
 const Navbar = () => {
   return (
     <div>
-      <ul className="flex justify-center items-center gap-11 w-full">
-        {NavbarConfig?.map((item) => (
-          <li
-            key={item.path}
-            className="text-lg font-medium hover:text-primary"
-          >
-            <Link href={item.path}>{item.name}</Link>
-          </li>
-        ))}
-      </ul>
+      <NavigationMenu className="w-full">
+        <NavigationMenuList className="space-x-5">
+          {NavbarConfig?.map((item, i) =>
+            item.elements && item.elements.length ? (
+              <NavigationMenuItem key={item.name + i}>
+                <NavigationMenuTrigger className="text-xl font-medium hover:text-primary">
+                  {item.name}
+                </NavigationMenuTrigger>
+                <NavigationMenuContent className="shadow-lg">
+                  <div className="pt-6 px-3 pb-3 space-y-1">
+                    {item.elements.map((subNav) => (
+                      <NavigationMenuItem key={subNav.path}>
+                        <Link href={subNav.path} legacyBehavior passHref>
+                          <NavigationMenuLink
+                            className={cn(
+                              navigationMenuTriggerStyle(),
+                              "text-lg hover:text-primary font-normal w-full justify-start"
+                            )}
+                          >
+                            {subNav.name}
+                          </NavigationMenuLink>
+                        </Link>
+                      </NavigationMenuItem>
+                    ))}
+                  </div>
+                </NavigationMenuContent>
+              </NavigationMenuItem>
+            ) : (
+              <NavigationMenuItem key={item.path}>
+                <Link href={item.path as string} legacyBehavior passHref>
+                  <NavigationMenuLink
+                    className={cn(
+                      navigationMenuTriggerStyle(),
+                      "text-xl font-medium hover:text-primary"
+                    )}
+                  >
+                    {item.name}
+                  </NavigationMenuLink>
+                </Link>
+              </NavigationMenuItem>
+            )
+          )}
+        </NavigationMenuList>
+      </NavigationMenu>
     </div>
   );
 };

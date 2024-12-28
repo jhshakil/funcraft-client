@@ -28,7 +28,13 @@ const TopBarAction = ({ role, userData, shopId }: Props) => {
       ) : (
         <>
           <ThemeMode />
-          <Link href={"/login"} className={cn(buttonVariants())}>
+          <Link
+            href={"/login"}
+            className={cn(
+              buttonVariants(),
+              "h-8 px-3 text-xs md:h-9 md:px-4 md:py-2 md:text-sm"
+            )}
+          >
             Login
           </Link>
         </>
