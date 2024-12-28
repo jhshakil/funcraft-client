@@ -1,12 +1,7 @@
 import { TCategory } from "@/types/category.type";
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from "../ui/card";
 import Link from "next/link";
+import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
+import { Images } from "lucide-react";
 
 type Props = {
   category: TCategory;
@@ -15,17 +10,20 @@ type Props = {
 const CategoryCard = ({ category }: Props) => {
   return (
     <Link href={`/product?category=${category.id}`}>
-      <Card className="w-full max-w-sm hover:shadow-lg transition-shadow duration-300">
-        <CardHeader>
-          <CardTitle>{category.name}</CardTitle>
-        </CardHeader>
-        <CardContent>
-          <CardDescription className="mb-2">
-            {category.description}
-          </CardDescription>
-          <p className="text-sm text-muted-foreground">2 items</p>
-        </CardContent>
-      </Card>
+      <div className="flex flex-col items-center gap-3">
+        <Avatar className="h-[66px] w-[66px] rounded-none">
+          <AvatarImage src={category.image} alt="Category" />
+          <AvatarFallback className="rounded-none">
+            <Images />
+          </AvatarFallback>
+        </Avatar>
+        <div className="text-center">
+          <h3 className="text-sm capitalize">{category.name}</h3>
+          <p className="text-sm text-muted-foreground">
+            {category._count?.product} items
+          </p>
+        </div>
+      </div>
     </Link>
   );
 };

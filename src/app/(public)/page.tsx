@@ -9,7 +9,7 @@ type Props = {
 };
 
 const Page = async ({ searchParams }: Props) => {
-  const categories = await getAllCategory({ limit: "4" });
+  const categories = await getAllCategory({});
   const products = await getAllProduct({
     page: searchParams.page || "1",
     sortBy: searchParams.sortBy,
@@ -17,11 +17,11 @@ const Page = async ({ searchParams }: Props) => {
   });
 
   return (
-    <>
+    <div className="flex flex-col space-y-16">
       <HeroSection />
       <CategorySection categories={categories.data} />
       <HomeProductSection products={products.data} />
-    </>
+    </div>
   );
 };
 

@@ -1,5 +1,14 @@
+"use client";
+
 import { TCategory } from "@/types/category.type";
 import CategoryCard from "../category/CategoryCard";
+import {
+  Carousel,
+  CarouselContent,
+  CarouselItem,
+  CarouselNext,
+  CarouselPrevious,
+} from "@/components/ui/carousel";
 
 type Props = {
   categories: TCategory[];
@@ -7,13 +16,26 @@ type Props = {
 
 const CategorySection = ({ categories }: Props) => {
   return (
-    <div className="my-10">
-      <h2 className="text-2xl font-bold mb-4">Categories</h2>
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-        {categories?.map((category) => (
-          <CategoryCard key={category.id} category={category} />
-        ))}
-      </div>
+    <div className="px-14">
+      <Carousel
+        opts={{
+          align: "start",
+        }}
+        className="w-full"
+      >
+        <CarouselContent>
+          {categories?.map((category) => (
+            <CarouselItem
+              key={category.id}
+              className="basis-1/2 md:basis-1/4 lg:basis-1/6"
+            >
+              <CategoryCard category={category} />
+            </CarouselItem>
+          ))}
+        </CarouselContent>
+        <CarouselPrevious />
+        <CarouselNext />
+      </Carousel>
     </div>
   );
 };

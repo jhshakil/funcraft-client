@@ -24,6 +24,8 @@ import { TCategory } from "@/types/category.type";
 import { useState } from "react";
 import { EditCategory } from "./EditCategory";
 import { useDeleteCategory } from "@/hooks/category.hook";
+import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
+import { Images } from "lucide-react";
 
 type Props = {
   categories: TCategory[];
@@ -53,6 +55,7 @@ const CategoryList = ({ categories, meta, currentPage, path }: Props) => {
         <TableHeader>
           <TableRow>
             <TableHead>Name</TableHead>
+            <TableHead>Image</TableHead>
             <TableHead>Description</TableHead>
             <TableHead className="text-right">Action</TableHead>
           </TableRow>
@@ -61,6 +64,17 @@ const CategoryList = ({ categories, meta, currentPage, path }: Props) => {
           {categories?.map((category) => (
             <TableRow key={category.id}>
               <TableCell className="font-medium">{category?.name}</TableCell>
+              <TableCell>
+                <Avatar>
+                  <AvatarImage
+                    src={category?.image as string}
+                    alt={category?.name}
+                  />
+                  <AvatarFallback>
+                    <Images />
+                  </AvatarFallback>
+                </Avatar>
+              </TableCell>
               <TableCell>{category?.description}</TableCell>
               <TableCell className="text-right">
                 <div className={cn("flex justify-end items-center gap-2")}>
