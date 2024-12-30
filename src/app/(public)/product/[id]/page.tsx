@@ -3,8 +3,12 @@ import RelatedProduct from "@/components/product/RelatedProduct";
 import { CreateReview } from "@/components/review/CreateReview";
 import NewsLetter from "@/components/shared/NewsLetter";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { getCurrentUser } from "@/services/AuthService";
 import { getAllProduct, getProductById } from "@/services/ProductService";
+import { checkForReview } from "@/services/ReviewService";
+import { getUser } from "@/services/UserService";
 import { TProductData } from "@/types/product.types";
+import { TCustomerData } from "@/types/user.types";
 import { Images } from "lucide-react";
 
 type Props = {
@@ -14,6 +18,29 @@ type Props = {
 };
 
 const Page = async ({ params }: Props) => {
+  const user = await getCurrentUser();
+
+  let userData: { data: TCustomerData } | null = null;
+
+  try {
+    if (user?.id) {
+      userData = await getUser(user?.id as string);
+    }
+  } catch (error) {
+    console.log(error);
+  }
+
+  let isEnableForReview = false;
+
+  if (userData?.data?.id) {
+    const data = await checkForReview({
+      userId: userData?.data?.id,
+      productId: params.id,
+    });
+
+    isEnableForReview = data?.data === "true" ? true : false;
+  }
+
   const product = await getProductById({ id: params.id });
   const products = await getAllProduct({
     category: product?.data?.category?.name,
@@ -27,7 +54,11 @@ const Page = async ({ params }: Props) => {
   return (
     <div className="flex flex-col space-y-16">
       <ProductDetails product={product.data} />
-      <CreateReview />
+      <CreateReview
+        isEnableReview={isEnableForReview}
+        productId={product.data.id}
+        customerId={userData?.data?.id as string}
+      />
       <RelatedProduct products={filterProducts} />
       <div className="py-[40px] px-[60px] flex justify-between items-center gap-20 border-t border-b border-border">
         <div className="flex  items-center gap-3">

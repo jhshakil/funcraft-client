@@ -5,16 +5,32 @@ import { Star } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
+import { useCreateReview } from "@/hooks/review.hook";
 
-export function CreateReview() {
-  const [rating, setRating] = useState(0);
-  const [comment, setComment] = useState("");
+type Props = {
+  isEnableReview: boolean;
+  productId: string;
+  customerId: string;
+};
+
+export function CreateReview({ isEnableReview, productId, customerId }: Props) {
+  const [ratting, setRatting] = useState(0);
+  const [review, setReview] = useState("");
+
+  const { mutate: handleCreateReview } = useCreateReview();
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    console.log({ rating, comment });
-    setRating(0);
-    setComment("");
+    const data = {
+      productId,
+      customerId,
+      ratting,
+      review,
+    };
+
+    handleCreateReview(data);
+    setRatting(0);
+    setReview("");
   };
 
   return (
@@ -22,15 +38,15 @@ export function CreateReview() {
       <h2 className="text-3xl font-medium mb-4">Add A Review</h2>
       <form onSubmit={handleSubmit} className="space-y-4">
         <div>
-          <Label htmlFor="rating">Rating</Label>
+          <Label htmlFor="ratting">Ratting</Label>
           <div className="flex items-center space-x-1 mt-1">
             {[1, 2, 3, 4, 5].map((star) => (
               <button
                 key={star}
                 type="button"
-                onClick={() => setRating(star)}
+                onClick={() => setRatting(star)}
                 className={`focus:outline-none ${
-                  star <= rating ? "text-yellow-400" : "text-gray-300"
+                  star <= ratting ? "text-yellow-400" : "text-gray-300"
                 }`}
               >
                 <Star className="w-6 h-6 fill-current" />
@@ -39,17 +55,20 @@ export function CreateReview() {
           </div>
         </div>
         <div>
-          <Label htmlFor="comment">Your Review</Label>
+          <Label htmlFor="review">Your Review</Label>
           <Textarea
-            id="comment"
-            value={comment}
-            onChange={(e) => setComment(e.target.value)}
+            id="review"
+            value={review}
+            onChange={(e) => setReview(e.target.value)}
             placeholder="Write your review here..."
             className="mt-1"
             rows={4}
           />
         </div>
-        <Button type="submit" disabled={rating === 0 || comment.trim() === ""}>
+        <Button
+          type="submit"
+          disabled={!isEnableReview || ratting === 0 || review.trim() === ""}
+        >
           Submit Review
         </Button>
       </form>
