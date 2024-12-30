@@ -13,12 +13,7 @@ export const getAllProduct = async ({
   limit,
   minPrice,
   maxPrice,
-  recent,
-  bestSelling,
-  topRated,
   flashSales,
-  clearance,
-  discounts,
 }: TProductQuery) => {
   const fetchOption = {
     next: {
@@ -49,23 +44,8 @@ export const getAllProduct = async ({
   if (maxPrice) {
     url.searchParams.append("limit", maxPrice);
   }
-  if (recent) {
-    url.searchParams.append("recent", recent);
-  }
-  if (bestSelling) {
-    url.searchParams.append("bestSelling", bestSelling);
-  }
-  if (topRated) {
-    url.searchParams.append("topRated", topRated);
-  }
   if (flashSales) {
     url.searchParams.append("flashSales", flashSales);
-  }
-  if (clearance) {
-    url.searchParams.append("clearance", clearance);
-  }
-  if (discounts) {
-    url.searchParams.append("discounts", discounts);
   }
 
   const res = await fetch(url.toString(), fetchOption);

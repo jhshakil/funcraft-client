@@ -2,7 +2,6 @@ import type { Metadata } from "next";
 import "./globals.css";
 import TopBar from "@/components/topBar";
 import Providers from "@/providers";
-import Footer from "@/components/shared/Footer";
 
 export const metadata: Metadata = {
   title: "FunCraft",
@@ -28,7 +27,6 @@ export default function RootLayout({
         >
           <TopBar />
           {children}
-          
         </Providers>
       </body>
     </html>

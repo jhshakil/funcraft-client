@@ -39,7 +39,7 @@ const NewsLetter = () => {
   }
 
   return (
-    <div className="pb-[64px] grid grid-cols-2 gap-20">
+    <div className="pb-[64px] grid grid-cols-2 gap-20 items-center">
       <div>
         <small className="text-sm text-primary font-medium">
           Join our newsletter
@@ -49,26 +49,28 @@ const NewsLetter = () => {
         </h3>
         <p className="mt-2 text-muted-foreground">{`We'll email you a voucher worth $10 off your first order over $50.`}</p>
       </div>
-      <div className="w-full max-w-sm mx-auto">
-        <Form {...form}>
-          <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
-            <FormField
-              control={form.control}
-              name="email"
-              render={({ field }) => (
-                <FormItem>
-                  <FormControl>
-                    <Input placeholder="Enter your email" {...field} />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-            <Button type="submit" className="w-full" disabled={isLoading}>
-              {isLoading ? "Subscribing..." : "Subscribe to newsletter"}
-            </Button>
-          </form>
-        </Form>
+      <div className="flex justify-end">
+        <div className="w-full max-w-sm">
+          <Form {...form}>
+            <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
+              <FormField
+                control={form.control}
+                name="email"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormControl>
+                      <Input placeholder="Enter your email" {...field} />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+              <Button type="submit" className="w-full" disabled={isLoading}>
+                {isLoading ? "Subscribing..." : "Subscribe to newsletter"}
+              </Button>
+            </form>
+          </Form>
+        </div>
       </div>
     </div>
   );

@@ -47,10 +47,5 @@ export type TProductQuery = {
   category?: string;
   minPrice?: string;
   maxPrice?: string;
-  recent?: string;
-  bestSelling?: string;
-  topRated?: string;
   flashSales?: string;
-  clearance?: string;
-  discounts?: string;
 };

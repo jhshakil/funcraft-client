@@ -21,7 +21,7 @@ export function ProductCard({ product }: Props) {
   return (
     <div className="relative max-w-sm rounded-lg overflow-hidden group shadow-lg">
       {discount && discount > 0 && (
-        <div className="absolute top-2 left-2 bg-green-100 text-green-800 text-xs font-medium px-2 py-1 rounded-md z-10">
+        <div className="absolute top-2 left-2 bg-primary text-white text-xs font-medium px-2 py-1 rounded-md z-10">
           -{discount}%
         </div>
       )}

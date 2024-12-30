@@ -9,12 +9,14 @@ import { useEffect, useState } from "react";
 import { Button } from "../ui/button";
 import { Input } from "../ui/input";
 import { Star } from "lucide-react";
+import { useUser } from "@/context/user.provider";
 
 type Props = {
   product: TProductData;
 };
 
 const ProductDetails = ({ product }: Props) => {
+  const { recentProduct, updateRecentProduct } = useUser();
   const [quantity, setQuantity] = useState(1);
 
   const discountAmount = product?.discount
@@ -28,23 +30,27 @@ const ProductDetails = ({ product }: Props) => {
     }
   };
 
+  useEffect(() => {
+    const filterRecent = recentProduct
+      ?.slice(0, 10)
+      ?.filter((el) => el.id !== product.id);
+
+    updateRecentProduct([product, ...filterRecent]);
+  }, [product]);
+
   return (
     <div className="mt-11 px-4 py-8">
-      <div className="grid md:grid-cols-2 gap-16">
-        {/* Image Gallery */}
-        <div className="relative">
-          <div className="relative aspect-square">
-            <Image
-              src={product?.thumbnailImage as string}
-              alt={product?.name}
-              fill
-              className="object-cover rounded-lg"
-              priority
-            />
-          </div>
+      <div className="grid md:grid-cols-2 gap-32">
+        <div className="relative aspect-square">
+          <Image
+            src={product?.thumbnailImage as string}
+            alt={product?.name}
+            fill
+            className="object-cover rounded-lg"
+            priority
+          />
         </div>
 
-        {/* Product Info */}
         <div className="space-y-6">
           <h1 className="text-3xl font-bold">{product?.name}</h1>
 
@@ -63,7 +69,7 @@ const ProductDetails = ({ product }: Props) => {
             <span className="text-sm text-green-600">In Stock</span>
           </div>
 
-          <p className="text-gray-600">{product?.description}</p>
+          <p className="text-gray-600 line-clamp-5">{product?.description}</p>
 
           <div className="flex items-center gap-2">
             <span className="text-3xl font-bold text-primary">
@@ -133,6 +139,11 @@ const ProductDetails = ({ product }: Props) => {
             </div>
           </div>
         </div>
+      </div>
+
+      <div className="mt-11">
+        <h2 className="text-3xl font-medium">Description</h2>
+        <p className="mt-4">{product.description}</p>
       </div>
     </div>
   );

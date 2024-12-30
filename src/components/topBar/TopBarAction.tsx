@@ -1,6 +1,5 @@
 "use client";
 
-import ThemeMode from "./ThemeMode";
 import { buttonVariants } from "../ui/button";
 import ProfileAction from "./ProfileAction";
 import Link from "next/link";
@@ -18,7 +17,6 @@ const TopBarAction = ({ role, userData, shopId }: Props) => {
     <>
       {userData?.id ? (
         <>
-          <ThemeMode />
           <ProfileAction
             role={role}
             userData={userData}
@@ -27,7 +25,6 @@ const TopBarAction = ({ role, userData, shopId }: Props) => {
         </>
       ) : (
         <>
-          <ThemeMode />
           <Link
             href={"/login"}
             className={cn(

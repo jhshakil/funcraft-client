@@ -16,12 +16,7 @@ const Page = async ({ searchParams }: Props) => {
     category: searchParams.category,
     minPrice: searchParams.minPrice,
     maxPrice: searchParams.maxPrice,
-    recent: searchParams.recent,
-    bestSelling: searchParams.bestSelling,
-    topRated: searchParams.topRated,
     flashSales: searchParams.flashSales,
-    clearance: searchParams.clearance,
-    discounts: searchParams.discounts,
   });
 
   return (

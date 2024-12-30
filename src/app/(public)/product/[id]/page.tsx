@@ -27,7 +27,7 @@ const Page = async ({ params }: Props) => {
   return (
     <div className="flex flex-col space-y-16">
       <ProductDetails product={product.data} />
-      {/* <CreateReview /> */}
+      <CreateReview />
       <RelatedProduct products={filterProducts} />
       <div className="py-[40px] px-[60px] flex justify-between items-center gap-20 border-t border-b border-border">
         <div className="flex  items-center gap-3">

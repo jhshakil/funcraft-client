@@ -7,16 +7,24 @@ import { getAllCategory } from "@/services/CategoryService";
 import { getAllProduct } from "@/services/ProductService";
 import { Images } from "lucide-react";
 
-type Props = {
-  searchParams: { sortBy?: string; sortOrder?: string; page?: string };
-};
-
-const Page = async ({ searchParams }: Props) => {
+const Page = async () => {
   const categories = await getAllCategory({});
   const products = await getAllProduct({
-    page: searchParams.page || "1",
-    sortBy: searchParams.sortBy,
-    sortOrder: searchParams.sortOrder,
+    limit: "8",
+  });
+  const flashSalesProducts = await getAllProduct({
+    limit: "8",
+    flashSales: "true",
+  });
+  const recentProducts = await getAllProduct({
+    limit: "8",
+    sortBy: "createdAt",
+    sortOrder: "desc",
+  });
+  const topRatedProducts = await getAllProduct({
+    limit: "8",
+    sortBy: "ratting",
+    sortOrder: "desc",
   });
 
   return (
@@ -29,17 +37,17 @@ const Page = async ({ searchParams }: Props) => {
         link="/product"
       />
       <HomeProductSection
-        products={products.data}
+        products={flashSalesProducts.data}
         title="Flash Sale"
         link="/product?flashSales=true"
       />
       <HomeProductSection
-        products={products.data}
+        products={recentProducts.data}
         title="Recent Product"
         link="/product?recent=true"
       />
       <HomeProductSection
-        products={products.data}
+        products={topRatedProducts.data}
         title="Top Rated Product"
         link="/product?topRated=true"
       />

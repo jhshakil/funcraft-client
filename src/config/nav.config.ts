@@ -12,16 +12,16 @@ export const NavbarConfig = [
         path: "/product",
       },
       {
-        name: "Recent Product",
-        path: "/product?recent=true",
+        name: "Best Selling Product",
+        path: "/product?sortBy=bestSelling&sortOrder=desc",
       },
       {
-        name: "Best Selling Product",
-        path: "/product?bestSelling=true",
+        name: "Recent Product",
+        path: "/product?sortBy=createdAt&sortOrder=desc",
       },
       {
         name: "Top Rated Product",
-        path: "/product?topRated=true",
+        path: "/product?sortBy=ratting&sortOrder=desc",
       },
     ],
   },
@@ -30,15 +30,15 @@ export const NavbarConfig = [
     path: "/product?flashSales=true",
   },
   {
-    name: "Clearance",
-    path: "/product?clearance=true",
-  },
-  {
-    name: "Discounts",
-    path: "/product?discounts=true",
+    name: "Recent View",
+    path: "/recent-product",
   },
   {
     name: "Shop",
     path: "/shop",
+  },
+  {
+    name: "contact",
+    path: "/contact",
   },
 ];
