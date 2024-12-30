@@ -5,58 +5,133 @@ import { Badge } from "../ui/badge";
 import { TProductData } from "@/types/product.types";
 import AddToCart from "../shared/AddToCart";
 import Link from "next/link";
-import { useUser } from "@/context/user.provider";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
+import { Button } from "../ui/button";
+import { Input } from "../ui/input";
+import { Star } from "lucide-react";
 
 type Props = {
   product: TProductData;
 };
 
 const ProductDetails = ({ product }: Props) => {
-  const { recentProduct, updateRecentProduct } = useUser();
+  const [quantity, setQuantity] = useState(1);
 
-  useEffect(() => {
-    const filterRecent = recentProduct
-      ?.slice(0, 10)
-      ?.filter((el) => el.id !== product.id);
+  const discountAmount = product?.discount
+    ? (product?.price * product?.discount) / 100
+    : 0;
+  const discountedPrice = product?.price - discountAmount;
 
-    updateRecentProduct([product, ...filterRecent]);
-  }, [product]);
+  const handleQuantityChange = (value: number) => {
+    if (value >= 1) {
+      setQuantity(value);
+    }
+  };
 
   return (
-    <div className="grid md:grid-cols-2 gap-8 my-11">
-      <div className="relative aspect-square mb-4 overflow-hidden rounded-lg">
-        <Image
-          src={product?.thumbnailImage as string}
-          alt={product?.name}
-          layout="fill"
-          objectFit="cover"
-          className="transition-all duration-300 ease-in-out"
-        />
-      </div>
-      <div>
-        <h1 className="text-3xl font-bold mb-2">{product?.name}</h1>
-        <div>
-          Category: <Badge className="mb-4">{product?.category?.name}</Badge>
-        </div>
-        <div>
-          Shop:{" "}
-          <Badge className="mb-4">
-            <Link href={`/shop/${product?.shop?.id}`}>
-              {product?.shop?.name}
-            </Link>
-          </Badge>
-        </div>
-        <p className="text-2xl font-semibold mb-4">
-          Price: ${product?.price.toFixed(2)}
-        </p>
-        <div className="mb-4">
-          <AddToCart product={product} />
+    <div className="mt-11 px-4 py-8">
+      <div className="grid md:grid-cols-2 gap-16">
+        {/* Image Gallery */}
+        <div className="relative">
+          <div className="relative aspect-square">
+            <Image
+              src={product?.thumbnailImage as string}
+              alt={product?.name}
+              fill
+              className="object-cover rounded-lg"
+              priority
+            />
+          </div>
         </div>
 
-        <div>
-          <h2 className="text-xl font-semibold mb-2">Product Description</h2>
-          <p>{product?.description}</p>
+        {/* Product Info */}
+        <div className="space-y-6">
+          <h1 className="text-3xl font-bold">{product?.name}</h1>
+
+          <div className="flex items-center gap-4">
+            <div className="flex items-center">
+              {[...Array(5)].map((_, i) => (
+                <Star
+                  key={i}
+                  className="w-5 h-5 fill-yellow-400 text-yellow-400"
+                />
+              ))}
+            </div>
+            <span className="text-sm text-gray-600">
+              {product?.ratting} customer review
+            </span>
+            <span className="text-sm text-green-600">In Stock</span>
+          </div>
+
+          <p className="text-gray-600">{product?.description}</p>
+
+          <div className="flex items-center gap-2">
+            <span className="text-3xl font-bold text-primary">
+              ${discountedPrice ? discountedPrice.toFixed(2) : ""}
+            </span>
+            {(product?.discount as number) > 0 && (
+              <span className="text-xl text-gray-400 line-through">
+                ${product?.price ? product?.price?.toFixed(2) : ""}
+              </span>
+            )}
+          </div>
+
+          <div className="flex gap-4 items-center">
+            <div className="flex items-center border rounded-md">
+              <Button
+                variant="ghost"
+                size="icon"
+                onClick={() => handleQuantityChange(quantity - 1)}
+                className="h-10 px-3"
+              >
+                -
+              </Button>
+              <Input
+                type="number"
+                value={quantity}
+                onChange={(e) =>
+                  handleQuantityChange(parseInt(e.target.value) || 1)
+                }
+                className="w-16 h-10 text-center border-0"
+              />
+              <Button
+                variant="ghost"
+                size="icon"
+                onClick={() => handleQuantityChange(quantity + 1)}
+                className="h-10 px-3"
+              >
+                +
+              </Button>
+            </div>
+            <AddToCart product={product} quantity={quantity} />
+          </div>
+
+          <div className="border-t pt-4">
+            <div className="space-y-2">
+              <div className="flex gap-2 items-center">
+                <p>Categories :</p>
+                <Badge>
+                  <Link href={`/product?category=${product?.category?.name}`}>
+                    {product?.category?.name}
+                  </Link>
+                </Badge>
+              </div>
+              <p>
+                Quantity :{" "}
+                <span className="ml-1 text-primary">
+                  {product?.inventoryCount}
+                </span>
+              </p>
+              <div className="flex gap-2 items-center">
+                <p>Shop :</p>
+                <Badge>
+                  <Link href={`/shop/${product?.shop?.id}`}>
+                    {product?.shop?.name}
+                  </Link>
+                </Badge>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </div>

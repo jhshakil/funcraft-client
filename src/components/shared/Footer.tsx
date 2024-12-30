@@ -3,7 +3,7 @@ import Logo from "./Logo";
 
 const Footer = () => {
   return (
-    <div className="border-t border-border">
+    <div className="bg-secondary">
       <div className="container mx-auto px-2 ">
         <div className="flex justify-between flex-wrap py-11 gap-11">
           <div>
@@ -17,7 +17,7 @@ const Footer = () => {
             <div className="mt-4 flex flex-col gap-1">
               <p>Mirpur-1, Dhaka, Bangladesh</p>
               <p>info.jhshakil@gmail.com</p>
-              <p>01851891846</p>
+              <p>+8801851891846</p>
             </div>
           </div>
         </div>

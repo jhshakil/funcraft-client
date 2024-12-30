@@ -11,9 +11,10 @@ import { CartAlert } from "./CartAlert";
 type Props = {
   className?: string;
   product: TProductData;
+  quantity?: number;
 };
 
-const AddToCart = ({ className, product }: Props) => {
+const AddToCart = ({ className, product, quantity }: Props) => {
   const { cartData, updateCartData, user } = useUser();
   const [openAlert, setOpenAlert] = useState(false);
 
@@ -28,7 +29,11 @@ const AddToCart = ({ className, product }: Props) => {
       if (findDuplicate) {
         const updateOldData = cartData.filter((el) => {
           if (el.id === product.id) {
-            el.quantity += 1;
+            if (quantity) {
+              el.quantity += quantity;
+            } else {
+              el.quantity += 1;
+            }
             el.totalPrice = Number(
               (Number(product.price) * el.quantity).toFixed(2)
             );
@@ -46,7 +51,7 @@ const AddToCart = ({ className, product }: Props) => {
           thumbnailImage: product.thumbnailImage,
           mainPrice: Number(product.price),
           totalPrice: Number(product.price),
-          quantity: 1,
+          quantity: quantity ?? 1,
         };
         updateCartData([...cartData, sampleData]);
       }

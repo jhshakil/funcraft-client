@@ -8,6 +8,8 @@ type Props = {
     sortOrder?: string;
     page?: string;
     category?: string;
+    minPrice?: string;
+    maxPrice?: string;
   };
 };
 
@@ -18,6 +20,8 @@ const Page = async ({ searchParams }: Props) => {
     sortBy: searchParams.sortBy,
     sortOrder: searchParams.sortOrder,
     category: searchParams.category,
+    minPrice: searchParams.minPrice,
+    maxPrice: searchParams.maxPrice,
   });
 
   return (

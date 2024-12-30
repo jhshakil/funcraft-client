@@ -11,12 +11,16 @@ export const getAllProduct = async ({
   sortOrder,
   category,
   limit,
+  minPrice,
+  maxPrice,
 }: {
   sortBy?: string;
   sortOrder?: string;
   page?: string;
   category?: string;
   limit?: string;
+  minPrice?: string;
+  maxPrice?: string;
 }) => {
   const fetchOption = {
     next: {
@@ -40,6 +44,12 @@ export const getAllProduct = async ({
   }
   if (limit) {
     url.searchParams.append("limit", limit);
+  }
+  if (minPrice) {
+    url.searchParams.append("minPrice", minPrice);
+  }
+  if (maxPrice) {
+    url.searchParams.append("limit", maxPrice);
   }
 
   const res = await fetch(url.toString(), fetchOption);

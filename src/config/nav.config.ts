@@ -17,11 +17,11 @@ export const NavbarConfig = [
       },
       {
         name: "Best Selling Product",
-        path: "/recent-product",
+        path: "/best-selling-product",
       },
       {
         name: "Top Rated Product",
-        path: "/recent-product",
+        path: "/top-rated-product",
       },
     ],
   },

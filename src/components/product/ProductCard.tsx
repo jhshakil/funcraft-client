@@ -2,65 +2,79 @@
 
 import Image from "next/image";
 import { Star } from "lucide-react";
-import {
-  Card,
-  CardContent,
-  CardFooter,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
 import { TProductData } from "@/types/product.types";
 import Link from "next/link";
 import AddToCart from "../shared/AddToCart";
+import { Button, buttonVariants } from "../ui/button";
+import { cn } from "@/lib/utils";
 
 type Props = {
   product: TProductData;
 };
 
 export function ProductCard({ product }: Props) {
+  const { name, discount = 0, thumbnailImage, price, ratting = 0 } = product;
+
+  const discountAmount = discount ? (price * discount) / 100 : 0;
+  const discountedPrice = price - discountAmount;
+
   return (
-    <Card className="w-full max-w-sm overflow-hidden">
-      <CardHeader className="p-0">
-        <div className="relative h-48 w-full">
-          <Image
-            src={product?.thumbnailImage as string}
-            alt={product?.name}
-            layout="fill"
-            objectFit="cover"
-          />
+    <div className="relative max-w-sm rounded-lg overflow-hidden group shadow-lg">
+      {discount && discount > 0 && (
+        <div className="absolute top-2 left-2 bg-green-100 text-green-800 text-xs font-medium px-2 py-1 rounded-md z-10">
+          -{discount}%
         </div>
-      </CardHeader>
-      <CardContent className="p-4">
-        <CardTitle className="text-lg font-semibold mb-2">
-          <Link href={`/product/${product?.id}`}>{product?.name}</Link>
-        </CardTitle>
-        <p className="text-sm text-gray-600 mb-2">{product?.description}</p>
-        <div className="flex justify-between items-center mb-2">
+      )}
+
+      <div className="relative aspect-square">
+        <Image
+          src={thumbnailImage as string}
+          alt={name}
+          fill
+          className="object-cover"
+          sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+        />
+      </div>
+      <div className="p-4 space-y-2">
+        <h3 className="font-medium text-lg text-gray-900">{name}</h3>
+
+        <div className="flex items-center gap-2">
           <span className="text-lg font-bold">
-            ${product?.price.toFixed(2)}
+            ${discountedPrice ? discountedPrice.toFixed(2) : ""}
           </span>
-          <Badge variant="secondary">{product?.inventoryCount} in stock</Badge>
+          {(discount as number) > 0 && (
+            <span className="text-sm text-gray-500 line-through">
+              ${price ? price?.toFixed(2) : ""}
+            </span>
+          )}
         </div>
-        <div className="flex items-center">
+
+        <div className="flex items-center gap-1">
           {[...Array(5)].map((_, i) => (
             <Star
               key={i}
               className={`w-4 h-4 ${
-                i < Math.round((product?.ratting as number) || 0)
-                  ? "text-yellow-400 fill-yellow-400"
-                  : "text-gray-300"
+                i < ratting
+                  ? "fill-yellow-400 text-yellow-400"
+                  : "fill-gray-200 text-gray-200"
               }`}
             />
           ))}
-          <span className="ml-2 text-sm text-gray-600">
-            ({product.ratting ? product?.ratting.toFixed(1) : 0})
+          <span className="text-sm text-gray-600 ml-1">
+            {ratting ? ratting.toFixed(1) : ""} Rating
           </span>
         </div>
-      </CardContent>
-      <CardFooter className="p-4 pt-0">
-        <AddToCart className="w-full" product={product} />
-      </CardFooter>
-    </Card>
+
+        <div className="!mt-4 flex justify-between items-center">
+          <Link
+            href={`/product/${product?.id}`}
+            className={cn(buttonVariants({ variant: "outline" }))}
+          >
+            Show Details
+          </Link>
+          <AddToCart product={product} />
+        </div>
+      </div>
+    </div>
   );
 }

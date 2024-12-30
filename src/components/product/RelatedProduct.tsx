@@ -8,6 +8,7 @@ type Props = {
 };
 
 const RelatedProduct = ({ products }: Props) => {
+  if (!(products && products.length)) return;
   return (
     <div className="my-10">
       <div className="flex justify-between items-center">

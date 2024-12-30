@@ -23,7 +23,7 @@ const Navbar = () => {
                   {item.name}
                 </NavigationMenuTrigger>
                 <NavigationMenuContent className="shadow-lg">
-                  <div className="pt-6 px-3 pb-3 space-y-1">
+                  <NavigationMenuList className="pt-6 px-3 pb-3 flex-col items-start space-y-1 space-x-0">
                     {item.elements.map((subNav) => (
                       <NavigationMenuItem key={subNav.path}>
                         <Link href={subNav.path} legacyBehavior passHref>
@@ -38,7 +38,7 @@ const Navbar = () => {
                         </Link>
                       </NavigationMenuItem>
                     ))}
-                  </div>
+                  </NavigationMenuList>
                 </NavigationMenuContent>
               </NavigationMenuItem>
             ) : (

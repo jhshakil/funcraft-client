@@ -1,18 +1,22 @@
 "use client";
 
 import { TProductData } from "@/types/product.types";
-import { ProductCard } from "../product/ProductCard";
+
+import { useState } from "react";
+import { TCategory } from "@/types/category.type";
+import { Sheet, SheetContent, SheetTrigger } from "../ui/sheet";
+import { Button } from "../ui/button";
+import { Menu } from "lucide-react";
+import ProductSidebar from "./ProductSidebar";
+import { ProductCard } from "./ProductCard";
 import {
   Select,
   SelectContent,
-  SelectGroup,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "@/components/ui/select";
-import { useState } from "react";
+} from "../ui/select";
 import { useRouter } from "next/navigation";
-import { TCategory } from "@/types/category.type";
 
 type Props = {
   products: TProductData[];
@@ -21,8 +25,9 @@ type Props = {
 
 const AllProduct = ({ products, categories }: Props) => {
   const router = useRouter();
+
+  const [sidebarOpen, setSidebarOpen] = useState(false);
   const [selectedField, setSelectedField] = useState("");
-  const [selectedCat, setSelectedCat] = useState("");
 
   const generateParam = (data: string) => {
     const url = new URL(window.location.href);
@@ -47,62 +52,68 @@ const AllProduct = ({ products, categories }: Props) => {
       router.push(url.pathname + url.search);
     }
   };
-  const generateCatParam = (data: string) => {
-    const url = new URL(window.location.href);
-    if (data) {
-      url.searchParams.set("category", data);
-      router.push(url.pathname + url.search);
-    }
-  };
 
   return (
     <div className="my-10">
-      <div className="flex justify-between items-center">
-        <h2 className="text-3xl font-bold mb-6">All Products</h2>
-        <div className="flex items-center gap-11">
-          <Select
-            value={selectedCat}
-            onValueChange={(value) => {
-              setSelectedCat(value);
-              generateCatParam(value);
-            }}
-          >
-            <SelectTrigger className="w-[180px]">
-              <SelectValue placeholder="Select Category" />
-            </SelectTrigger>
-            <SelectContent>
-              {categories?.map((category) => (
-                <SelectItem key={category.id} value={category.name}>
-                  {category.name}
-                </SelectItem>
-              ))}
-            </SelectContent>
-          </Select>
-          <Select
-            value={selectedField}
-            onValueChange={(value) => {
-              setSelectedField(value);
-              generateParam(value);
-            }}
-          >
-            <SelectTrigger className="w-[180px]">
-              <SelectValue placeholder="Sort Product" />
-            </SelectTrigger>
-            <SelectContent>
-              <SelectGroup>
-                <SelectItem value="rlh">{`Ratting Low > Heigh`}</SelectItem>
-                <SelectItem value="rhl">{`Ratting Heigh > Low`}</SelectItem>
-                <SelectItem value="plh">{`Price Low > Heigh`}</SelectItem>
-                <SelectItem value="phl">{`Price Heigh > Low`}</SelectItem>
-              </SelectGroup>
-            </SelectContent>
-          </Select>
+      <div className="container mx-auto px-4 py-8">
+        <div className="flex gap-8">
+          <Sheet open={sidebarOpen} onOpenChange={setSidebarOpen}>
+            <SheetTrigger asChild>
+              <Button variant="outline" className="lg:hidden mb-4">
+                <Menu className="h-4 w-4 mr-2" />
+                Filters
+              </Button>
+            </SheetTrigger>
+            <SheetContent side="left" className="w-[300px] sm:w-[400px]">
+              <div className="px-1">
+                <ProductSidebar categories={categories} />
+              </div>
+            </SheetContent>
+          </Sheet>
+
+          <div className="hidden lg:block w-[300px] flex-shrink-0">
+            <ProductSidebar categories={categories} />
+          </div>
+
+          <div className="flex-1">
+            <div className="w-full">
+              <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-6">
+                <p className="text-sm text-gray-600">
+                  Showing 1–20 of 62 results
+                </p>
+                <div className="flex items-center gap-2">
+                  <Select
+                    value={selectedField}
+                    onValueChange={(value) => {
+                      setSelectedField(value);
+                      generateParam(value);
+                    }}
+                  >
+                    <SelectTrigger className="w-[180px]">
+                      <SelectValue placeholder="Sort Product" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="rlh">{`Ratting Low > Heigh`}</SelectItem>
+                      <SelectItem value="rhl">{`Ratting Heigh > Low`}</SelectItem>
+                      <SelectItem value="plh">{`Price Low > Heigh`}</SelectItem>
+                      <SelectItem value="phl">{`Price Heigh > Low`}</SelectItem>
+                    </SelectContent>
+                  </Select>
+                </div>
+              </div>
+
+              <div
+                className={
+                  "grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3 gap-6"
+                }
+              >
+                {products.map((product) => (
+                  <ProductCard key={product.id} product={product} />
+                ))}
+              </div>
+            </div>
+          </div>
         </div>
-      </div>
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-        {products?.map((product) => (
-          <ProductCard key={product.id} product={product} />
-        ))}
       </div>
     </div>
   );
