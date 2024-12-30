@@ -13,29 +13,29 @@ export const NavbarConfig = [
       },
       {
         name: "Recent Product",
-        path: "/recent-product",
+        path: "/product?recent=true",
       },
       {
         name: "Best Selling Product",
-        path: "/best-selling-product",
+        path: "/product?bestSelling=true",
       },
       {
         name: "Top Rated Product",
-        path: "/top-rated-product",
+        path: "/product?topRated=true",
       },
     ],
   },
   {
     name: "Flash Sales",
-    path: "/flash-sales",
+    path: "/product?flashSales=true",
   },
   {
     name: "Clearance",
-    path: "/clearance",
+    path: "/product?clearance=true",
   },
   {
     name: "Discounts",
-    path: "/discount",
+    path: "/product?discounts=true",
   },
   {
     name: "Shop",

@@ -1,16 +1,10 @@
 import AllProduct from "@/components/product/AllProduct";
 import { getAllCategory } from "@/services/CategoryService";
 import { getAllProduct } from "@/services/ProductService";
+import { TProductQuery } from "@/types/product.types";
 
 type Props = {
-  searchParams: {
-    sortBy?: string;
-    sortOrder?: string;
-    page?: string;
-    category?: string;
-    minPrice?: string;
-    maxPrice?: string;
-  };
+  searchParams: TProductQuery;
 };
 
 const Page = async ({ searchParams }: Props) => {
@@ -22,6 +16,12 @@ const Page = async ({ searchParams }: Props) => {
     category: searchParams.category,
     minPrice: searchParams.minPrice,
     maxPrice: searchParams.maxPrice,
+    recent: searchParams.recent,
+    bestSelling: searchParams.bestSelling,
+    topRated: searchParams.topRated,
+    flashSales: searchParams.flashSales,
+    clearance: searchParams.clearance,
+    discounts: searchParams.discounts,
   });
 
   return (

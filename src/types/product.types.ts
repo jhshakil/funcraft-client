@@ -38,3 +38,19 @@ export type TCoupon = {
   code?: string;
   discount: string;
 };
+
+export type TProductQuery = {
+  sortBy?: string;
+  limit?: string;
+  sortOrder?: string;
+  page?: string;
+  category?: string;
+  minPrice?: string;
+  maxPrice?: string;
+  recent?: string;
+  bestSelling?: string;
+  topRated?: string;
+  flashSales?: string;
+  clearance?: string;
+  discounts?: string;
+};
