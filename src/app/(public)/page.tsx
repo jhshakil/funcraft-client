@@ -26,7 +26,7 @@ const Page = async ({ searchParams }: Props) => {
       <HomeProductSection
         products={products.data}
         title={"Featured Products"}
-        link="/products"
+        link="/product"
       />
       <HomeProductSection
         products={products.data}
