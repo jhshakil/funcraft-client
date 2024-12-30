@@ -83,6 +83,29 @@ const Page = () => {
         </CardDescription>
       </CardHeader>
       <CardContent className="grid gap-4">
+        <div className="flex items-center gap-4">
+          <Button
+            onClick={() =>
+              form.reset({ email: "jhshakil@gmail.com", password: "12345678" })
+            }
+          >
+            Demo Admin
+          </Button>
+          <Button
+            onClick={() =>
+              form.reset({ email: "jvendor@gmail.com", password: "12345678" })
+            }
+          >
+            Demo Vendor
+          </Button>
+          <Button
+            onClick={() =>
+              form.reset({ email: "jcustomer@gmail.com", password: "12345678" })
+            }
+          >
+            Demo Customer
+          </Button>
+        </div>
         <Form {...form}>
           <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
             <FormField
