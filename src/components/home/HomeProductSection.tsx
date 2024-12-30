@@ -1,17 +1,26 @@
-"use client";
-
 import { TProductData } from "@/types/product.types";
 import { ProductCard } from "../product/ProductCard";
+import Link from "next/link";
+import { cn } from "@/lib/utils";
+import { buttonVariants } from "../ui/button";
 
 type Props = {
   products: TProductData[];
+  title: string;
+  link: string;
 };
 
-const HomeProductSection = ({ products }: Props) => {
+const HomeProductSection = ({ products, title, link }: Props) => {
   return (
     <div className="my-10">
-      <div className="flex justify-between items-center">
-        <h2 className="text-3xl font-bold mb-6">Featured Products</h2>
+      <div className="flex justify-between items-top">
+        <h2 className="text-3xl font-bold mb-6">{title}</h2>
+        <Link
+          href={link}
+          className={cn(buttonVariants({ variant: "outline" }))}
+        >
+          See More
+        </Link>
       </div>
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
         {products?.map((product) => (

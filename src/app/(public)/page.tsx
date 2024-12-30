@@ -20,10 +20,29 @@ const Page = async ({ searchParams }: Props) => {
   });
 
   return (
-    <div className="flex flex-col space-y-16">
+    <div className="flex flex-col space-y-20">
       <HeroSection />
       <CategorySection categories={categories.data} />
-      <HomeProductSection products={products.data} />
+      <HomeProductSection
+        products={products.data}
+        title={"Featured Products"}
+        link="/products"
+      />
+      <HomeProductSection
+        products={products.data}
+        title="Flash Sale"
+        link="/product?flashSales=true"
+      />
+      <HomeProductSection
+        products={products.data}
+        title="Recent Product"
+        link="/product?recent=true"
+      />
+      <HomeProductSection
+        products={products.data}
+        title="Top Rated Product"
+        link="/product?topRated=true"
+      />
       <div className="py-[40px] px-[60px] flex justify-between items-center gap-20 border-t border-b border-border">
         <div className="flex  items-center gap-3">
           <Avatar className="h-[66px] w-[66px] rounded-none">
