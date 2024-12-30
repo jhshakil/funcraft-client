@@ -81,7 +81,7 @@ const AdminOrderList = ({ orders, meta, currentPage, path }: Props) => {
               <Button
                 className={cn(
                   order.orderStatus === "DELIVERED" ? "hidden" : "",
-                  path === "/user/orders" ? "hidden" : ""
+                  path === "/dashboard/user/orders" ? "hidden" : ""
                 )}
                 onClick={() =>
                   handleUpdateStatus({
@@ -97,7 +97,7 @@ const AdminOrderList = ({ orders, meta, currentPage, path }: Props) => {
                   <Button
                     className={cn(
                       order.orderStatus === "PENDING" ? "hidden" : "",
-                      path === "/user/orders" ? "hidden" : ""
+                      path === "/dashboard/user/orders" ? "hidden" : ""
                     )}
                     onClick={() =>
                       handleUpdateStatus({
@@ -125,7 +125,7 @@ const AdminOrderList = ({ orders, meta, currentPage, path }: Props) => {
                   <Button
                     className={cn(
                       order.orderStatus === "BLOCKED" ? "hidden" : "",
-                      path === "/user/orders" ? "hidden" : ""
+                      path === "/dashboard/user/orders" ? "hidden" : ""
                     )}
                     variant={"secondary"}
                     onClick={() =>

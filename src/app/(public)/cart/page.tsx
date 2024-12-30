@@ -44,7 +44,10 @@ const Page = () => {
         <h1 className="text-3xl font-bold mb-6">All Carts</h1>
         {cartData && cartData.length ? (
           <div>
-            <Link href={"/user/checkout"} className={cn(buttonVariants())}>
+            <Link
+              href={"/dashboard/user/checkout"}
+              className={cn(buttonVariants())}
+            >
               Go to checkout
             </Link>
           </div>

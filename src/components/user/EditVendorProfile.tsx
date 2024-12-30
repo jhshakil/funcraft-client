@@ -80,7 +80,7 @@ const EditorVendorProfile = ({ userData }: { userData?: TVendorData }) => {
 
   useEffect(() => {
     if (!isPending && isSuccess) {
-      router.push("/vendor/dashboard");
+      router.push("/dashboard/vendor/dashboard");
     }
   }, [isPending, isSuccess]);
 

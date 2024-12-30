@@ -32,7 +32,7 @@ const Page = async ({ searchParams }: { searchParams: { page?: string } }) => {
           products={products.data}
           meta={products.meta}
           currentPage={searchParams.page || "1"}
-          path="/vendor/products"
+          path="/dashboard/vendor/products"
           categories={categories.data as TCategory[]}
         />
       </div>

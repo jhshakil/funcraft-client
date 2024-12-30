@@ -60,7 +60,7 @@ export function CheckoutForm({
 
   useEffect(() => {
     if (!isPending && isSuccess) {
-      router.push(`/user/payment?orderId=${orderData?.data?.id}`);
+      router.push(`/dashboard/user/payment?orderId=${orderData?.data?.id}`);
     }
   }, [isPending, isSuccess]);
 

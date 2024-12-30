@@ -38,99 +38,24 @@ type Props = {
 
 const userRoutes = [
   {
-    name: "Profile",
-    path: "/user/profile",
-    icon: <UserPen className="mr-2 h-4 w-4" />,
-  },
-  {
     name: "Dashboard",
-    path: "/user/dashboard",
+    path: "/dashboard/user",
     icon: <CreditCard className="mr-2 h-4 w-4" />,
-  },
-  {
-    name: "Orders",
-    path: "/user/orders",
-    icon: <Users className="mr-2 h-4 w-4" />,
-  },
-  {
-    name: "Delivery Address",
-    path: "/user/delivery-address",
-    icon: <MapPinHouse className="mr-2 h-4 w-4" />,
   },
 ];
 
 const adminRoutes = [
   {
-    name: "Profile",
-    path: "/admin/profile",
-    icon: <UserPen className="mr-2 h-4 w-4" />,
-  },
-  {
     name: "Dashboard",
-    path: "/admin/dashboard",
+    path: "/dashboard/admin",
     icon: <CreditCard className="mr-2 h-4 w-4" />,
-  },
-  {
-    name: "Users",
-    path: "/admin/users",
-    icon: <Users className="mr-2 h-4 w-4" />,
-  },
-  {
-    name: "Create Admin",
-    path: "/admin/create-admin",
-    icon: <FileUser className="mr-2 h-4 w-4" />,
-  },
-  {
-    name: "Categories",
-    path: "/admin/categories",
-    icon: <ClipboardList className="mr-2 h-4 w-4" />,
-  },
-  {
-    name: "Products",
-    path: "/admin/products",
-    icon: <Users className="mr-2 h-4 w-4" />,
-  },
-  {
-    name: "Orders",
-    path: "/admin/orders",
-    icon: <Users className="mr-2 h-4 w-4" />,
-  },
-  {
-    name: "Shops",
-    path: "/admin/shops",
-    icon: <ShoppingBag className="mr-2 h-4 w-4" />,
   },
 ];
 const vendorRoutes = [
   {
-    name: "Profile",
-    path: "/vendor/profile",
-    icon: <UserPen className="mr-2 h-4 w-4" />,
-  },
-  {
     name: "Dashboard",
-    path: "/vendor/dashboard",
+    path: "/dashboard/vendor",
     icon: <CreditCard className="mr-2 h-4 w-4" />,
-  },
-  {
-    name: "Orders",
-    path: "/vendor/orders",
-    icon: <Users className="mr-2 h-4 w-4" />,
-  },
-  {
-    name: "Products",
-    path: "/vendor/products",
-    icon: <Users className="mr-2 h-4 w-4" />,
-  },
-  {
-    name: "Create Shop",
-    path: "/vendor/create-shop",
-    icon: <FileUser className="mr-2 h-4 w-4" />,
-  },
-  {
-    name: "Coupons",
-    path: "/vendor/coupons",
-    icon: <Code className="mr-2 h-4 w-4" />,
   },
 ];
 
@@ -176,7 +101,9 @@ const ProfileAction = ({ role, userData, shopId }: Props) => {
               onClick={() => router.push(item.path)}
               className={cn(
                 "cursor-pointer",
-                item.path === "/vendor/create-shop" && shopId ? "hidden" : ""
+                item.path === "/dashboard/vendor/create-shop" && shopId
+                  ? "hidden"
+                  : ""
               )}
             >
               {item.icon}

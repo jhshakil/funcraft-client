@@ -72,7 +72,7 @@ const EditorUserProfile = ({ userData }: { userData?: TCustomerData }) => {
 
   useEffect(() => {
     if (!isPending && isSuccess) {
-      router.push("/user/dashboard");
+      router.push("/dashboard/user/dashboard");
     }
   }, [isPending, isSuccess]);
 

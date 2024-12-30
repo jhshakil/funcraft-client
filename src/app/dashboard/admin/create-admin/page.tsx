@@ -82,7 +82,7 @@ const Page = () => {
 
   useEffect(() => {
     if (!isPending && isSuccess) {
-      router.push("/admin/users");
+      router.push("/dashboard/admin/users");
     }
   }, [isPending, isSuccess]);
 

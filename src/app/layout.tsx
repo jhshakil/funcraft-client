@@ -27,8 +27,8 @@ export default function RootLayout({
           disableTransitionOnChange
         >
           <TopBar />
-          <div className="container min-h-[80vh] mx-auto px-2">{children}</div>
-          <Footer />
+          {children}
+          
         </Providers>
       </body>
     </html>

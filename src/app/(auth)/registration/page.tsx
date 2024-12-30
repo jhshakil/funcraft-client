@@ -106,7 +106,7 @@ const Page = () => {
 
   useEffect(() => {
     if (!vendorPending && vendorSuccess) {
-      router.push("/vendor/create-shop");
+      router.push("/dashboard/vendor/create-shop");
     }
   }, [vendorPending, vendorSuccess]);
 

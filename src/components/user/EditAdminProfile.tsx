@@ -70,7 +70,7 @@ const EditorAdminProfile = ({ userData }: { userData?: TAdminData }) => {
 
   useEffect(() => {
     if (!isPending && isSuccess) {
-      router.push("/admin/dashboard");
+      router.push("/dashboard/admin/dashboard");
     }
   }, [isPending, isSuccess]);
 
