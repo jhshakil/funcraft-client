@@ -26,26 +26,16 @@ export const NavbarConfig = [
     ],
   },
   {
-    name: "Category",
-    path: "/category",
+    name: "Flash Sales",
+    path: "/flash-sales",
   },
   {
-    name: "Deals",
-    path: "#",
-    elements: [
-      {
-        name: "Flash Sales",
-        path: "/flash-sales",
-      },
-      {
-        name: "Clearance",
-        path: "/clearance",
-      },
-      {
-        name: "Specific Discounts",
-        path: "/special-discount",
-      },
-    ],
+    name: "Clearance",
+    path: "/clearance",
+  },
+  {
+    name: "Discounts",
+    path: "/discount",
   },
   {
     name: "Shop",

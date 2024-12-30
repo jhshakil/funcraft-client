@@ -15,7 +15,7 @@ const Navbar = () => {
   return (
     <div>
       <NavigationMenu className="w-full">
-        <NavigationMenuList className="space-x-5">
+        <NavigationMenuList className="space-x-3">
           {NavbarConfig?.map((item, i) =>
             item.elements && item.elements.length ? (
               <NavigationMenuItem key={item.name + i}>
