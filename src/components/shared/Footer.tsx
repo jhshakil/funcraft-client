@@ -26,14 +26,14 @@ const Footer = () => {
             2024 <span className="text-primary">funcraft</span>. All rights
             reverved
           </p>
-          <ul className="flex items-center divide-x-2 divide-border">
+          {/* <ul className="flex items-center divide-x-2 divide-border">
             <li className="px-3">
               <Link href={`/`}>Terms & Conditions</Link>
             </li>
             <li className="px-3">
               <Link href={`/`}>Privacy & Policy</Link>
             </li>
-          </ul>
+          </ul> */}
         </div>
       </div>
     </div>
