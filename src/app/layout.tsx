@@ -1,6 +1,5 @@
 import type { Metadata } from "next";
 import "./globals.css";
-import TopBar from "@/components/topBar";
 import Providers from "@/providers";
 
 export const metadata: Metadata = {
@@ -25,7 +24,6 @@ export default function RootLayout({
           enableSystem
           disableTransitionOnChange
         >
-          <TopBar />
           {children}
         </Providers>
       </body>

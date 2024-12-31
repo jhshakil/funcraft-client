@@ -36,7 +36,7 @@ export function CreateReview({ isEnableReview, productId, customerId }: Props) {
   return (
     <div>
       <h2 className="text-3xl font-medium mb-4">Add A Review</h2>
-      <form onSubmit={handleSubmit} className="space-y-4">
+      <form onSubmit={handleSubmit} className="space-y-4 max-w-lg">
         <div>
           <Label htmlFor="ratting">Ratting</Label>
           <div className="flex items-center space-x-1 mt-1">
@@ -46,7 +46,7 @@ export function CreateReview({ isEnableReview, productId, customerId }: Props) {
                 type="button"
                 onClick={() => setRatting(star)}
                 className={`focus:outline-none ${
-                  star <= ratting ? "text-yellow-400" : "text-gray-300"
+                  star <= ratting ? "text-primary" : "text-gray-300"
                 }`}
               >
                 <Star className="w-6 h-6 fill-current" />

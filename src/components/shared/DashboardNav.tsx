@@ -1,6 +1,5 @@
 "use client";
 
-import { getCurrentUser } from "@/services/AuthService";
 import Link from "next/link";
 import {
   ClipboardList,
@@ -11,12 +10,10 @@ import {
   MapPinHouse,
   Menu,
   ShoppingBag,
+  Star,
   UserPen,
   Users,
 } from "lucide-react";
-import { Sheet, SheetContent, SheetTrigger } from "../ui/sheet";
-import { usePathname } from "next/navigation";
-import { useState } from "react";
 import { Button } from "../ui/button";
 import { cn } from "@/lib/utils";
 import { ScrollArea } from "../ui/scroll-area";
@@ -36,6 +33,11 @@ const userRoutes = [
     name: "Orders",
     path: "/dashboard/user/orders",
     icon: Users,
+  },
+  {
+    name: "Reviews",
+    path: "/dashboard/user/reviews",
+    icon: Star,
   },
   {
     name: "Delivery Address",
@@ -85,6 +87,11 @@ const adminRoutes = [
     path: "/dashboard/admin/shops",
     icon: ShoppingBag,
   },
+  {
+    name: "Reviews",
+    path: "/dashboard/admin/reviews",
+    icon: Star,
+  },
 ];
 const vendorRoutes = [
   {
@@ -130,65 +137,18 @@ type SidebarContentProps = {
 };
 
 const DashboardNav = ({ role }: Props) => {
-  const pathname = usePathname();
-  const [isCollapsed, setIsCollapsed] = useState(false);
-  const [isMobileOpen, setIsMobileOpen] = useState(false);
-
   return (
     <>
-      <Sheet open={isMobileOpen} onOpenChange={setIsMobileOpen}>
-        <SheetTrigger asChild>
-          <Button
-            variant="ghost"
-            className="mr-2 px-0 text-base hover:bg-transparent focus-visible:bg-transparent focus-visible:ring-0 focus-visible:ring-offset-0 lg:hidden justify-start"
-          >
-            <Menu className="h-6 w-6" />
-            <span className="sr-only">Toggle Menu</span>
-          </Button>
-        </SheetTrigger>
-        <SheetContent side="left" className="w-[240px] p-0">
-          <SidebarContent role={role} />
-        </SheetContent>
-      </Sheet>
-
-      <aside
-        className={cn(
-          "fixed hidden h-screen lg:flex",
-          isCollapsed ? "w-[60px]" : "w-[240px]"
-        )}
-      >
-        <SidebarContent
-          role={role}
-          // isCollapsed={isCollapsed}
-          // setIsCollapsed={setIsCollapsed}
-        />
+      <aside className={cn("fixed hidden h-screen xl:flex", "w-[240px]")}>
+        <SidebarContent role={role} />
       </aside>
     </>
   );
 };
 
-function SidebarContent({
-  isCollapsed,
-  setIsCollapsed,
-  role,
-}: SidebarContentProps) {
-  const pathname = usePathname();
-
+export function SidebarContent({ role }: SidebarContentProps) {
   return (
-    <div className="flex h-full w-full flex-col border-r bg-white">
-      {/* <div className="flex h-[60px] items-center border-b px-4">
-        {setIsCollapsed && (
-          <Button
-            variant="ghost"
-            className="ml-auto h-8 w-8 p-0"
-            onClick={() => setIsCollapsed(!isCollapsed)}
-          >
-            <Menu className="h-4 w-4" />
-            <span className="sr-only">Toggle Sidebar</span>
-          </Button>
-        )}
-      </div> */}
-
+    <div className="flex h-full w-full flex-col border-r bg-white ">
       <ScrollArea className="flex-1 py-2">
         <nav className="grid gap-4 px-2">
           {(role === "ADMIN" || role === "SUPER_ADMIN"
@@ -201,18 +161,11 @@ function SidebarContent({
               key={j}
               variant="ghost"
               asChild
-              className={cn(
-                "h-9 w-full justify-start",
-                isCollapsed && "h-9 w-9 justify-center p-0"
-              )}
+              className={cn("h-9 w-full justify-start")}
             >
               <Link href={item.path}>
-                {item.icon && (
-                  <item.icon
-                    className={cn("h-4 w-4", isCollapsed ? "" : "mr-2")}
-                  />
-                )}
-                {!isCollapsed && <span className="flex-1">{item.name}</span>}
+                {item.icon && <item.icon className={cn("h-5 w-5 mr-3")} />}
+                <span className="flex-1 text-base xl:text-lg">{item.name}</span>
               </Link>
             </Button>
           ))}

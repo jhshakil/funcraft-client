@@ -7,4 +7,5 @@ export type TReview = {
   customer?: TCustomerData;
   ratting: number;
   review: string;
+  createdAt?: string;
 };

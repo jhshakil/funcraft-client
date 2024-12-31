@@ -1,11 +1,12 @@
 import ProductDetails from "@/components/product/ProductDetails";
 import RelatedProduct from "@/components/product/RelatedProduct";
 import { CreateReview } from "@/components/review/CreateReview";
+import ShowReview from "@/components/review/ShowReview";
 import NewsLetter from "@/components/shared/NewsLetter";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { getCurrentUser } from "@/services/AuthService";
 import { getAllProduct, getProductById } from "@/services/ProductService";
-import { checkForReview } from "@/services/ReviewService";
+import { checkForReview, getReviewByProductId } from "@/services/ReviewService";
 import { getUser } from "@/services/UserService";
 import { TProductData } from "@/types/product.types";
 import { TCustomerData } from "@/types/user.types";
@@ -46,6 +47,7 @@ const Page = async ({ params }: Props) => {
     category: product?.data?.category?.name,
     limit: "5",
   });
+  const reviews = await getReviewByProductId({ id: params.id });
 
   const filterProducts = products?.data?.filter(
     (product: TProductData) => product.id !== params.id
@@ -56,9 +58,10 @@ const Page = async ({ params }: Props) => {
       <ProductDetails product={product.data} />
       <CreateReview
         isEnableReview={isEnableForReview}
-        productId={product.data.id}
+        productId={params.id}
         customerId={userData?.data?.id as string}
       />
+      <ShowReview reviews={reviews.data} />
       <RelatedProduct products={filterProducts} />
       <div className="py-[40px] px-[60px] flex justify-between items-center gap-20 border-t border-b border-border">
         <div className="flex  items-center gap-3">

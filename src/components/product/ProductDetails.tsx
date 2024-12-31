@@ -8,7 +8,7 @@ import Link from "next/link";
 import { useEffect, useState } from "react";
 import { Button } from "../ui/button";
 import { Input } from "../ui/input";
-import { Star } from "lucide-react";
+import { Star, StarHalf } from "lucide-react";
 import { useUser } from "@/context/user.provider";
 
 type Props = {
@@ -23,6 +23,9 @@ const ProductDetails = ({ product }: Props) => {
     ? (product?.price * product?.discount) / 100
     : 0;
   const discountedPrice = product?.price - discountAmount;
+
+  const fullStars = Math.floor((product?.ratting as number) || 0);
+  const hasHalfStar = ((product?.ratting as number) || 0) % 1 !== 0;
 
   const handleQuantityChange = (value: number) => {
     if (value >= 1) {
@@ -56,17 +59,27 @@ const ProductDetails = ({ product }: Props) => {
 
           <div className="flex items-center gap-4">
             <div className="flex items-center">
-              {[...Array(5)].map((_, i) => (
-                <Star
-                  key={i}
-                  className="w-5 h-5 fill-yellow-400 text-yellow-400"
-                />
+              {[...Array(5)].map((_, index) => (
+                <span key={index}>
+                  {index < fullStars ? (
+                    <Star className="w-5 h-5 fill-primary text-primary" />
+                  ) : index === fullStars && hasHalfStar ? (
+                    <StarHalf className="w-5 h-5 fill-primary text-primary" />
+                  ) : (
+                    <Star className="w-5 h-5 text-gray-300" />
+                  )}
+                </span>
               ))}
             </div>
             <span className="text-sm text-gray-600">
-              {product?.ratting} customer review
+              {product?.reviewCount} customer review
             </span>
-            <span className="text-sm text-green-600">In Stock</span>
+
+            {product?.inventoryCount ? (
+              <span className="text-sm text-green-600">In Stock</span>
+            ) : (
+              <span className="text-sm text-red-600">Out of Stock</span>
+            )}
           </div>
 
           <p className="text-gray-600 line-clamp-5">{product?.description}</p>
