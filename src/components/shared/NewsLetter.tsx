@@ -39,8 +39,8 @@ const NewsLetter = () => {
   }
 
   return (
-    <div className="pb-[64px] grid grid-cols-2 gap-20 items-center">
-      <div>
+    <div className="pb-[64px] grid grid-cols-1 lg:grid-cols-3 gap-20 items-center">
+      <div className="col-span-1 lg:col-span-2">
         <small className="text-sm text-primary font-medium">
           Join our newsletter
         </small>
@@ -49,7 +49,7 @@ const NewsLetter = () => {
         </h3>
         <p className="mt-2 text-muted-foreground">{`We'll email you a voucher worth $10 off your first order over $50.`}</p>
       </div>
-      <div className="flex justify-end">
+      <div>
         <div className="w-full max-w-sm">
           <Form {...form}>
             <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">

@@ -55,10 +55,10 @@ const AllProduct = ({ products, categories }: Props) => {
 
   return (
     <div className="px-4 py-8 my-10">
-      <div className="flex gap-8">
+      <div className="flex flex-col lg:flex-row gap-8">
         <Sheet open={sidebarOpen} onOpenChange={setSidebarOpen}>
           <SheetTrigger asChild>
-            <Button variant="outline" className="lg:hidden mb-4">
+            <Button variant="outline" className="lg:hidden mb-4 w-[100px]">
               <Menu className="h-4 w-4 mr-2" />
               Filters
             </Button>

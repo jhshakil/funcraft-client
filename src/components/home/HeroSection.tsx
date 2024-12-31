@@ -5,9 +5,9 @@ import { cn } from "@/lib/utils";
 const HeroSection = () => {
   return (
     <div className="h-[70vh] bg-[url(/images/banner/hero-banner.jpg)] bg-no-repeat bg-cover flex justify-end items-center">
-      <div className="bg-background p-[40px] pt-[60px] mr-[60px] w-[643px] rounded-lg opacity-80">
+      <div className="bg-background p-[40px] pt-[60px] md:mr-[60px] w-[643px] rounded-lg opacity-80">
         <span className="text-base font-medium">New Arrival</span>
-        <h1 className="mt-1 text-[52px] text-primary font-bold leading-tight">
+        <h1 className="mt-1 text-3xl md:text-[52px] text-primary font-bold leading-tight">
           Discover Our Flash Sale Product
         </h1>
         <p className="mt-5 text-base">
@@ -20,7 +20,7 @@ const HeroSection = () => {
           href={`/product?discount=true`}
           className={cn(
             buttonVariants(),
-            "w-[222px] h-[70px] text-xl mt-[46px] uppercase"
+            "w-[180px] h-[60px] text-xl mt-[46px] uppercase"
           )}
         >
           Buy Now

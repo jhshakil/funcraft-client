@@ -132,7 +132,7 @@ export function CheckoutForm({
   };
 
   return (
-    <div className="w-[600px]">
+    <div className="max-w-[600px]">
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
           <FormField

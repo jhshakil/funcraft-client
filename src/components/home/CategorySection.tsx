@@ -17,6 +17,9 @@ type Props = {
 const CategorySection = ({ categories }: Props) => {
   return (
     <div className="px-14">
+      <h2 className="text-xl md:text-3xl text-center font-bold mb-11">
+        All Categories
+      </h2>
       <Carousel
         opts={{
           align: "start",

@@ -14,7 +14,7 @@ const HomeProductSection = ({ products, title, link }: Props) => {
   return (
     <div className="my-10">
       <div className="flex justify-between items-top">
-        <h2 className="text-3xl font-bold mb-6">{title}</h2>
+        <h2 className="text-xl md:text-3xl font-bold mb-6">{title}</h2>
         <Link
           href={link}
           className={cn(buttonVariants({ variant: "outline" }))}

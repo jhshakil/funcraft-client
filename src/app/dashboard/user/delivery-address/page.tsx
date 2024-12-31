@@ -35,11 +35,11 @@ const Page = async () => {
       </div>
       <div className="mt-11">
         {address.success ? (
-          <div className="w-[600px] min-h-[200px] bg-gray-100 p-4 rounded-lg border border-dashed border-border">
+          <div className="max-w-[600px] min-h-[200px] bg-gray-100 p-4 rounded-lg border border-dashed border-border">
             <p>{address.data.address}</p>
           </div>
         ) : (
-          <div className="w-[600px] min-h-[200px] bg-gray-100 p-4 rounded-lg border border-dashed border-border">
+          <div className="max-w-[600px] min-h-[200px] bg-gray-100 p-4 rounded-lg border border-dashed border-border">
             <p>No address created</p>
           </div>
         )}

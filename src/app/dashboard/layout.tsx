@@ -24,11 +24,11 @@ const Layout = async ({ children }: { children: React.ReactNode }) => {
     <div>
       <DashboardTopBar user={user} userData={userData} shop={shop.data} />
       <div className="flex flex-col xl:flex-row min-h-[80vh]">
-        <div className="px-8 lg:px-0">
+        <div className="px-2 lg:px-0">
           <DashboardNav role={user?.role} />
         </div>
         <div className="flex-1 xl:pl-[240px]">
-          <div className="px-11">{children}</div>
+          <div className="px-4 md:px-8 lg:px-11">{children}</div>
         </div>
       </div>
     </div>

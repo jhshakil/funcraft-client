@@ -88,7 +88,7 @@ const EditorUserProfile = ({ userData }: { userData?: TCustomerData }) => {
             className="h-[200px] w-[200px]"
           />
         </div>
-        <div className="w-[400px]">
+        <div className="max-w-[400px]">
           <Form {...form}>
             <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
               <FormField

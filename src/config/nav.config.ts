@@ -5,12 +5,12 @@ export const NavbarConfig = [
   },
   {
     name: "Product",
+    path: "/product",
+  },
+  {
+    name: "Explore",
     path: "#",
     elements: [
-      {
-        name: "All Product",
-        path: "/product",
-      },
       {
         name: "Best Selling Product",
         path: "/product?sortBy=bestSelling&sortOrder=desc",
@@ -36,9 +36,5 @@ export const NavbarConfig = [
   {
     name: "Shop",
     path: "/shop",
-  },
-  {
-    name: "contact",
-    path: "/contact",
   },
 ];

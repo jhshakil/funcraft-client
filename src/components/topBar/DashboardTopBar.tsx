@@ -24,7 +24,7 @@ type Props = {
 const DashboardTopBar = ({ user, userData, shop }: Props) => {
   const [isMobileOpen, setIsMobileOpen] = useState(false);
   return (
-    <div className="w-full py-3 md:py-5 px-11 flex justify-between items-center gap-3 md:gap-8 border-b border-border">
+    <div className="w-full py-3 md:py-5 px-4 md:px-8 lg:px-11 flex justify-between items-center gap-3 md:gap-8 border-b border-border">
       <div className="mr-5">
         <Logo />
       </div>
