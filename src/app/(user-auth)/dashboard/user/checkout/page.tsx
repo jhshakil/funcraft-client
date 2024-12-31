@@ -24,16 +24,7 @@ const Page = async () => {
 
   return (
     <div className="mt-5">
-      <div className="flex justify-between items-center">
-        <h1 className="text-3xl">Checkout</h1>
-        <div>
-          {address.success ? (
-            <UpdateDeliveryAddress address={address?.data} />
-          ) : (
-            <CreateDeliveryAddress customerId={userData?.data?.id as string} />
-          )}
-        </div>
-      </div>
+      <h1 className="text-3xl">Checkout</h1>
       <div className="mt-11">
         <CheckoutForm
           address={address?.data}

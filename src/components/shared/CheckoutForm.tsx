@@ -21,6 +21,8 @@ import { useCreateOrder } from "@/hooks/order.hook";
 import { useRouter } from "next/navigation";
 import { Input } from "../ui/input";
 import { useGetCouponByCode } from "@/hooks/coupon.hook";
+import { UpdateDeliveryAddress } from "../user/UpdateDeliveryAddress";
+import { CreateDeliveryAddress } from "../user/CreateDeliveryAddress";
 
 const FormSchema = z.object({
   address: z.string().min(2, {
@@ -133,6 +135,13 @@ export function CheckoutForm({
 
   return (
     <div className="max-w-[600px]">
+      <div className="mb-5">
+        {address?.address ? (
+          <UpdateDeliveryAddress address={address} />
+        ) : (
+          <CreateDeliveryAddress customerId={customerId} />
+        )}
+      </div>
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
           <FormField
@@ -143,7 +152,7 @@ export function CheckoutForm({
                 <FormLabel>Address</FormLabel>
                 <FormControl>
                   <Textarea
-                    placeholder="Enter your address"
+                    placeholder="No Address Created"
                     readOnly
                     {...field}
                   />
