@@ -16,18 +16,40 @@ import {
   SelectTrigger,
   SelectValue,
 } from "../ui/select";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
+import {
+  Pagination,
+  PaginationContent,
+  PaginationItem,
+  PaginationLink,
+  PaginationNext,
+  PaginationPrevious,
+} from "../ui/pagination";
+import { calculatePages } from "@/lib/utils";
+import { TMeta } from "@/types/meta.type";
 
 type Props = {
   products: TProductData[];
   categories: TCategory[];
+  meta: TMeta;
+  currentPage: string;
 };
 
-const AllProduct = ({ products, categories }: Props) => {
+const AllProduct = ({ products, categories, meta, currentPage }: Props) => {
   const router = useRouter();
+  const searchParams = useSearchParams();
 
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [selectedField, setSelectedField] = useState("");
+
+  const totalPage = calculatePages(meta.total, meta.limit);
+  const start = Math.max(0, Number(currentPage) - 2);
+  const end = Math.min(totalPage, start + 3);
+  const adjustedStart = Math.max(0, end - 3);
+  const visibleItems = Array.from(
+    { length: totalPage },
+    (_, index) => index + 1
+  ).slice(adjustedStart, end);
 
   const generateParam = (data: string) => {
     const url = new URL(window.location.href);
@@ -51,6 +73,12 @@ const AllProduct = ({ products, categories }: Props) => {
       url.searchParams.set("sortOrder", "desc");
       router.push(url.pathname + url.search);
     }
+  };
+
+  const createHref = (page: number) => {
+    const currentParams = Object.fromEntries(searchParams.entries());
+    const updatedParams = { ...currentParams, page: String(page) };
+    return `/product?${new URLSearchParams(updatedParams).toString()}`;
   };
 
   return (
@@ -78,7 +106,7 @@ const AllProduct = ({ products, categories }: Props) => {
           <div className="w-full">
             <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-6">
               <p className="text-sm text-gray-600">
-                Showing 1–20 of 62 results
+                Showing total {meta.total} results
               </p>
               <div className="flex items-center gap-2">
                 <Select
@@ -109,6 +137,45 @@ const AllProduct = ({ products, categories }: Props) => {
               {products?.map((product) => (
                 <ProductCard key={product.id} product={product} />
               ))}
+            </div>
+            <div className="mt-8">
+              <Pagination className="justify-end">
+                <PaginationContent>
+                  {/* Previous Button */}
+                  <PaginationItem>
+                    <PaginationPrevious
+                      href={createHref(
+                        Number(currentPage) < 2 ? 1 : Number(currentPage) - 1
+                      )}
+                    />
+                  </PaginationItem>
+
+                  {/* Page Links */}
+                  {visibleItems.map((el) => (
+                    <PaginationItem key={`product-pagination_${el}`}>
+                      <PaginationLink
+                        href={createHref(el)}
+                        isActive={el === meta.page}
+                      >
+                        {el}
+                      </PaginationLink>
+                    </PaginationItem>
+                  ))}
+
+                  {/* Next Button */}
+                  <PaginationItem>
+                    <PaginationNext
+                      href={createHref(
+                        Number(currentPage) === totalPage
+                          ? totalPage
+                          : Number(currentPage) < totalPage
+                          ? Number(currentPage) + 1
+                          : totalPage
+                      )}
+                    />
+                  </PaginationItem>
+                </PaginationContent>
+              </Pagination>
             </div>
           </div>
         </div>

@@ -11,6 +11,7 @@ const Page = async ({ searchParams }: Props) => {
   const categories = await getAllCategory({ limit: "20" });
   const products = await getAllProduct({
     page: searchParams.page || "1",
+    limit: "9",
     sortBy: searchParams.sortBy,
     sortOrder: searchParams.sortOrder,
     category: searchParams.category,
@@ -21,7 +22,12 @@ const Page = async ({ searchParams }: Props) => {
 
   return (
     <div>
-      <AllProduct products={products.data} categories={categories.data} />
+      <AllProduct
+        products={products.data}
+        categories={categories.data}
+        meta={products.meta}
+        currentPage={searchParams.page || "1"}
+      />
     </div>
   );
 };

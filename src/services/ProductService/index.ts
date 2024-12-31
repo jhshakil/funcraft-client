@@ -42,7 +42,7 @@ export const getAllProduct = async ({
     url.searchParams.append("minPrice", minPrice);
   }
   if (maxPrice) {
-    url.searchParams.append("limit", maxPrice);
+    url.searchParams.append("maxPrice", maxPrice);
   }
   if (flashSales) {
     url.searchParams.append("flashSales", flashSales);
