@@ -11,7 +11,9 @@ const Page = async ({ searchParams }: { searchParams: { page?: string } }) => {
       <div className="flex justify-between items-center">
         <h1 className="text-3xl">Dashboard</h1>
       </div>
-      <div className="mt-11"></div>
+      <div className="mt-11">
+        <p>Coming Soon...</p>
+      </div>
     </div>
   );
 };

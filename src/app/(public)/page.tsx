@@ -1,6 +1,7 @@
 import CategorySection from "@/components/home/CategorySection";
 import HeroSection from "@/components/home/HeroSection";
 import HomeProductSection from "@/components/home/HomeProductSection";
+import OfferProduct from "@/components/home/OfferProduct";
 import NewsLetter from "@/components/shared/NewsLetter";
 import SpecialFeature from "@/components/shared/SpecialFeature";
 
@@ -36,11 +37,7 @@ const Page = async () => {
         title={"Featured Products"}
         link="/product"
       />
-      <HomeProductSection
-        products={flashSalesProducts.data}
-        title="Flash Sale"
-        link="/product?flashSales=true"
-      />
+      <OfferProduct products={flashSalesProducts.data} />
       <HomeProductSection
         products={recentProducts.data}
         title="Recent Product"
@@ -51,6 +48,11 @@ const Page = async () => {
         title="Top Rated Product"
         link="/product?topRated=true"
       />
+      {/* <HomeProductSection
+        products={flashSalesProducts.data}
+        title="Flash Sale"
+        link="/product?flashSales=true"
+      /> */}
       <SpecialFeature />
       <NewsLetter />
     </div>

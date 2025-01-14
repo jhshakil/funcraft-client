@@ -19,7 +19,7 @@ const Navbar = () => {
           {NavbarConfig?.map((item, i) =>
             item.elements && item.elements.length ? (
               <NavigationMenuItem key={item.name + i}>
-                <NavigationMenuTrigger className="text-lg font-medium hover:text-primary">
+                <NavigationMenuTrigger className="text-base xl:text-lg font-medium hover:text-primary px-2 xl:px-4">
                   {item.name}
                 </NavigationMenuTrigger>
                 <NavigationMenuContent className="shadow-lg">
@@ -47,7 +47,7 @@ const Navbar = () => {
                   <NavigationMenuLink
                     className={cn(
                       navigationMenuTriggerStyle(),
-                      "text-lg font-medium hover:text-primary"
+                      "text-base lg:text-lg font-medium hover:text-primary px-2 xl:px-4"
                     )}
                   >
                     {item.name}

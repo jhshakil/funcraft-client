@@ -10,7 +10,7 @@ type Props = {
 const CategoryCard = ({ category }: Props) => {
   return (
     <Link href={`/product?category=${category.name}`}>
-      <div className="flex flex-col items-center gap-3">
+      <div className="flex flex-col items-center gap-3 border border-border rounded-lg py-4">
         <Avatar className="h-[66px] w-[66px] rounded-none">
           <AvatarImage src={category.image} alt="Category" />
           <AvatarFallback className="rounded-none">

@@ -63,7 +63,7 @@ const MainSearch = () => {
           />
           {allSearchData && allSearchData?.length ? (
             <div className="absolute top-[50px] bg-background w-full p-4 z-20">
-              <ul>
+              <ul className=" divide-y-2">
                 {allSearchData?.map((item: TProductData, i: number) => (
                   <li
                     key={`search_item-${i}`}
@@ -71,6 +71,7 @@ const MainSearch = () => {
                       setALlSearchData([]);
                       setProOpen(false);
                     }}
+                    className="py-4"
                   >
                     <Link href={`/product/${item?.id}?key=${item?.id}`}>
                       {item?.name}
