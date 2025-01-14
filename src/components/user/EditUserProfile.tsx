@@ -16,13 +16,19 @@ import { Input } from "@/components/ui/input";
 import AvatarComponent from "@/components/shared/AvatarComponent";
 import EditorImageUpload from "@/components/shared/EditorImageUpload";
 import { Button } from "@/components/ui/button";
-import { Pen } from "lucide-react";
 import { useEffect, useState } from "react";
 import { useUpdateUser } from "@/hooks/user.hook";
 import { toast } from "sonner";
 import { useRouter } from "next/navigation";
 import { useUser } from "@/context/user.provider";
 import { TCustomerData } from "@/types/user.types";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "../ui/card";
 
 const FormSchema = z.object({
   name: z.string().min(2, {
@@ -33,7 +39,6 @@ const FormSchema = z.object({
 });
 
 const EditorUserProfile = ({ userData }: { userData?: TCustomerData }) => {
-  const [open, setOpen] = useState(false);
   const [uploadFile, setUploadFile] = useState<string>();
   const router = useRouter();
 
@@ -46,12 +51,12 @@ const EditorUserProfile = ({ userData }: { userData?: TCustomerData }) => {
     defaultValues: {
       name: userData?.name || "",
       contactNumber: userData?.contactNumber || "",
+      profilePhoto: userData?.profilePhoto || "",
     },
   });
 
   const uploadedFile = (data: string) => {
     setUploadFile(data);
-    setOpen(false);
   };
 
   async function onSubmit(formData: z.infer<typeof FormSchema>) {
@@ -72,35 +77,31 @@ const EditorUserProfile = ({ userData }: { userData?: TCustomerData }) => {
 
   useEffect(() => {
     if (!isPending && isSuccess) {
-      router.push("/dashboard/user/dashboard");
+      router.push("/dashboard/user");
     }
   }, [isPending, isSuccess]);
 
   return (
-    <div className="mt-11 flex justify-center">
-      <div className="flex flex-col gap-11">
-        <div>
-          <Button size={"icon"} onClick={() => setOpen(true)}>
-            <Pen size={16} />
-          </Button>
-          <AvatarComponent
-            src={uploadFile || (userData?.profilePhoto as string)}
-            className="h-[200px] w-[200px]"
-          />
-        </div>
-        <div className="max-w-[400px]">
-          <Form {...form}>
-            <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
+    <Card className="w-full lg:w-3/4 mx-auto my-8">
+      <CardHeader className="space-y-1">
+        <CardTitle className="text-2xl">Edit your Profile</CardTitle>
+        <CardDescription>
+          Fill your data below to update profile
+        </CardDescription>
+      </CardHeader>
+      <CardContent className="grid gap-4">
+        <Form {...form}>
+          <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <FormField
                 control={form.control}
                 name="name"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Name</FormLabel>
+                    <FormLabel>name</FormLabel>
                     <FormControl>
                       <Input placeholder="Enter your name" {...field} />
                     </FormControl>
-
                     <FormMessage />
                   </FormItem>
                 )}
@@ -110,32 +111,34 @@ const EditorUserProfile = ({ userData }: { userData?: TCustomerData }) => {
                 name="contactNumber"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Contact Number</FormLabel>
+                    <FormLabel>Phone Number</FormLabel>
                     <FormControl>
-                      <Input
-                        placeholder="Enter your contact number"
-                        {...field}
-                      />
+                      <Input placeholder="Enter your phone number" {...field} />
                     </FormControl>
-
                     <FormMessage />
                   </FormItem>
                 )}
               />
-
-              <Button type="submit" className="w-full">
-                Update
-              </Button>
-            </form>
-          </Form>
-        </div>
-      </div>
-      <EditorImageUpload
-        open={open}
-        setOpen={setOpen}
-        onSubmit={uploadedFile}
-      />
-    </div>
+            </div>
+            <div>
+              <p className="text-sm">Profile Image</p>
+              <div className="grid grid-cols-1 md:grid-cols-3 items-center gap-8 mt-5">
+                <AvatarComponent
+                  src={uploadFile || (userData?.profilePhoto as string)}
+                  className="h-[200px] w-[200px]"
+                />
+                <div className="md:col-span-2">
+                  <EditorImageUpload onSubmit={uploadedFile} />
+                </div>
+              </div>
+            </div>
+            <div className="flex justify-end items-center gap-4">
+              <Button type="submit">Update</Button>
+            </div>
+          </form>
+        </Form>
+      </CardContent>
+    </Card>
   );
 };
 

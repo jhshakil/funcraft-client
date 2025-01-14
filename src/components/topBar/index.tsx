@@ -27,7 +27,7 @@ const TopBar = async () => {
   const shop = await getShopByVendorId(user?.id as string);
 
   return (
-    <header className="w-full py-4 md:py-6 bg-background sticky top-0 z-50 shadow-lg">
+    <header className="w-full py-4 md:py-6 bg-background sticky top-0 z-50 border-b border-border">
       <div className="container mx-auto px-2 flex justify-between items-center gap-3 md:gap-8">
         <div className="mr-5">
           <Logo />

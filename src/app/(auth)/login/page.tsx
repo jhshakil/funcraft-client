@@ -83,7 +83,7 @@ const Page = () => {
         </CardDescription>
       </CardHeader>
       <CardContent className="grid gap-4">
-        <div className="flex items-center gap-4">
+        <div className="flex items-center flex-wrap gap-4">
           <Button
             onClick={() =>
               form.reset({ email: "jhshakil@gmail.com", password: "12345678" })

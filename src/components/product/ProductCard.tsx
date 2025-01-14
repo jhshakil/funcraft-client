@@ -27,13 +27,15 @@ export function ProductCard({ product }: Props) {
       )}
 
       <div className="relative aspect-square">
-        <Image
-          src={thumbnailImage as string}
-          alt={name}
-          fill
-          className="object-cover"
-          sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-        />
+        {thumbnailImage && (
+          <Image
+            src={thumbnailImage as string}
+            alt={name}
+            fill
+            className="object-cover"
+            sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+          />
+        )}
       </div>
       <div className="p-4 space-y-2">
         <h3 className="font-medium text-lg text-gray-900">{name}</h3>

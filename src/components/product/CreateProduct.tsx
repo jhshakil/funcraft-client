@@ -111,6 +111,7 @@ export function CreateProduct({ categories, shopId }: Props) {
           await getDownloadURL(imgData.ref).then((val) => {
             formData.thumbnailImage = val;
             handleCreate(formData);
+            form.reset();
             toast.success("Success!", {
               description: "Your request has been completed successfully.",
               icon: "✅",
@@ -120,6 +121,7 @@ export function CreateProduct({ categories, shopId }: Props) {
         });
       } else {
         handleCreate(formData);
+        form.reset();
         toast.success("Success!", {
           description: "Your request has been completed successfully.",
           icon: "✅",

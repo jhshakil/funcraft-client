@@ -1,16 +1,6 @@
 "use client";
 
-import {
-  ClipboardList,
-  Code,
-  CreditCard,
-  FileUser,
-  LogOut,
-  MapPinHouse,
-  ShoppingBag,
-  UserPen,
-  Users,
-} from "lucide-react";
+import { CreditCard, LogOut } from "lucide-react";
 
 import {
   DropdownMenu,

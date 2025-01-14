@@ -43,7 +43,7 @@ const ProductDetails = ({ product }: Props) => {
 
   return (
     <div className="mt-11 px-4 py-8">
-      <div className="grid md:grid-cols-2 gap-11 lg:gap-32">
+      <div className="grid md:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-2 gap-11">
         <div className="relative aspect-square">
           <Image
             src={product?.thumbnailImage as string}
@@ -54,7 +54,7 @@ const ProductDetails = ({ product }: Props) => {
           />
         </div>
 
-        <div className="space-y-6">
+        <div className="space-y-6 xl:col-span-2 2xl:col-span-1">
           <h1 className="text-3xl font-bold">{product?.name}</h1>
 
           <div className="flex items-center gap-4">

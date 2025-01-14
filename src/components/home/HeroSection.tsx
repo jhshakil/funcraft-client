@@ -4,7 +4,7 @@ import { cn } from "@/lib/utils";
 
 const HeroSection = () => {
   return (
-    <div className="h-[70vh] bg-[url(/images/banner/hero-banner.jpg)] bg-no-repeat bg-cover flex justify-end items-center">
+    <div className="h-[80vh] 2xl:h-[70vh] bg-[url(/images/banner/hero-banner.jpg)] bg-no-repeat bg-cover flex justify-end items-center">
       <div className="bg-background p-[40px] pt-[60px] md:mr-[60px] w-[643px] rounded-lg opacity-80">
         <span className="text-base font-medium">New Arrival</span>
         <h1 className="mt-1 text-3xl md:text-[52px] text-primary font-bold leading-tight">
