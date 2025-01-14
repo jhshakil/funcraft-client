@@ -15,7 +15,10 @@ const OfferProduct = ({ products }: Props) => {
     return price - discountAmount;
   };
   return (
-    <section className="container mx-auto p-4">
+    <section className="my-10">
+      <div className="flex justify-between items-top">
+        <h2 className="text-xl md:text-3xl font-bold mb-6">Flash Sale</h2>
+      </div>
       <div className="grid gap-6 md:grid-cols-2">
         {products?.slice(0, 2)?.map((product) => (
           <Card
