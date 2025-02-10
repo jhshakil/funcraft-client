@@ -9,24 +9,6 @@ import { getAllCategory } from "@/services/CategoryService";
 import { getAllProduct } from "@/services/ProductService";
 
 const Page = async () => {
-  // const categories = await getAllCategory({});
-  // const products = await getAllProduct({
-  //   limit: "8",
-  // });
-  // const flashSalesProducts = await getAllProduct({
-  //   limit: "8",
-  //   flashSales: "true",
-  // });
-  // const recentProducts = await getAllProduct({
-  //   limit: "8",
-  //   sortBy: "createdAt",
-  //   sortOrder: "desc",
-  // });
-  // const topRatedProducts = await getAllProduct({
-  //   limit: "8",
-  //   sortBy: "ratting",
-  //   sortOrder: "desc",
-  // });
 
   const [categories, products, flashSalesProducts, recentProducts, topRatedProducts] = await Promise.all([
     getAllCategory({}),

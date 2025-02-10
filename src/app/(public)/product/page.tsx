@@ -8,17 +8,19 @@ type Props = {
 };
 
 const Page = async ({ searchParams }: Props) => {
-  const categories = await getAllCategory({ limit: "20" });
-  const products = await getAllProduct({
-    page: searchParams.page || "1",
-    limit: "9",
-    sortBy: searchParams.sortBy,
-    sortOrder: searchParams.sortOrder,
-    category: searchParams.category,
-    minPrice: searchParams.minPrice,
-    maxPrice: searchParams.maxPrice,
-    flashSales: searchParams.flashSales,
-  });
+  const [categories, products] = await Promise.all([
+    getAllCategory({ limit: "20" }),
+    getAllProduct({
+      page: searchParams.page || "1",
+      limit: "9",
+      sortBy: searchParams.sortBy,
+      sortOrder: searchParams.sortOrder,
+      category: searchParams.category,
+      minPrice: searchParams.minPrice,
+      maxPrice: searchParams.maxPrice,
+      flashSales: searchParams.flashSales,
+    }),
+  ]);
 
   return (
     <div>

@@ -9,7 +9,6 @@ import { getAllProduct, getProductById } from "@/services/ProductService";
 import { checkForReview, getReviewByProductId } from "@/services/ReviewService";
 import { getUser } from "@/services/UserService";
 import { TProductData } from "@/types/product.types";
-import { TCustomerData } from "@/types/user.types";
 
 type Props = {
   params: {
@@ -18,38 +17,42 @@ type Props = {
 };
 
 const Page = async ({ params }: Props) => {
-  const user = await getCurrentUser();
+  const productId = params.id;
+  
+  // Fetch user data in parallel
+  const [user, product] = await Promise.all([
+    getCurrentUser(),
+    getProductById({ id: productId }),
+  ]);
 
-  let userData: { data: TCustomerData } | null = null;
+  // Additional user-based requests
+  const userDataPromise = user?.id ? getUser(user.id) : Promise.resolve(null);
+  const reviewCheckPromise = user?.id
+    ? checkForReview({ userId: user.id, productId })
+    : Promise.resolve({ data: "false" });
 
-  try {
-    if (user?.id) {
-      userData = await getUser(user?.id as string);
-    }
-  } catch (error) {
-    console.log(error);
-  }
-
-  let isEnableForReview = false;
-
-  if (userData?.data?.id) {
-    const data = await checkForReview({
-      userId: userData?.data?.id,
-      productId: params.id,
-    });
-
-    isEnableForReview = data?.data === "true" ? true : false;
-  }
-
-  const product = await getProductById({ id: params.id });
-  const products = await getAllProduct({
+  // Related products & reviews
+  const relatedProductsPromise = getAllProduct({
     category: product?.data?.category?.name,
     limit: "5",
   });
-  const reviews = await getReviewByProductId({ id: params.id });
 
-  const filterProducts = products?.data?.filter(
-    (product: TProductData) => product.id !== params.id
+  const reviewsPromise = getReviewByProductId({ id: productId });
+
+  // Resolve all API calls in parallel
+  const [userData, reviewCheck, relatedProducts, reviews] = await Promise.all([
+    userDataPromise,
+    reviewCheckPromise,
+    relatedProductsPromise,
+    reviewsPromise,
+  ]);
+
+  // Check if user is eligible for review
+  const isEnableForReview = reviewCheck?.data === "true";
+
+  // Filter out the current product from related products
+  const filterProducts = relatedProducts?.data?.filter(
+    (p: TProductData) => p.id !== productId
   );
 
   return (
@@ -57,8 +60,8 @@ const Page = async ({ params }: Props) => {
       <ProductDetails product={product.data} />
       <CreateReview
         isEnableReview={isEnableForReview}
-        productId={params.id}
-        customerId={userData?.data?.id as string}
+        productId={productId}
+        customerId={userData?.data?.id || ""}
       />
       <ShowReview reviews={reviews.data} />
       <RelatedProduct products={filterProducts} />
