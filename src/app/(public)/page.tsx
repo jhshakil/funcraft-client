@@ -9,24 +9,32 @@ import { getAllCategory } from "@/services/CategoryService";
 import { getAllProduct } from "@/services/ProductService";
 
 const Page = async () => {
-  const categories = await getAllCategory({});
-  const products = await getAllProduct({
-    limit: "8",
-  });
-  const flashSalesProducts = await getAllProduct({
-    limit: "8",
-    flashSales: "true",
-  });
-  const recentProducts = await getAllProduct({
-    limit: "8",
-    sortBy: "createdAt",
-    sortOrder: "desc",
-  });
-  const topRatedProducts = await getAllProduct({
-    limit: "8",
-    sortBy: "ratting",
-    sortOrder: "desc",
-  });
+  // const categories = await getAllCategory({});
+  // const products = await getAllProduct({
+  //   limit: "8",
+  // });
+  // const flashSalesProducts = await getAllProduct({
+  //   limit: "8",
+  //   flashSales: "true",
+  // });
+  // const recentProducts = await getAllProduct({
+  //   limit: "8",
+  //   sortBy: "createdAt",
+  //   sortOrder: "desc",
+  // });
+  // const topRatedProducts = await getAllProduct({
+  //   limit: "8",
+  //   sortBy: "ratting",
+  //   sortOrder: "desc",
+  // });
+
+  const [categories, products, flashSalesProducts, recentProducts, topRatedProducts] = await Promise.all([
+    getAllCategory({}),
+    getAllProduct({ limit: "8" }),
+    getAllProduct({ limit: "8", flashSales: "true" }),
+    getAllProduct({ limit: "8", sortBy: "createdAt", sortOrder: "desc" }),
+    getAllProduct({ limit: "8", sortBy: "rating", sortOrder: "desc" }),
+  ]);
 
   return (
     <div className="flex flex-col space-y-20">
