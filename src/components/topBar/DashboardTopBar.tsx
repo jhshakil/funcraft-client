@@ -9,10 +9,9 @@ import {
 import Logo from "../shared/Logo";
 import TopBarAction from "./TopBarAction";
 import { TShop } from "@/types/shop.type";
-import { Sheet, SheetContent, SheetTrigger } from "../ui/sheet";
+import { Sheet, SheetTrigger } from "../ui/sheet";
 import { Button } from "../ui/button";
 import { Menu } from "lucide-react";
-import { SidebarContent } from "../shared/DashboardNav";
 import { useState } from "react";
 
 type Props = {
@@ -44,11 +43,6 @@ const DashboardTopBar = ({ user, userData, shop }: Props) => {
               <span className="sr-only">Toggle Menu</span>
             </Button>
           </SheetTrigger>
-          <SheetContent side="left" className="w-[240px] p-0">
-            <div className="mt-8">
-              <SidebarContent role={user?.role as string} />
-            </div>
-          </SheetContent>
         </Sheet>
       </div>
     </div>

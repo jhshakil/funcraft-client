@@ -1,6 +1,5 @@
 "use client";
 
-import Link from "next/link";
 import {
   ClipboardList,
   Code,
@@ -12,9 +11,19 @@ import {
   UserPen,
   Users,
 } from "lucide-react";
-import { Button } from "../ui/button";
-import { cn } from "@/lib/utils";
-import { ScrollArea } from "../ui/scroll-area";
+
+import {
+  Sidebar,
+  SidebarContent,
+  SidebarHeader,
+  SidebarMenu,
+  SidebarMenuButton,
+  SidebarMenuItem,
+  SidebarRail,
+} from "@/components/ui/sidebar";
+import Logo from "./Logo";
+import Link from "next/link";
+import { usePathname } from "next/navigation";
 
 const userRoutes = [
   {
@@ -128,49 +137,43 @@ type Props = {
   role: string;
 };
 
-type SidebarContentProps = {
-  isCollapsed?: boolean;
-  setIsCollapsed?: (collapsed: boolean) => void;
-  role?: string;
-};
-
 const DashboardNav = ({ role }: Props) => {
-  return (
-    <>
-      <aside className={cn("fixed hidden h-screen xl:flex", "w-[240px]")}>
-        <SidebarContent role={role} />
-      </aside>
-    </>
-  );
-};
+  const pathname = usePathname();
+  const lastSegment = pathname.split("/").pop();
 
-export function SidebarContent({ role }: SidebarContentProps) {
   return (
-    <div className="flex h-full w-full flex-col border-r bg-white ">
-      <ScrollArea className="flex-1 py-2">
-        <nav className="grid gap-4 px-2">
+    <Sidebar>
+      <SidebarHeader>
+        <Logo />
+      </SidebarHeader>
+      <SidebarContent className="mt-6 px-2">
+        <SidebarMenu>
           {(role === "ADMIN" || role === "SUPER_ADMIN"
             ? adminRoutes
             : role === "VENDOR"
             ? vendorRoutes
             : userRoutes
           )?.map((item, j) => (
-            <Button
-              key={j}
-              variant="ghost"
-              asChild
-              className={cn("h-9 w-full justify-start")}
-            >
-              <Link href={item.path}>
-                {item.icon && <item.icon className={cn("h-5 w-5 mr-3")} />}
-                <span className="flex-1 text-base xl:text-lg">{item.name}</span>
-              </Link>
-            </Button>
+            <SidebarMenuItem key={j}>
+              <SidebarMenuButton
+                asChild
+                className="text-base font-medium"
+                isActive={
+                  item.name === "Dashboard" && lastSegment === "user"
+                    ? true
+                    : item.name.toLocaleLowerCase() ===
+                      lastSegment?.toLowerCase()
+                }
+              >
+                <Link href={item.path}>{item.name}</Link>
+              </SidebarMenuButton>
+            </SidebarMenuItem>
           ))}
-        </nav>
-      </ScrollArea>
-    </div>
+        </SidebarMenu>
+      </SidebarContent>
+      <SidebarRail />
+    </Sidebar>
   );
-}
+};
 
 export default DashboardNav;
