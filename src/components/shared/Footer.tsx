@@ -4,7 +4,7 @@ import Logo from "./Logo";
 const Footer = () => {
   return (
     <div className="bg-secondary">
-      <div className="container mx-auto px-2 ">
+      <div className="container">
         <div className="flex justify-between flex-wrap py-11 gap-11">
           <div>
             <Logo />

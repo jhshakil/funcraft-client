@@ -14,7 +14,7 @@ const ShopDetails = ({ shop, user }: { shop: TShop; user: TVendorData }) => {
   return (
     <div className="min-h-screen">
       <div className="bg-white border-b border-border">
-        <div className="container mx-auto px-4 py-6 flex items-center justify-between">
+        <div className="container py-6 flex items-center justify-between">
           <div className="flex items-center space-x-4">
             <Avatar className="w-[50px] h-[50px]">
               <AvatarImage

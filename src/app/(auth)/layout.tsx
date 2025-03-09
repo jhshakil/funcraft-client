@@ -6,7 +6,7 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
   return (
     <div>
       <TopBar />
-      <div className="container min-h-[80vh] mx-auto px-2">{children}</div>
+      <div className="container min-h-[80vh]">{children}</div>
       <ScrollToTop />
       <Footer />
     </div>

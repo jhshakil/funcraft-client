@@ -11,6 +11,7 @@ type Props = {
 };
 
 const HomeProductSection = ({ products, title, link }: Props) => {
+  if (!products?.length) return;
   return (
     <div className="my-10">
       <div className="flex justify-between items-top">
@@ -22,7 +23,7 @@ const HomeProductSection = ({ products, title, link }: Props) => {
           See More
         </Link>
       </div>
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
         {products?.map((product) => (
           <ProductCard key={product.id} product={product} />
         ))}

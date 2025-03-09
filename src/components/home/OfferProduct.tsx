@@ -10,6 +10,8 @@ type Props = {
 };
 
 const OfferProduct = ({ products }: Props) => {
+  if (!products?.length) return;
+
   const getDiscount = (discount: number, price: number) => {
     const discountAmount = discount ? (price * discount) / 100 : 0;
     return price - discountAmount;
