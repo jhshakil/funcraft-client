@@ -26,3 +26,23 @@ export const getStatsByCustomer = async ({
 
   return res.json();
 };
+
+export const getStatsByVendor = async ({ shopId }: { shopId: string }) => {
+  const cookieStore = cookies();
+  const accessToken = cookieStore.get("accessToken")?.value;
+
+  const fetchOption = {
+    next: {
+      tags: ["vendor_stats"],
+    },
+    headers: {
+      Authorization: accessToken as string,
+    },
+  };
+
+  const url = new URL(`${envConfig.baseUrl}/stats/vendor/${shopId}`);
+
+  const res = await fetch(url.toString(), fetchOption);
+
+  return res.json();
+};

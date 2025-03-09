@@ -56,7 +56,7 @@ const Layout = async ({ children }: { children: React.ReactNode }) => {
           />
         </header>
         <div>
-          <div className="px-4 md:px-8 lg:px-11">{children}</div>
+          <div className="px-4 md:px-8 lg:px-11 py-6">{children}</div>
         </div>
       </SidebarInset>
     </SidebarProvider>
