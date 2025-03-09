@@ -159,7 +159,10 @@ const DashboardNav = ({ role }: Props) => {
                 asChild
                 className="text-base font-medium"
                 isActive={
-                  item.name === "Dashboard" && lastSegment === "user"
+                  item.name === "Dashboard" &&
+                  (lastSegment === "user" ||
+                    lastSegment === "vendor" ||
+                    lastSegment === "admin")
                     ? true
                     : item.name.toLocaleLowerCase() ===
                       lastSegment?.toLowerCase()
