@@ -18,11 +18,11 @@ import { Textarea } from "../ui/textarea";
 import { TDeliveryAddress } from "@/types/user.types";
 import { useUser } from "@/context/user.provider";
 import { useCreateOrder } from "@/hooks/order.hook";
-import { useRouter } from "next/navigation";
 import { Input } from "../ui/input";
 import { useGetCouponByCode } from "@/hooks/coupon.hook";
 import { UpdateDeliveryAddress } from "../user/UpdateDeliveryAddress";
 import { CreateDeliveryAddress } from "../user/CreateDeliveryAddress";
+import { useMakePayment } from "@/hooks/payment.hook";
 
 const FormSchema = z.object({
   address: z.string().min(2, {
@@ -51,7 +51,11 @@ export function CheckoutForm({
   } = useCreateOrder();
 
   const { mutate: checkCode, data: CodeData } = useGetCouponByCode();
-  const router = useRouter();
+  const { mutate: handlePayment, data: paymentData } = useMakePayment();
+
+  if (paymentData && paymentData?.data?.payment_url) {
+    window.location.href = paymentData?.data?.payment_url;
+  }
 
   const form = useForm<z.infer<typeof FormSchema>>({
     resolver: zodResolver(FormSchema),
@@ -62,7 +66,7 @@ export function CheckoutForm({
 
   useEffect(() => {
     if (!isPending && isSuccess) {
-      router.push(`/dashboard/user/payment?orderId=${orderData?.data?.id}`);
+      handlePayment({ orderId: orderData?.data?.id });
     }
   }, [isPending, isSuccess]);
 
@@ -72,7 +76,7 @@ export function CheckoutForm({
     }
   }, [CodeData]);
 
-  if (!(cartData && cartData.length)) return;
+  // if (!(cartData && cartData.length)) return <p>No Product added</p>;
 
   const totalCheckoutPrice = cartData?.reduce(
     (sum, item) => sum + item.totalPrice,
@@ -220,7 +224,11 @@ export function CheckoutForm({
             </Button>
           </div>
 
-          <Button type="submit" className="w-full">
+          <Button
+            type="submit"
+            disabled={!(cartData && cartData.length)}
+            className="w-full"
+          >
             Goto Payment
           </Button>
         </form>

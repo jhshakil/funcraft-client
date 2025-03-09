@@ -1,6 +1,4 @@
 import { CheckoutForm } from "@/components/shared/CheckoutForm";
-import { CreateDeliveryAddress } from "@/components/user/CreateDeliveryAddress";
-import { UpdateDeliveryAddress } from "@/components/user/UpdateDeliveryAddress";
 import { getCurrentUser } from "@/services/AuthService";
 import { getDeliveryAddressById } from "@/services/DeliveryAddress";
 import { getUser } from "@/services/UserService";
