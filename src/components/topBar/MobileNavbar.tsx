@@ -29,6 +29,12 @@ import Link from "next/link";
 import { useState } from "react";
 import { NavbarConfig } from "@/config/nav.config";
 
+type TNav = {
+  name: string;
+  path: string;
+  elements?: { name: string; path: string }[];
+};
+
 const MobileNavbar = () => {
   const [proOpen, setProOpen] = useState(false);
 
@@ -50,7 +56,7 @@ const MobileNavbar = () => {
             <NavigationMenu className="justify-start px-11 [&>div]:w-full">
               <NavigationMenuList className="justify-start w-full">
                 <NavigationMenuItem className="flex flex-col gap-8 w-full">
-                  {NavbarConfig?.map((item, i) =>
+                  {NavbarConfig?.map((item: TNav, i) =>
                     item.elements && item.elements.length ? (
                       <Accordion
                         key={item.name + i}
