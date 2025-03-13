@@ -25,7 +25,7 @@ const Page = async () => {
   ]);
 
   return (
-    <div className="flex flex-col space-y-20">
+    <div className="flex flex-col space-y-20 mb-12">
       <HeroSection />
       <CategorySection categories={categories.data} />
       <NewArrivals products={recentProducts.data} />
@@ -45,7 +45,6 @@ const Page = async () => {
         title="Top Rated Product"
         link="/product?topRated=true"
       />
-
       <SpecialFeature />
       <NewsLetter />
     </div>
