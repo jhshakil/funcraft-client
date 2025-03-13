@@ -14,13 +14,7 @@ const PaymentCard = ({ orderId }: Props) => {
     window.location.href = paymentData?.data?.payment_url;
   }
 
-  return (
-    <div>
-      <div>
-        <Button onClick={() => handlePayment({ orderId })}>Pay Now</Button>
-      </div>
-    </div>
-  );
+  return <Button onClick={() => handlePayment({ orderId })}>Pay Now</Button>;
 };
 
 export default PaymentCard;

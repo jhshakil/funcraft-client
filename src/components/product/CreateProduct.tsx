@@ -99,10 +99,7 @@ export function CreateProduct({ categories, shopId }: Props) {
   }, [isPending, isSuccess]);
 
   async function onSubmit(formData: z.infer<typeof FormSchema>) {
-    const loadingToastId = toast("Loading...", {
-      description: "Please wait while we process your request.",
-      icon: "⏳",
-    });
+    const loadingToastId = toast("Loading...");
     try {
       formData.shopId = shopId;
       if (acceptedFiles[0]) {
@@ -112,27 +109,16 @@ export function CreateProduct({ categories, shopId }: Props) {
             formData.thumbnailImage = val;
             handleCreate(formData);
             form.reset();
-            toast.success("Success!", {
-              description: "Your request has been completed successfully.",
-              icon: "✅",
-              duration: 4000,
-            });
+            toast.success("Success!");
           });
         });
       } else {
         handleCreate(formData);
         form.reset();
-        toast.success("Success!", {
-          description: "Your request has been completed successfully.",
-          icon: "✅",
-          duration: 4000,
-        });
+        toast.success("Success!");
       }
     } catch (err: any) {
-      toast.error("Something went wrong!", {
-        description: "Please try again later.",
-        icon: "❌",
-      });
+      toast.error("Something went wrong!");
     } finally {
       toast.dismiss(loadingToastId);
     }

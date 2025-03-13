@@ -87,20 +87,12 @@ export function EditCategory({ open, setOpen, categoryData }: Props) {
           await getDownloadURL(imgData.ref).then((val) => {
             formData.image = val;
             handleUpdate(formData);
-            toast.success("Success!", {
-              description: "Your request has been completed successfully.",
-              icon: "✅",
-              duration: 4000,
-            });
+            toast.success("Success!");
           });
         });
       } else {
         handleUpdate(formData);
-        toast.success("Success!", {
-          description: "Your request has been completed successfully.",
-          icon: "✅",
-          duration: 4000,
-        });
+        toast.success("Success!");
       }
     } catch (err: any) {
       toast.error("Something went wrong");

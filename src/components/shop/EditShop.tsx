@@ -30,7 +30,6 @@ import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
 import { imageUploadDB } from "@/lib/firebaseConfig";
 import { v4 } from "uuid";
 import { ScrollArea } from "../ui/scroll-area";
-import { useUpdateProduct } from "@/hooks/product.hook";
 import { TShop } from "@/types/shop.type";
 import { useUpdateShop } from "@/hooks/shop.hook";
 
@@ -86,10 +85,7 @@ export function EditShop({ open, setOpen, shop }: Props) {
   }, [isPending, isSuccess]);
 
   async function onSubmit(formData: z.infer<typeof FormSchema>) {
-    const loadingToastId = toast("Loading...", {
-      description: "Please wait while we process your request.",
-      icon: "⏳",
-    });
+    const loadingToastId = toast("Loading...");
     try {
       if (acceptedFiles[0]) {
         const imgRef = ref(imageUploadDB, `/profilePhoto/${v4()}`);
@@ -97,26 +93,15 @@ export function EditShop({ open, setOpen, shop }: Props) {
           await getDownloadURL(imgData.ref).then((val) => {
             formData.logo = val;
             handleUpdate(formData);
-            toast.success("Success!", {
-              description: "Your request has been completed successfully.",
-              icon: "✅",
-              duration: 4000,
-            });
+            toast.success("Success!");
           });
         });
       } else {
         handleUpdate(formData);
-        toast.success("Success!", {
-          description: "Your request has been completed successfully.",
-          icon: "✅",
-          duration: 4000,
-        });
+        toast.success("Success!");
       }
     } catch (err: any) {
-      toast.error("Something went wrong!", {
-        description: "Please try again later.",
-        icon: "❌",
-      });
+      toast.error("Something went wrong!");
     } finally {
       toast.dismiss(loadingToastId);
     }

@@ -43,9 +43,7 @@ const NewsLetter = () => {
     } finally {
       setIsLoading(false);
       setIsSubscribed(true);
-      toast.success(`You've successfully subscribed with ${values.email}`, {
-        icon: <CheckCircle className="h-4 w-4 text-green-500" />,
-      });
+      toast.success(`You've successfully subscribed with ${values.email}`);
 
       form.reset();
       setTimeout(() => setIsSubscribed(false), 3000);

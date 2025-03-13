@@ -71,20 +71,12 @@ export function CreateCategory() {
           await getDownloadURL(imgData.ref).then((val) => {
             formData.image = val;
             handleCreate(formData);
-            toast.success("Success!", {
-              description: "Your request has been completed successfully.",
-              icon: "✅",
-              duration: 4000,
-            });
+            toast.success("Success!");
           });
         });
       } else {
         handleCreate(formData);
-        toast.success("Success!", {
-          description: "Your request has been completed successfully.",
-          icon: "✅",
-          duration: 4000,
-        });
+        toast.success("Success!");
       }
 
       form.reset({

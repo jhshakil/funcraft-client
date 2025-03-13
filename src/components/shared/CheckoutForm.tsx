@@ -86,10 +86,7 @@ export function CheckoutForm({
     if (CodeData) {
       setDiscount(CodeData?.data?.discount);
       setCouponApplied(true);
-      toast.success("Coupon applied successfully!", {
-        description: `You got ${CodeData?.data?.discount}% discount`,
-        icon: <CheckCircle className="h-4 w-4 text-green-500" />,
-      });
+      toast.success("Coupon applied successfully!");
     }
   }, [CodeData]);
 
@@ -112,10 +109,7 @@ export function CheckoutForm({
   }
 
   const createOrder = (deliveryAddressId: string) => {
-    const loadingToastId = toast("Processing your order...", {
-      description: "Please wait while we prepare your order.",
-      icon: <ShoppingBag className="h-4 w-4 animate-pulse" />,
-    });
+    const loadingToastId = toast("Processing your order...");
 
     try {
       const result = {
@@ -133,10 +127,7 @@ export function CheckoutForm({
       handleCreate(result);
       updateCartData([]);
     } catch (err: any) {
-      toast.error("Failed to create order", {
-        description: "Please try again later.",
-        icon: "❌",
-      });
+      toast.error("Failed to create order");
     } finally {
       toast.dismiss(loadingToastId);
     }
