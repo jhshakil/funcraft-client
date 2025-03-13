@@ -1,6 +1,7 @@
 import CategorySection from "@/components/home/CategorySection";
 import HeroSection from "@/components/home/HeroSection";
 import HomeProductSection from "@/components/home/HomeProductSection";
+import NewArrivals from "@/components/home/NewArrivals";
 import OfferProduct from "@/components/home/OfferProduct";
 import NewsLetter from "@/components/shared/NewsLetter";
 import SpecialFeature from "@/components/shared/SpecialFeature";
@@ -9,8 +10,13 @@ import { getAllCategory } from "@/services/CategoryService";
 import { getAllProduct } from "@/services/ProductService";
 
 const Page = async () => {
-
-  const [categories, products, flashSalesProducts, recentProducts, topRatedProducts] = await Promise.all([
+  const [
+    categories,
+    products,
+    flashSalesProducts,
+    recentProducts,
+    topRatedProducts,
+  ] = await Promise.all([
     getAllCategory({}),
     getAllProduct({ limit: "8" }),
     getAllProduct({ limit: "8", flashSales: "true" }),
@@ -22,6 +28,7 @@ const Page = async () => {
     <div className="flex flex-col space-y-20">
       <HeroSection />
       <CategorySection categories={categories.data} />
+      <NewArrivals products={recentProducts.data} />
       <HomeProductSection
         products={products.data}
         title={"Featured Products"}
@@ -38,11 +45,7 @@ const Page = async () => {
         title="Top Rated Product"
         link="/product?topRated=true"
       />
-      {/* <HomeProductSection
-        products={flashSalesProducts.data}
-        title="Flash Sale"
-        link="/product?flashSales=true"
-      /> */}
+
       <SpecialFeature />
       <NewsLetter />
     </div>

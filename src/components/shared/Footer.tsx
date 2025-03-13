@@ -28,7 +28,7 @@ const Footer = () => {
             <ul className="space-y-2">
               <li>
                 <Link
-                  href="/best-selling"
+                  href="/product?sortBy=bestSelling&sortOrder=desc"
                   className="text-secondary-foreground/80 hover:text-primary transition-colors"
                 >
                   Best Selling Products
@@ -36,7 +36,7 @@ const Footer = () => {
               </li>
               <li>
                 <Link
-                  href="/recent-products"
+                  href="/product?sortBy=createdAt&sortOrder=desc"
                   className="text-secondary-foreground/80 hover:text-primary transition-colors"
                 >
                   Recent Products
@@ -44,7 +44,7 @@ const Footer = () => {
               </li>
               <li>
                 <Link
-                  href="/top-rated"
+                  href="/product?sortBy=ratting&sortOrder=desc"
                   className="text-secondary-foreground/80 hover:text-primary transition-colors"
                 >
                   Top Rated Products
@@ -52,7 +52,7 @@ const Footer = () => {
               </li>
               <li>
                 <Link
-                  href="/flash-sale"
+                  href="/product?flashSales=true"
                   className="text-secondary-foreground/80 hover:text-primary transition-colors"
                 >
                   Flash Sale
