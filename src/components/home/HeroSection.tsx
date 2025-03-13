@@ -17,7 +17,7 @@ const HeroSection = () => {
         </p>
 
         <Link
-          href={`/product?discount=true`}
+          href={`/product?flashSales=true`}
           className={cn(
             buttonVariants(),
             "w-[180px] h-[60px] text-xl mt-[46px] uppercase"

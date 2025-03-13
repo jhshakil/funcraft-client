@@ -11,12 +11,18 @@ import {
   navigationMenuTriggerStyle,
 } from "@/components/ui/navigation-menu";
 
+type TNav = {
+  name: string;
+  path: string;
+  elements?: { name: string; path: string }[];
+};
+
 const Navbar = () => {
   return (
     <div>
       <NavigationMenu className="w-full">
         <NavigationMenuList className="space-x-3">
-          {NavbarConfig?.map((item, i) =>
+          {NavbarConfig?.map((item: TNav, i) =>
             item.elements && item.elements.length ? (
               <NavigationMenuItem key={item.name + i}>
                 <NavigationMenuTrigger className="text-base xl:text-lg font-medium hover:text-primary px-2 xl:px-4">
