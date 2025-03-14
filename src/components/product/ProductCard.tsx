@@ -216,7 +216,7 @@ export function ProductCard({ product, viewMode = "grid" }: Props) {
         </div>
       </Link>
 
-      <div className="p-4 space-y-2">
+      <div className="p-4 space-y-2 h-full">
         <Link
           href={`/product/${id}`}
           className="block group-hover:text-primary transition-colors"

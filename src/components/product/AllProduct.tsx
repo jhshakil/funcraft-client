@@ -139,13 +139,13 @@ const AllProduct = ({ products, categories, meta, currentPage }: Props) => {
   const getGridClasses = () => {
     switch (gridView) {
       case "grid":
-        return "grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6";
+        return "grid grid-cols-1 sm:grid-cols-2 2xl:grid-cols-3 gap-6";
       case "grid-dense":
         return "grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4";
       case "list":
         return "flex flex-col gap-4";
       default:
-        return "grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6";
+        return "grid grid-cols-1 sm:grid-cols-2 2xl:grid-cols-3 gap-6";
     }
   };
 
