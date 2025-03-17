@@ -215,7 +215,7 @@ const Page = () => {
                     Proceed to Checkout
                   </Link>
                   <Link
-                    href="/products"
+                    href="/product"
                     className={cn(
                       buttonVariants({ variant: "outline", size: "lg" }),
                       "w-full"
@@ -244,7 +244,7 @@ const EmptyCartState = () => (
         {`Looks like you haven't added anything to your cart yet. Browse our
         products and find something you'll love!`}
       </p>
-      <Link href="/products" className={cn(buttonVariants({ size: "lg" }))}>
+      <Link href="/product" className={cn(buttonVariants({ size: "lg" }))}>
         Start Shopping
       </Link>
     </CardContent>
