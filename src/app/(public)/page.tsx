@@ -18,10 +18,10 @@ const Page = async () => {
     topRatedProducts,
   ] = await Promise.all([
     getAllCategory({}),
-    getAllProduct({ limit: "8" }),
-    getAllProduct({ limit: "8", flashSales: "true" }),
-    getAllProduct({ limit: "8", sortBy: "createdAt", sortOrder: "desc" }),
-    getAllProduct({ limit: "8", sortBy: "rating", sortOrder: "desc" }),
+    getAllProduct({ limit: "10" }),
+    getAllProduct({ limit: "10", flashSales: "true" }),
+    getAllProduct({ limit: "10", sortBy: "createdAt", sortOrder: "desc" }),
+    getAllProduct({ limit: "10", sortBy: "rating", sortOrder: "desc" }),
   ]);
 
   return (

@@ -45,13 +45,11 @@ export function ProductCard({ product, viewMode = "grid" }: Props) {
     }
 
     return (
-      <div className="flex items-center gap-1">
+      <div className="flex items-center gap-[1px]">
         {stars}
-        {viewMode !== "grid-dense" && (
-          <span className="text-xs text-muted-foreground ml-1">
-            ({ratting?.toFixed(1)})
-          </span>
-        )}
+        <span className="text-xs text-muted-foreground ml-1">
+          ({ratting?.toFixed(1)})
+        </span>
       </div>
     );
   };
@@ -165,11 +163,11 @@ export function ProductCard({ product, viewMode = "grid" }: Props) {
             href={`/product/${id}`}
             className="block group-hover:text-primary transition-colors"
           >
-            <h3 className="font-medium text-sm line-clamp-1">{name}</h3>
+            <h3 className="font-medium text-sm line-clamp-2">{name}</h3>
           </Link>
 
           {/* Price and Rating */}
-          <div className="mt-auto pt-2 flex flex-col gap-1.5">
+          <div className="mt-auto pt-2 flex flex-wrap justify-between gap-1.5">
             {/* Rating */}
             <div className="flex items-center">{renderRating()}</div>
 
@@ -192,57 +190,59 @@ export function ProductCard({ product, viewMode = "grid" }: Props) {
 
   // Default grid view
   return (
-    <div className="relative rounded-lg overflow-hidden border group hover:shadow-md transition-all duration-200">
-      <Link href={`/product/${id}`} className="block">
-        {discount && discount > 0 && (
-          <Badge variant="destructive" className="absolute top-2 left-2 z-10">
-            -{discount}% OFF
-          </Badge>
-        )}
-
-        <div className="relative aspect-video">
-          {thumbnailImage ? (
-            <Image
-              src={(thumbnailImage as string) || "/placeholder.svg"}
-              alt={name}
-              fill
-              className="object-cover"
-            />
-          ) : (
-            <div className="h-full w-full bg-muted flex items-center justify-center">
-              <span className="text-muted-foreground">No image</span>
-            </div>
+    <div className="relative rounded-lg overflow-hidden border group hover:shadow-md transition-all duration-200 flex flex-col justify-between">
+      <div>
+        <Link href={`/product/${id}`} className="block">
+          {discount && discount > 0 && (
+            <Badge variant="destructive" className="absolute top-2 left-2 z-10">
+              -{discount}% OFF
+            </Badge>
           )}
-        </div>
-      </Link>
 
-      <div className="p-4 space-y-2 h-full">
-        <Link
-          href={`/product/${id}`}
-          className="block group-hover:text-primary transition-colors"
-        >
-          <h3 className="font-medium text-base line-clamp-2">{name}</h3>
+          <div className="relative aspect-video">
+            {thumbnailImage ? (
+              <Image
+                src={(thumbnailImage as string) || "/placeholder.svg"}
+                alt={name}
+                fill
+                className="object-cover"
+              />
+            ) : (
+              <div className="h-full w-full bg-muted flex items-center justify-center">
+                <span className="text-muted-foreground">No image</span>
+              </div>
+            )}
+          </div>
         </Link>
 
-        <div className="flex items-center">{renderRating()}</div>
-
-        <div className="flex flex-wrap justify-between items-center">
-          <div className="flex items-center gap-2">
-            <span className="text-base font-bold">
+        <div className="px-4 mt-2">
+          <Link
+            href={`/product/${id}`}
+            className="block group-hover:text-primary transition-colors"
+          >
+            <h3 className="font-medium text-base line-clamp-2">{name}</h3>
+          </Link>
+        </div>
+      </div>
+      <div className="p-4 space-y-2">
+        <div className="flex flex-wrap items-center justify-between">
+          <div>{renderRating()}</div>
+          <div className="flex items-center gap-1">
+            <span className="text-xs font-bold">
               ${discountedPrice?.toFixed(2)}
             </span>
             {discount && discount > 0 && (
-              <span className="text-sm text-muted-foreground line-through">
+              <span className="text-xs text-muted-foreground line-through">
                 ${price?.toFixed(2)}
               </span>
             )}
           </div>
-
-          <AddToCart
-            product={product}
-            className="bg-primary/10 hover:bg-primary text-primary hover:text-white transition-colors"
-          />
         </div>
+
+        <AddToCart
+          product={product}
+          className="bg-primary/10 hover:bg-primary text-primary hover:text-white transition-colors w-full"
+        />
       </div>
     </div>
   );

@@ -65,6 +65,11 @@ export function CreateReview({ isEnableReview, productId, customerId }: Props) {
             rows={4}
           />
         </div>
+        <div>
+          <small>
+            {`"You can enable this feature after purchasing the product. Please make sure to select 'Start' and enter the required text."`}
+          </small>
+        </div>
         <Button
           type="submit"
           disabled={!isEnableReview || ratting === 0 || review.trim() === ""}

@@ -57,7 +57,7 @@ const AllProduct = ({ products, categories, meta, currentPage }: Props) => {
 
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [selectedField, setSelectedField] = useState("");
-  const [gridView, setGridView] = useState<GridView>("grid");
+  const [gridView, setGridView] = useState<GridView>("grid-dense");
   const [activeFilters, setActiveFilters] = useState<string[]>([]);
 
   // Extract active filters from URL on component mount
@@ -141,7 +141,7 @@ const AllProduct = ({ products, categories, meta, currentPage }: Props) => {
       case "grid":
         return "grid grid-cols-1 sm:grid-cols-2 2xl:grid-cols-3 gap-6";
       case "grid-dense":
-        return "grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4";
+        return "grid grid-cols-2 sm:grid-cols-3 xl:grid-cols-4 gap-4";
       case "list":
         return "flex flex-col gap-4";
       default:
@@ -252,25 +252,26 @@ const AllProduct = ({ products, categories, meta, currentPage }: Props) => {
                       size="icon"
                       className={cn(
                         "h-8 w-8 rounded-sm",
-                        gridView === "grid" && "bg-muted"
+                        gridView === "grid-dense" && "bg-muted"
                       )}
-                      onClick={() => setGridView("grid")}
+                      onClick={() => setGridView("grid-dense")}
                     >
                       <Grid3X3 className="h-4 w-4" />
-                      <span className="sr-only">Grid view</span>
+                      <span className="sr-only">Dense grid view</span>
                     </Button>
                     <Button
                       variant="ghost"
                       size="icon"
                       className={cn(
                         "h-8 w-8 rounded-sm",
-                        gridView === "grid-dense" && "bg-muted"
+                        gridView === "grid" && "bg-muted"
                       )}
-                      onClick={() => setGridView("grid-dense")}
+                      onClick={() => setGridView("grid")}
                     >
                       <Grid2X2 className="h-4 w-4" />
-                      <span className="sr-only">Dense grid view</span>
+                      <span className="sr-only">Grid view</span>
                     </Button>
+
                     <Button
                       variant="ghost"
                       size="icon"
