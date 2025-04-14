@@ -2,9 +2,7 @@ import { NextResponse } from "next/server";
 import type { NextRequest } from "next/server";
 import { getCurrentUser } from "./services/AuthService";
 
-const AuthRoutes = ["/login", "/registration"];
-
-type Role = keyof typeof roleBaseRoutes;
+const PUBLIC_ROUTES = ["/login", "/registration"];
 
 const roleBaseRoutes = {
   CUSTOMER: [/^\/dashboard\/user/],
@@ -15,45 +13,35 @@ const roleBaseRoutes = {
 
 export async function middleware(request: NextRequest) {
   const { pathname } = request.nextUrl;
-
   const user = await getCurrentUser();
 
-  if (!user) {
-    if (AuthRoutes.includes(pathname)) {
-      return NextResponse.next();
-    } else {
+  // Not logged in and not visiting a public route → redirect to login
+  if (!user || !user.role) {
+    if (!PUBLIC_ROUTES.includes(pathname)) {
       return NextResponse.redirect(
         new URL(`/login?redirect=${pathname}`, request.url)
       );
     }
+    return NextResponse.next();
   }
 
-  if (user?.role && roleBaseRoutes[user?.role as Role]) {
-    const routes = roleBaseRoutes[user?.role as Role];
+  const allowedRoutes =
+    roleBaseRoutes[user.role as keyof typeof roleBaseRoutes] || [];
 
-    if (routes.some((route) => pathname.match(route))) {
-      return NextResponse.next();
-    }
-  }
+  const canAccess = allowedRoutes.some((regex) => regex.test(pathname));
 
-  if (user.role && user.role === "CUSTOMER") {
-    if (pathname === "/" || AuthRoutes.includes(pathname)) {
-      return NextResponse.next();
-    }
+  if (canAccess || PUBLIC_ROUTES.includes(pathname) || pathname === "/") {
+    return NextResponse.next();
   }
 
   return NextResponse.redirect(new URL("/", request.url));
 }
 
-// See "Matching Paths" below to learn more
 export const config = {
   matcher: [
-    "/dashboard/user",
-    "/dashboard/user/:page*",
-    "/dashboard/vendor",
-    "/dashboard/vendor:page*",
-    "/dashboard/admin",
-    "/dashboard/admin:page*",
+    "/dashboard/user/:path*",
+    "/dashboard/vendor/:path*",
+    "/dashboard/admin/:path*",
     "/login",
     "/registration",
   ],
