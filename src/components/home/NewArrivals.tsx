@@ -13,7 +13,6 @@ type Props = {
 const NewArrivals = ({ products }: Props) => {
   if (!products?.length) return null;
 
-  // Only show up to 3 products
   const displayProducts = products.slice(0, 3);
 
   return (

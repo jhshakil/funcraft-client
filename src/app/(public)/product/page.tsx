@@ -1,36 +1,13 @@
-import AllProduct from "@/components/product/AllProduct";
-import { getAllCategory } from "@/services/CategoryService";
-import { getAllProduct } from "@/services/ProductService";
-import { TProductQuery } from "@/types/product.types";
+import { Suspense } from "react";
+import AllProductWrapper from "./_components/AllProductWrapper";
+import AllProductSkeleton from "@/components/skeletonLoader/AllProductSkeleton";
 
-type Props = {
-  searchParams: TProductQuery;
-};
-
-const Page = async ({ searchParams }: Props) => {
-  // const [categories, products] = await Promise.all([
-  //   getAllCategory({ limit: "20" }),
-  //   getAllProduct({
-  //     page: searchParams.page || "1",
-  //     limit: "9",
-  //     sortBy: searchParams.sortBy,
-  //     sortOrder: searchParams.sortOrder,
-  //     category: searchParams.category,
-  //     minPrice: searchParams.minPrice,
-  //     maxPrice: searchParams.maxPrice,
-  //     flashSales: searchParams.flashSales,
-  //   }),
-  // ]);
-
+const Page = ({ searchParams }: { searchParams: any }) => {
   return (
     <div>
-      <p>all Product</p>
-      {/* <AllProduct
-        products={products.data}
-        categories={categories.data}
-        meta={products.meta}
-        currentPage={searchParams.page || "1"}
-      /> */}
+      <Suspense fallback={<AllProductSkeleton />}>
+        <AllProductWrapper searchParams={searchParams} />
+      </Suspense>
     </div>
   );
 };

@@ -25,10 +25,10 @@ export const NavbarConfig = [
   //     },
   //   ],
   // },
-  {
-    name: "Flash Sales",
-    path: "/product?flashSales=true",
-  },
+  // {
+  //   name: "Flash Sales",
+  //   path: "/product?flashSales=true",
+  // },
   {
     name: "Recent View",
     path: "/recent-product",
